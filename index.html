@@ -25,14 +25,16 @@
 @media (min-width: 820px){
   :root{ --fontBase: 20px; --fontTile: 24px; --fontLogo: 104px; --fontCat: 22px; --tileH: 96px; }
 }
-*{box-sizing:border-box; user-select:none; -webkit-user-select:none}
+*{box-sizing:border-box; user-select:none; -webkit-user-select:none; touch-action: pan-y;}
 html,body{height:100%}
+html, body { width:100%; max-width:100%; overflow-x:hidden; }
 body{
   margin:0; color:var(--fg);
   font-size: var(--fontBase);
   font-family: "Staatliches", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   background: var(--catSolid);
   letter-spacing:.02em;
+  overscroll-behavior-x: contain; /* stop sideways elastic scroll */
 }
 
 /* Loader */
@@ -77,7 +79,7 @@ body{
 .container{max-width:var(--maxw);margin:0 auto;padding:14px 10px}
 .banner{
   display:flex;align-items:center;justify-content:center;gap:12px;
-  background: color-mix(in oklab, var(--cat1) 10%, var(--catSolid) 90%); /* subtle contrast but matching */
+  background: color-mix(in oklab, var(--cat1) 10%, var(--catSolid) 90%);
   border:1px solid color-mix(in oklab, var(--cat1) 22%, transparent 78%);
   padding:12px; border-radius:var(--radius);
   margin:12px 0 10px;
@@ -97,7 +99,7 @@ button.catBtn{background:linear-gradient(135deg,var(--cat1),var(--cat2));color:#
 .events{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
 .tile{ background:#fff;border:0;border-radius:var(--radius);padding:18px 16px;
   display:grid;grid-template-columns:64px 1fr 48px;align-items:center;gap:12px;
-  box-shadow:0 6px 18px rgba(38,54,94,.12);transition:background .15s ease, transform .08s ease, box-shadow .15s ease;
+  box-shadow:0 6px 18px rgba(38,54,94,.12);transition:background .15s ease, transform .08s ease, box-shadow .25s ease;
   min-height:var(--tileH); font-size: var(--fontTile); }
 .tile .rank{width:48px;height:48px;display:grid;place-items:center;border-radius:12px;background:#e7ecfb;color:#0b1020;font-weight:900;font-size: clamp(18px,2.6vw,22px)}
 .tile .rank.correct{background:var(--green); color:#fff}
@@ -109,7 +111,11 @@ button.catBtn{background:linear-gradient(135deg,var(--cat1),var(--cat2));color:#
 /* Selection + target outlines */
 .tile.selected{ box-shadow: 0 0 0 3px var(--cat1) inset; background: color-mix(in oklab, var(--cat1) 10%, white 90%); }
 .tile.swapTarget{ box-shadow: 0 0 0 3px var(--cat2) inset; }
-.tile.pairFlash{ box-shadow: 0 0 0 3px var(--cat2) inset; transition: box-shadow .25s ease; }
+.tile.secondChosen{ box-shadow: 0 0 0 3px var(--cat2) inset; }
+.tile.swapFlash{ box-shadow: 0 0 0 3px var(--green) inset !important; }
+
+/* Drag state */
+.tile.dragging{ box-shadow: 0 0 0 3px var(--green) inset; cursor:grabbing; touch-action:none; }
 
 /* Feedback & Endgame */
 .hint{color:var(--muted);font-size:clamp(14px,1.8vw,15px);margin:10px 2px 2px}
@@ -168,10 +174,10 @@ button.catBtn{background:linear-gradient(135deg,var(--cat1),var(--cat2));color:#
   <div class="banner"><strong class="subcat" id="titleBanner">Subcategory</strong></div>
   <section class="controls">
     <div class="attempts">Attempts: <span id="attemptsUsed">0</span>/6</div>
-    <div class="buttons"><button id="shuffleBtn" class="catBtn">Shuffle</button><button id="resetBtn" class="catBtn">Reset</button><button id="submitBtn" class="primary">Submit</button></div>
+    <div class="buttons"><button id="submitBtn" class="primary">Submit</button></div>
   </section>
   <ul id="eventsList" class="events" aria-live="polite"></ul>
-  <p class="hint">Tap a tile to select, then tap another to swap — or drag using the ☰ on the right.</p>
+  <p class="hint">Tap a tile to select, then tap another to swap, or drag using the ☰ on the right.</p>
   <section id="feedbackSection" class="feedback"></section>
   <section id="endgame" class="endgame hidden">
     <h2 id="endTitle" style="margin:0">—</h2>
@@ -209,7 +215,7 @@ function deterministicShuffle(arr, seedStr="ordera-v20-seed"){
   return a;
 }
 
-const state={id:dayId(),puzzle:null,order:[],attempts:[],used:0,solved:false,locked:false,lockedMap:{},selectedIndex:null};
+const state={id:dayId(),puzzle:null,order:[],attempts:[],used:0,solved:false,locked:false,lockedMap:{},selectedIndex:null, swapFlashPositions:[]};
 const els={
   loader:$("#loader"), attempts:$("#attemptsUsed"), list:$("#eventsList"),
   fb:$("#feedbackSection"), end:$("#endgame"), endTitle:$("#endTitle"), endSub:$("#endSubtitle"),
@@ -261,6 +267,15 @@ function makeTile(itemIndex,pos){
   const h=document.createElement("div"); h.className="handle"; h.textContent="☰";
   li.append(r,t,h);
   if(state.lockedMap[pos]===itemIndex){ li.classList.add("locked"); r.classList.add("correct"); }
+
+  // Flash green outline after a swap
+  if(state.swapFlashPositions.includes(pos)){
+    requestAnimationFrame(()=>{
+      li.classList.add('swapFlash');
+      setTimeout(()=>{ li.classList.remove('swapFlash'); }, 450); // linger then fade via transition
+    });
+  }
+
   li.addEventListener("click",()=>onTap(pos),{passive:true});
   li.addEventListener("pointerenter",()=>{
     if(state.selectedIndex!=null && pos!==state.selectedIndex && !state.lockedMap.hasOwnProperty(pos)) li.classList.add("swapTarget");
@@ -269,7 +284,7 @@ function makeTile(itemIndex,pos){
   enableDrag(li);
   return li;
 }
-function renderList(){ els.list.innerHTML=""; state.order.forEach((idx,pos)=>els.list.appendChild(makeTile(idx,pos))); }
+function renderList(){ els.list.innerHTML=""; state.order.forEach((idx,pos)=>els.list.appendChild(makeTile(idx,pos))); state.swapFlashPositions = []; }
 function renderFeedback(){
   els.fb.innerHTML=""; state.attempts.forEach(row=>{
     const div=document.createElement("div"); div.className="feedbackRow";
@@ -303,15 +318,22 @@ function onTap(pos){
   if(state.lockedMap.hasOwnProperty(src) || state.lockedMap.hasOwnProperty(dst)){
     tiles[src].classList.remove("selected"); state.selectedIndex=null; return;
   }
-  // flash outlines on swap pair
-  if(tiles[src]) tiles[src].classList.add("pairFlash");
-  if(tiles[dst]) tiles[dst].classList.add("pairFlash");
+  // show outline on the second tile chosen
+  tiles[dst]?.classList.add('secondChosen');
+
+  // pair flash (pre-swap) for subtle feedback
+  tiles[src]?.classList.add("swapTarget");
   setTimeout(()=>{
-    if(tiles[src]) tiles[src].classList.remove("pairFlash");
-    if(tiles[dst]) tiles[dst].classList.remove("pairFlash");
-  }, 250);
-  [state.order[src],state.order[dst]]=[state.order[dst],state.order[src]];
-  tiles[src].classList.remove("selected"); state.selectedIndex=null; renderList();
+    tiles[src]?.classList.remove("selected","swapTarget");
+    tiles[dst]?.classList.remove('secondChosen');
+
+    // perform swap
+    [state.order[src],state.order[dst]]=[state.order[dst],state.order[src]];
+    state.selectedIndex=null;
+    // after re-render, flash green on both positions
+    state.swapFlashPositions = [src, dst];
+    renderList();
+  }, 90);
 }
 
 function submit(){
@@ -328,7 +350,7 @@ function submit(){
   if(row.every(Boolean)){ state.solved=true; end(); }
   else if(state.used>=6){ end(); }
 }
-function end(){ state.locked=true; renderEnd(); $("#submitBtn").disabled=true; $("#shuffleBtn").disabled=true; $("#resetBtn").disabled=true; }
+function end(){ state.locked=true; renderEnd(); $("#submitBtn").disabled=true; }
 function shareText(){
   const title=`ORDERA ${state.id} — ${state.solved?state.used:"X"}/6`;
   const rows=state.attempts.map(r=>r.map(c=>c?'🟩':'⬜').join('')).join('\n');
@@ -363,6 +385,7 @@ function enableDrag(tile){
     if(dragging) return; dragging=true;
     e.preventDefault();
     try{ tile.setPointerCapture && tile.setPointerCapture(e.pointerId);}catch{}
+    // disable page scroll while dragging only
     document.body.style.overflow='hidden';
 
     lockSet = new Set(Object.keys(state.lockedMap).map(i=>parseInt(i,10)));
@@ -444,6 +467,13 @@ function enableDrag(tile){
     movVals.splice(targetMov,0,val);
     const newOrder = state.order.slice();
     movVals.forEach((v,i)=>{ newOrder[movablePositions[i]] = v; });
+    // figure out final absolute index where tile landed
+    let targetAbs = 0, seenMov=0;
+    for(let i=0;i<newOrder.length;i++){
+      if(lockSet.has(i)) continue;
+      if(seenMov===targetMov){ targetAbs = i; break; }
+      seenMov++;
+    }
     state.order = newOrder;
 
     if(ph && ph.parentNode) ph.parentNode.removeChild(ph); ph=null;
@@ -451,6 +481,8 @@ function enableDrag(tile){
     tile.style.position=""; tile.style.left=""; tile.style.top=""; tile.style.width=""; tile.style.zIndex=""; tile.style.pointerEvents="";
     tile.remove();
 
+    // After reorder, flash green on the dropped position
+    state.swapFlashPositions = [targetAbs];
     renderList();
     document.removeEventListener("pointermove", onMove);
   }
@@ -479,20 +511,6 @@ async function boot(){
   }finally{
     // Controls
     document.getElementById("submitBtn").addEventListener("click", submit);
-    document.getElementById("shuffleBtn").addEventListener("click", ()=>{
-      if(state.locked) return;
-      const lockSet = new Set(Object.keys(state.lockedMap).map(i=>+i));
-      const movable = state.order.map((v,pos)=>({v,pos})).filter(x=>!lockSet.has(x.pos));
-      const shuffled = deterministicShuffle(movable.map(x=>x.v), "ordera-shuff-"+state.id);
-      const newOrder = state.order.slice();
-      let k=0; for(let pos=0; pos<newOrder.length; pos++){ if(lockSet.has(pos)) continue; newOrder[pos]=shuffled[k++]; }
-      state.order=newOrder; renderList();
-    });
-    document.getElementById("resetBtn").addEventListener("click", ()=>{
-      if(state.locked) return;
-      state.order=deterministicShuffle(state.puzzle.items.map((_,i)=>i),"ordera-reset-"+state.id);
-      state.lockedMap={}; state.attempts=[]; state.used=0; els.attempts.textContent=state.used; renderAll();
-    });
 
     // Fade out loader
     els.loader.classList.add("hidden");
