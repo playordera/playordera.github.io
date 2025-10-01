@@ -12,46 +12,31 @@
 <style>
 :root{
   --fg:#0b1020; --muted:#23314f;
-  --green:#22b34b;
+  --green:#22b34b; --greenSoft:#22b34b22;
   --cat1:#7b61ff; --cat2:#a78bfa; --catSolid:#dcdfff;
-  --maxw: 760px;
-  --radius: 16px;
-  --tileH: 88px;
-  --fontBase: 19px;
-  --fontTile: 22px;
-  --fontLogo: 92px;
-  --fontCat: 20px;
+  --maxw: 760px; --radius: 16px; --tileH: 88px;
+  --fontBase: 19px; --fontTile: 22px; --fontLogo: 92px; --fontCat: 20px;
 }
-@media (min-width: 820px){
-  :root{ --fontBase: 20px; --fontTile: 24px; --fontLogo: 104px; --fontCat: 22px; --tileH: 96px; }
-}
-*{box-sizing:border-box; user-select:none; -webkit-user-select:none; touch-action: pan-y;}
+@media (min-width: 820px){ :root{ --fontBase: 20px; --fontTile: 24px; --fontLogo: 104px; --fontCat: 22px; --tileH: 96px; }}
+*{box-sizing:border-box; user-select:none; -webkit-user-select:none;}
 html,body{height:100%}
 html, body { width:100%; max-width:100%; overflow-x:hidden; }
 body{
-  margin:0; color:var(--fg);
-  font-size: var(--fontBase);
+  margin:0; color:var(--fg); font-size: var(--fontBase);
   font-family: "Staatliches", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  background: var(--catSolid);
-  letter-spacing:.02em;
+  background: var(--catSolid); letter-spacing:.02em;
   overscroll-behavior-x: contain; /* stop sideways elastic scroll */
 }
 
 /* Loader */
-#loader{
-  position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-  background:#0b0b10; z-index:99999; transition:opacity .4s ease, visibility .4s ease;
-}
+#loader{ position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:#0b0b10; z-index:99999; transition:opacity .4s ease, visibility .4s ease; }
 #loader.hidden{ opacity:0; visibility:hidden }
 .loader-stack{ display:flex; flex-direction:column; align-items:center; gap:16px }
 .loader-icon{ position:relative; width:min(28vw,140px); height:min(28vw,140px); }
 .loader-icon .sq{ position:absolute; border-radius:14px; width:70%; height:70%; top:0; left:0; background: var(--cat1); animation: hueflow 6s linear infinite; }
 .loader-icon .sq.top{ left:30%; top:30%; background: var(--cat2); animation: hueflow 6s linear infinite; }
-.loader-wordmark{ font-size: clamp(40px, 10vw, 110px); font-weight:900; letter-spacing:.12em;
-  background: linear-gradient(90deg,var(--cat1),var(--cat2)); -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation: hueflow 6s linear infinite; }
-.loader-spinner{ width:min(8vw,44px); height:min(8vw,44px); border-radius:999px; border:4px solid transparent;
-  border-top-color: currentColor; color: var(--cat1); animation: spin 1s linear infinite, hueflow 6s linear infinite; opacity:.9; }
+.loader-wordmark{ font-size: clamp(40px, 10vw, 110px); font-weight:900; letter-spacing:.12em; background: linear-gradient(90deg,var(--cat1),var(--cat2)); -webkit-background-clip:text; background-clip:text; color:transparent; animation: hueflow 6s linear infinite; }
+.loader-spinner{ width:min(8vw,44px); height:min(8vw,44px); border-radius:999px; border:4px solid transparent; border-top-color: currentColor; color: var(--cat1); animation: spin 1s linear infinite, hueflow 6s linear infinite; opacity:.9; }
 @keyframes spin{ to{ transform: rotate(360deg) } }
 @keyframes hueflow{ 0%{ filter:hue-rotate(0deg) } 50%{ filter:hue-rotate(180deg) } 100%{ filter:hue-rotate(360deg) } }
 
@@ -63,28 +48,12 @@ body{
 .logo-icon{ width:46px; height:46px; position:relative; flex:0 0 auto }
 .logo-icon .sq{ position:absolute; width:32px; height:32px; border-radius:8px; top:0; left:0; background: var(--cat1) }
 .logo-icon .sq.top{ left:12px; top:12px; background: var(--cat2); box-shadow: 0 0 0 3px var(--cat1) inset }
-.wordmark{
-  font-size: clamp(32px, 4.2vw, var(--fontLogo));
-  letter-spacing:.10em; line-height:1;
-  background: linear-gradient(90deg,var(--cat1), var(--cat2));
-  -webkit-background-clip:text; background-clip:text; color:transparent; white-space:nowrap;
-}
-.cat-pill{
-  display:inline-flex; align-items:center; gap:10px; padding:10px 16px; border-radius:999px;
-  background:linear-gradient(135deg,var(--cat1),var(--cat2)); color:#ffffff; font-weight:900; text-transform:uppercase;
-  letter-spacing:.12em; font-size:var(--fontCat); white-space:nowrap;
-}
+.wordmark{ font-size: clamp(32px, 4.2vw, var(--fontLogo)); letter-spacing:.10em; line-height:1; background: linear-gradient(90deg,var(--cat1), var(--cat2)); -webkit-background-clip:text; background-clip:text; color:transparent; white-space:nowrap;}
+.cat-pill{ display:inline-flex; align-items:center; gap:10px; padding:10px 16px; border-radius:999px; background:linear-gradient(135deg,var(--cat1),var(--cat2)); color:#ffffff; font-weight:900; text-transform:uppercase; letter-spacing:.12em; font-size:var(--fontCat); white-space:nowrap;}
 
 /* Main */
 .container{max-width:var(--maxw);margin:0 auto;padding:14px 10px}
-.banner{
-  display:flex;align-items:center;justify-content:center;gap:12px;
-  background: color-mix(in oklab, var(--cat1) 10%, var(--catSolid) 90%);
-  border:1px solid color-mix(in oklab, var(--cat1) 22%, transparent 78%);
-  padding:12px; border-radius:var(--radius);
-  margin:12px 0 10px;
-  color:#071127; text-align:center;
-}
+.banner{ display:flex;align-items:center;justify-content:center;gap:12px; background: color-mix(in oklab, var(--cat1) 10%, var(--catSolid) 90%); border:1px solid color-mix(in oklab, var(--cat1) 22%, transparent 78%); padding:12px; border-radius:var(--radius); margin:12px 0 10px; color:#071127; text-align:center;}
 .banner .subcat{font-weight:900; font-size: clamp(22px, 3.2vw, 30px); background:linear-gradient(135deg,var(--cat1),var(--cat2)); -webkit-background-clip:text; background-clip:text; color:transparent}
 
 /* Controls */
@@ -97,10 +66,7 @@ button.catBtn{background:linear-gradient(135deg,var(--cat1),var(--cat2));color:#
 
 /* Events */
 .events{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
-.tile{ background:#fff;border:0;border-radius:var(--radius);padding:18px 16px;
-  display:grid;grid-template-columns:64px 1fr 48px;align-items:center;gap:12px;
-  box-shadow:0 6px 18px rgba(38,54,94,.12);transition:background .15s ease, transform .08s ease, box-shadow .25s ease;
-  min-height:var(--tileH); font-size: var(--fontTile); }
+.tile{ background:#fff;border:0;border-radius:var(--radius);padding:18px 16px; display:grid;grid-template-columns:64px 1fr 48px;align-items:center;gap:12px; box-shadow:0 6px 18px rgba(38,54,94,.12);transition:background .15s ease, transform .08s ease, box-shadow .25s ease; min-height:var(--tileH); font-size: var(--fontTile); }
 .tile .rank{width:48px;height:48px;display:grid;place-items:center;border-radius:12px;background:#e7ecfb;color:#0b1020;font-weight:900;font-size: clamp(18px,2.6vw,22px)}
 .tile .rank.correct{background:var(--green); color:#fff}
 .tile .text{line-height:1.1;font-weight:900}
@@ -115,7 +81,7 @@ button.catBtn{background:linear-gradient(135deg,var(--cat1),var(--cat2));color:#
 .tile.swapFlash{ box-shadow: 0 0 0 3px var(--green) inset !important; }
 
 /* Drag state */
-.tile.dragging{ box-shadow: 0 0 0 3px var(--green) inset; cursor:grabbing; touch-action:none; }
+.tile.dragging{ box-shadow: 0 0 0 3px var(--green) inset, 0 10px 24px var(--greenSoft); cursor:grabbing; touch-action:none; }
 
 /* Feedback & Endgame */
 .hint{color:var(--muted);font-size:clamp(14px,1.8vw,15px);margin:10px 2px 2px}
@@ -126,25 +92,10 @@ button.catBtn{background:linear-gradient(135deg,var(--cat1),var(--cat2));color:#
 .endgame{margin-top:20px;background:#fff;border:0;padding:16px;border-radius:var(--radius)}
 .hidden{display:none !important}
 
-/* === Logo text (solid color cycle + outline) === */
-.logo-cycle{
-  font-weight: 900;
-  letter-spacing:.12em;
-  color: #ffffff; /* will be hue-rotated via filter */
-  -webkit-text-stroke: 2px #0b0b10; /* outline to give logo weight */
-  text-shadow:
-    0 1px 0 rgba(0,0,0,.25),
-    0 2px 8px rgba(0,0,0,.28);
-  filter: hue-rotate(0deg);
-  animation: hueflow 6s linear infinite;
-}
-.loader-wordmark.logo-cycle{ 
-  font-size: clamp(40px, 10vw, 110px);
-}
-.wordmark.logo-cycle{
-  font-size: clamp(32px, 4.2vw, var(--fontLogo));
-  line-height:1;
-}
+/* Logo text */
+.logo-cycle{ font-weight: 900; letter-spacing:.12em; color: #ffffff; -webkit-text-stroke: 2px #0b0b10; text-shadow: 0 1px 0 rgba(0,0,0,.25), 0 2px 8px rgba(0,0,0,.28); filter: hue-rotate(0deg); animation: hueflow 6s linear infinite; }
+.loader-wordmark.logo-cycle{ font-size: clamp(40px, 10vw, 110px); }
+.wordmark.logo-cycle{ font-size: clamp(32px, 4.2vw, var(--fontLogo)); line-height:1; }
 </style>
 </head>
 <body>
@@ -209,56 +160,18 @@ function hashStr(str){let h=2166136261>>>0; for(let i=0;i<str.length;i++){h^=str
 function deterministicShuffle(arr, seedStr="ordera-v20-seed"){
   const rand = mulberry32(hashStr(seedStr));
   const a=arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(rand()*(i+1)); [a[i],a[j]]=[a[j],a[i]];
-  }
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
   return a;
 }
 
 const state={id:dayId(),puzzle:null,order:[],attempts:[],used:0,solved:false,locked:false,lockedMap:{},selectedIndex:null, swapFlashPositions:[]};
-const els={
-  loader:$("#loader"), attempts:$("#attemptsUsed"), list:$("#eventsList"),
-  fb:$("#feedbackSection"), end:$("#endgame"), endTitle:$("#endTitle"), endSub:$("#endSubtitle"),
-  reveal:$("#reveal"), share:$("#shareBtn"), sharePrev:$("#sharePreview"),
-  catText:$("#catText"), titleBanner:$("#titleBanner"), favicon:document.getElementById("favicon"), wordmark:document.getElementById("wordmark")
-};
+const els={ loader:$("#loader"), attempts:$("#attemptsUsed"), list:$("#eventsList"), fb:$("#feedbackSection"), end:$("#endgame"), endTitle:$("#endTitle"), endSub:$("#endSubtitle"), reveal:$("#reveal"), share:$("#shareBtn"), sharePrev:$("#sharePreview"), catText:$("#catText"), titleBanner:$("#titleBanner"), favicon:document.getElementById("favicon"), wordmark:document.getElementById("wordmark") };
 
-function makeFaviconDataURI(c1, c2){
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'>
-    <rect x='4' y='4' width='16' height='16' rx='4' fill='${c1}'/>
-    <rect x='10' y='10' width='16' height='16' rx='4' fill='${c2}'/>
-  </svg>`;
-  return "data:image/svg+xml;base64," + btoa(svg);
-}
-function applyCategoryTheme(cat){
-  const pal = CORE_CAT_COLORS[cat] || CORE_CAT_COLORS["Literature"];
-  const [c1,c2,solid] = pal;
-  const r = document.documentElement.style;
-  r.setProperty('--cat1', c1);
-  r.setProperty('--cat2', c2);
-  r.setProperty('--catSolid', solid || '#dcdfff');
-  document.body.style.background = solid || '#dcdfff';
-  els.favicon.href = makeFaviconDataURI(c1,c2);
-}
+function makeFaviconDataURI(c1, c2){ const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><rect x='4' y='4' width='16' height='16' rx='4' fill='${c1}'/><rect x='10' y='10' width='16' height='16' rx='4' fill='${c2}'/></svg>`; return "data:image/svg+xml;base64," + btoa(svg); }
+function applyCategoryTheme(cat){ const pal = CORE_CAT_COLORS[cat] || CORE_CAT_COLORS["Literature"]; const [c1,c2,solid] = pal; const r = document.documentElement.style; r.setProperty('--cat1', c1); r.setProperty('--cat2', c2); r.setProperty('--catSolid', solid || '#dcdfff'); document.body.style.background = solid || '#dcdfff'; els.favicon.href = makeFaviconDataURI(c1,c2); }
 
-async function fetchPool(){
-  const res=await fetch(SHEET_URL,{cache:"no-cache"});
-  const json=await res.json();
-  const pool=[];
-  for(const row of json){
-    if(!row||!row.title||!row.events) continue;
-    const items=row.events.map(e=>({t:String(e.event),y:parseInt(e.year,10)})).filter(x=>x.t&&Number.isFinite(x.y));
-    if(items.length<5) continue;
-    pool.push({category:String(row.category||"Literature"),title:String(row.title),items,correct:items.slice().sort((a,b)=>a.y-b.y)});
-  }
-  return pool;
-}
-function chooseToday(pool){
-  if(!pool.length) return null;
-  const shuffled=deterministicShuffle(pool,"ordera-v20-pool");
-  const idx=Math.floor((Date.now()-new Date(2024,0,1))/86400000)%shuffled.length;
-  return shuffled[idx];
-}
+async function fetchPool(){ const res=await fetch(SHEET_URL,{cache:"no-cache"}); const json=await res.json(); const pool=[]; for(const row of json){ if(!row||!row.title||!row.events) continue; const items=row.events.map(e=>({t:String(e.event),y:parseInt(e.year,10)})).filter(x=>x.t&&Number.isFinite(x.y)); if(items.length<5) continue; pool.push({category:String(row.category||"Literature"),title:String(row.title),items,correct:items.slice().sort((a,b)=>a.y-b.y)});} return pool; }
+function chooseToday(pool){ if(!pool.length) return null; const shuffled=deterministicShuffle(pool,"ordera-v20-pool"); const idx=Math.floor((Date.now()-new Date(2024,0,1))/86400000)%shuffled.length; return shuffled[idx]; }
 
 function makeTile(itemIndex,pos){
   const li=document.createElement("li"); li.className="tile"; li.dataset.pos=pos;
@@ -270,69 +183,35 @@ function makeTile(itemIndex,pos){
 
   // Flash green outline after a swap
   if(state.swapFlashPositions.includes(pos)){
-    requestAnimationFrame(()=>{
-      li.classList.add('swapFlash');
-      setTimeout(()=>{ li.classList.remove('swapFlash'); }, 450); // linger then fade via transition
-    });
+    requestAnimationFrame(()=>{ li.classList.add('swapFlash'); setTimeout(()=>{ li.classList.remove('swapFlash'); }, 450); });
   }
 
   li.addEventListener("click",()=>onTap(pos),{passive:true});
-  li.addEventListener("pointerenter",()=>{
-    if(state.selectedIndex!=null && pos!==state.selectedIndex && !state.lockedMap.hasOwnProperty(pos)) li.classList.add("swapTarget");
-  });
+  li.addEventListener("pointerenter",()=>{ if(state.selectedIndex!=null && pos!==state.selectedIndex && !state.lockedMap.hasOwnProperty(pos)) li.classList.add("swapTarget"); });
   li.addEventListener("pointerleave",()=>{ li.classList.remove("swapTarget"); });
   enableDrag(li);
   return li;
 }
 function renderList(){ els.list.innerHTML=""; state.order.forEach((idx,pos)=>els.list.appendChild(makeTile(idx,pos))); state.swapFlashPositions = []; }
-function renderFeedback(){
-  els.fb.innerHTML=""; state.attempts.forEach(row=>{
-    const div=document.createElement("div"); div.className="feedbackRow";
-    row.forEach(c=>{const sq=document.createElement("div"); sq.className="square"+(c?" correct":""); div.appendChild(sq);});
-    els.fb.appendChild(div);
-  });
-}
-function renderEnd(){
-  els.end.classList.toggle("hidden",!state.locked);
-  if(!state.locked) return;
-  els.endTitle.textContent = state.solved ? "You solved it!" : "Out of attempts.";
-  els.endSub.textContent = `ORDERA ${state.id} — ${state.solved?state.used:"X"}/6`;
-  els.reveal.innerHTML="";
-  state.puzzle.correct.forEach((it,i)=>{
-    const row=document.createElement("div"); row.textContent=`${i+1}. ${it.y} ${it.t}`; els.reveal.appendChild(row);
-  });
-  els.sharePrev.textContent=shareText();
-  els.share.classList.remove("hidden"); els.sharePrev.classList.remove("hidden");
-}
+function renderFeedback(){ els.fb.innerHTML=""; state.attempts.forEach(row=>{ const div=document.createElement("div"); div.className="feedbackRow"; row.forEach(c=>{const sq=document.createElement("div"); sq.className="square"+(c?" correct":""); div.appendChild(sq);}); els.fb.appendChild(div); }); }
+function renderEnd(){ els.end.classList.toggle("hidden",!state.locked); if(!state.locked) return; els.endTitle.textContent = state.solved ? "You solved it!" : "Out of attempts."; els.endSub.textContent = `ORDERA ${state.id} — ${state.solved?state.used:"X"}/6`; els.reveal.innerHTML=""; state.puzzle.correct.forEach((it,i)=>{ const row=document.createElement("div"); row.textContent=`${i+1}. ${it.y} ${it.t}`; els.reveal.appendChild(row); }); els.sharePrev.textContent=shareText(); els.share.classList.remove("hidden"); els.sharePrev.classList.remove("hidden"); }
 function renderAll(){ renderList(); renderFeedback(); renderEnd(); els.attempts.textContent=state.used; }
 
 function onTap(pos){
-  if(state.locked) return;
-  if(state.lockedMap.hasOwnProperty(pos)) return;
+  if(state.locked) return; if(state.lockedMap.hasOwnProperty(pos)) return;
   const tiles=$$("#eventsList .tile");
-  if(state.selectedIndex==null){
-    state.selectedIndex=pos; if(tiles[pos]) tiles[pos].classList.add("selected"); return;
-  }
+  if(state.selectedIndex==null){ state.selectedIndex=pos; tiles[pos]?.classList.add("selected"); return; }
   const src=state.selectedIndex, dst=pos;
-  if(src===dst){ tiles[src].classList.remove("selected"); state.selectedIndex=null; return; }
-  if(state.lockedMap.hasOwnProperty(src) || state.lockedMap.hasOwnProperty(dst)){
-    tiles[src].classList.remove("selected"); state.selectedIndex=null; return;
-  }
-  // show outline on the second tile chosen
-  tiles[dst]?.classList.add('secondChosen');
+  if(src===dst){ tiles[src]?.classList.remove("selected"); state.selectedIndex=null; return; }
+  if(state.lockedMap.hasOwnProperty(src) || state.lockedMap.hasOwnProperty(dst)){ tiles[src]?.classList.remove("selected"); state.selectedIndex=null; return; }
 
-  // pair flash (pre-swap) for subtle feedback
+  // highlight second tile chosen
+  tiles[dst]?.classList.add('secondChosen');
   tiles[src]?.classList.add("swapTarget");
   setTimeout(()=>{
-    tiles[src]?.classList.remove("selected","swapTarget");
-    tiles[dst]?.classList.remove('secondChosen');
-
-    // perform swap
-    [state.order[src],state.order[dst]]=[state.order[dst],state.order[src]];
-    state.selectedIndex=null;
-    // after re-render, flash green on both positions
-    state.swapFlashPositions = [src, dst];
-    renderList();
+    tiles[src]?.classList.remove("selected","swapTarget"); tiles[dst]?.classList.remove('secondChosen');
+    [state.order[src],state.order[dst]]=[state.order[dst],state.order[src]]; state.selectedIndex=null;
+    state.swapFlashPositions = [src, dst]; renderList();
   }, 90);
 }
 
@@ -340,58 +219,35 @@ function submit(){
   if(state.locked) return;
   const correct=state.puzzle.correct;
   const itemsByPos=state.order.map(i=>state.puzzle.items[i]);
-  const row=itemsByPos.map((it,i)=>{
-    const good = it.t===correct[i].t;
-    if(good){ state.lockedMap[i]=state.order[i]; } // lock position & tint rank
-    return good;
-  });
+  const row=itemsByPos.map((it,i)=>{ const good = it.t===correct[i].t; if(good){ state.lockedMap[i]=state.order[i]; } return good; });
   state.attempts.push(row); state.used++; els.attempts.textContent=state.used;
   renderList(); renderFeedback();
   if(row.every(Boolean)){ state.solved=true; end(); }
   else if(state.used>=6){ end(); }
 }
 function end(){ state.locked=true; renderEnd(); $("#submitBtn").disabled=true; }
-function shareText(){
-  const title=`ORDERA ${state.id} — ${state.solved?state.used:"X"}/6`;
-  const rows=state.attempts.map(r=>r.map(c=>c?'🟩':'⬜').join('')).join('\n');
-  return `${title}\n${rows}`;
-}
+function shareText(){ const title=`ORDERA ${state.id} — ${state.solved?state.used:"X"}/6`; const rows=state.attempts.map(r=>r.map(c=>c?'🟩':'⬜').join('')).join('\n'); return `${title}\n${rows}`; }
 
-/* ===== Drag (right 20% / handle only), with correct reordering ===== */
+/* ===== Drag (handle/right area only), disable scroll while dragging, respect locked slots ===== */
 function enableDrag(tile){
-  let dragging=false, ph=null, grabOffset=0, lastY=0, rafTick=false, scroller=null;
   const parent=document.getElementById("eventsList");
-  let lockSet=new Set(), movablePositions=[], fromAbs=0, fromMov=0;
+  let dragging=false, ph=null, grabOffset=0, lastY=0, rafTick=false, scroller=null;
+  let fromAbs=0, lockSet=new Set(), movablePositions=[], fromMov=0;
 
-  function isInHandleArea(ev){
-    const rect = tile.getBoundingClientRect();
-    const x = (ev.touches?ev.touches[0].clientX:ev.clientX);
-    const withinRight = (x - rect.left) >= rect.width*0.8; // right 20%
-    return withinRight || !!ev.target.closest('.handle');
-  }
+  function isInHandleArea(ev){ const rect = tile.getBoundingClientRect(); const x = (ev.touches?ev.touches[0].clientX:ev.clientX); const withinRight = (x - rect.left) >= rect.width*0.8; return withinRight || !!ev.target.closest('.handle'); }
 
-  function onDown(e){
-    if(state.locked) return;
-    const tiles=$$("#eventsList .tile");
-    fromAbs = tiles.indexOf(tile);
-    if(fromAbs<0) return;
-    if(state.lockedMap.hasOwnProperty(fromAbs)) return; // locked position
-    if(!isInHandleArea(e)) return; // allow scroll if left side
-
-    startDrag(e);
-  }
+  function onDown(e){ if(state.locked) return; const tiles=$$("#eventsList .tile"); fromAbs = tiles.indexOf(tile); if(fromAbs<0) return; if(state.lockedMap.hasOwnProperty(fromAbs)) return; if(!isInHandleArea(e)) return; startDrag(e); }
 
   function startDrag(e){
     if(dragging) return; dragging=true;
+    // prevent page scroll + gestures while dragging
     e.preventDefault();
     try{ tile.setPointerCapture && tile.setPointerCapture(e.pointerId);}catch{}
-    // disable page scroll while dragging only
     document.body.style.overflow='hidden';
+    document.body.style.touchAction='none';
 
     lockSet = new Set(Object.keys(state.lockedMap).map(i=>parseInt(i,10)));
-    movablePositions = [];
-    for(let i=0;i<parent.children.length;i++){ if(!lockSet.has(i)) movablePositions.push(i); }
-    // compute fromMov before removing tile
+    movablePositions = []; for(let i=0;i<parent.children.length;i++){ if(!lockSet.has(i)) movablePositions.push(i); }
     fromMov = movablePositions.indexOf(fromAbs);
 
     const rect=tile.getBoundingClientRect();
@@ -411,111 +267,48 @@ function enableDrag(tile){
     document.body.appendChild(tile);
 
     document.addEventListener("pointermove", onMove, {passive:false});
-    document.addEventListener("pointerup", onUp, {once:true});
+    document.addEventListener("pointerup", onUp, {once:true, passive:false});
   }
 
-  function onMove(e){
-    if(!dragging) return; e.preventDefault();
-    lastY = e.clientY ?? (e.touches?e.touches[0].clientY:lastY);
-    if(!rafTick){
-      rafTick=true; requestAnimationFrame(()=>{
-        rafTick=false;
-        tile.style.top = (lastY - grabOffset)+"px";
-        placePlaceholder(lastY);
-        autoScroll(lastY);
-      });
-    }
-  }
+  function onMove(e){ if(!dragging) return; e.preventDefault(); lastY = e.clientY ?? (e.touches?e.touches[0].clientY:lastY); if(!rafTick){ rafTick=true; requestAnimationFrame(()=>{ rafTick=false; tile.style.top = (lastY - grabOffset)+"px"; placePlaceholder(lastY); autoScroll(lastY); }); } }
 
-  function placePlaceholder(y){
-    const children = Array.from(parent.children);
-    const movTargets = children.filter((node, idx)=> node!==ph && !lockSet.has(idx));
-    let targetMov = movTargets.length;
-    for(let i=0;i<movTargets.length;i++){
-      const r = movTargets[i].getBoundingClientRect();
-      const center = r.top + r.height/2;
-      if(y < center){ targetMov = i; break; }
-    }
-    if(targetMov === movTargets.length){ parent.appendChild(ph); }
-    else{ parent.insertBefore(ph, movTargets[targetMov]); }
-  }
+  function placePlaceholder(y){ const children = Array.from(parent.children); const movTargets = children.filter((node, idx)=> node!==ph && !lockSet.has(idx)); let targetMov = movTargets.length; for(let i=0;i<movTargets.length;i++){ const r = movTargets[i].getBoundingClientRect(); const center = r.top + r.height/2; if(y < center){ targetMov = i; break; } } if(targetMov === movTargets.length){ parent.appendChild(ph); } else{ parent.insertBefore(ph, movTargets[targetMov]); } }
 
-  function autoScroll(y){
-    const margin=60, vt=window.scrollY, vb=vt+innerHeight;
-    if(y<vt+margin) startScroll(-12);
-    else if(y>vb-margin) startScroll(12);
-    else stopScroll();
-  }
+  function autoScroll(y){ const margin=60, vt=window.scrollY, vb=vt+innerHeight; if(y<vt+margin) startScroll(-12); else if(y>vb-margin) startScroll(12); else stopScroll(); }
   function startScroll(dy){ if(scroller) return; scroller=setInterval(()=>window.scrollBy(0,dy),16); }
   function stopScroll(){ if(scroller){ clearInterval(scroller); scroller=null; } }
 
-  function onUp(e){
-    if(!dragging) return; dragging=false; stopScroll();
-    try{ tile.releasePointerCapture && tile.releasePointerCapture(e.pointerId);}catch{} document.body.style.overflow='';
-
+  function onUp(e){ if(!dragging) return; dragging=false; stopScroll(); try{ tile.releasePointerCapture && tile.releasePointerCapture(e.pointerId);}catch{} document.body.style.overflow=''; document.body.style.touchAction='auto';
     const children = Array.from(parent.children);
     // compute targetMov by counting non-locked items before placeholder
-    let targetMov = 0;
-    for(let i=0;i<children.length;i++){
-      if(children[i] === ph) break;
-      if(!lockSet.has(i)) targetMov++;
-    }
-
-    // reorder only within movables
-    const movVals = movablePositions.map(pos => state.order[pos]);
-    const [val] = movVals.splice(fromMov,1);
-    movVals.splice(targetMov,0,val);
-    const newOrder = state.order.slice();
-    movVals.forEach((v,i)=>{ newOrder[movablePositions[i]] = v; });
-    // figure out final absolute index where tile landed
-    let targetAbs = 0, seenMov=0;
-    for(let i=0;i<newOrder.length;i++){
-      if(lockSet.has(i)) continue;
-      if(seenMov===targetMov){ targetAbs = i; break; }
-      seenMov++;
-    }
+    let targetMov = 0; for(let i=0;i<children.length;i++){ if(children[i] === ph) break; if(!lockSet.has(i)) targetMov++; }
+    const movVals = movablePositions.map(pos => state.order[pos]); const [val] = movVals.splice(fromMov,1); movVals.splice(targetMov,0,val);
+    const newOrder = state.order.slice(); movVals.forEach((v,i)=>{ newOrder[movablePositions[i]] = v; });
+    // find final absolute index
+    let targetAbs = 0, seenMov=0; for(let i=0;i<newOrder.length;i++){ if(lockSet.has(i)) continue; if(seenMov===targetMov){ targetAbs = i; break; } seenMov++; }
     state.order = newOrder;
 
     if(ph && ph.parentNode) ph.parentNode.removeChild(ph); ph=null;
-    tile.classList.remove("dragging");
-    tile.style.position=""; tile.style.left=""; tile.style.top=""; tile.style.width=""; tile.style.zIndex=""; tile.style.pointerEvents="";
-    tile.remove();
+    tile.classList.remove("dragging"); tile.style.position=""; tile.style.left=""; tile.style.top=""; tile.style.width=""; tile.style.zIndex=""; tile.style.pointerEvents=""; tile.remove();
 
-    // After reorder, flash green on the dropped position
-    state.swapFlashPositions = [targetAbs];
-    renderList();
+    // Flash green at the dropped slot
+    state.swapFlashPositions = [targetAbs]; renderList();
     document.removeEventListener("pointermove", onMove);
   }
 
-  tile.addEventListener("pointerdown", onDown);
+  tile.addEventListener("pointerdown", onDown, {passive:false});
 }
 
-// Boot
+function bootFinalize(){ document.getElementById("submitBtn").addEventListener("click", submit); els.loader.classList.add("hidden"); setTimeout(()=>{ try{ els.loader.remove(); }catch{} }, 450); }
+
 async function boot(){
   try{
     const pool=await fetchPool();
     const chosen=chooseToday(pool);
-    if(chosen){
-      state.puzzle=chosen;
-      state.order=deterministicShuffle(chosen.items.map((_,i)=>i),"ordera-init-"+state.id);
-      document.getElementById("catText").textContent=chosen.category;
-      document.getElementById("titleBanner").textContent=chosen.title;
-      applyCategoryTheme(chosen.category);
-      renderAll();
-    }else{
-      document.querySelector("main").innerHTML = `<div class="endgame" style="display:block"><h2>No puzzles found</h2><p>Check your Sheet headers: Category | Title | Event | Year.</p></div>`;
-    }
-  }catch(e){
-    console.error(e);
-    document.querySelector("main").innerHTML = `<div class="endgame" style="display:block"><h2>Couldn’t load puzzles</h2><p>${String(e)}</p></div>`;
-  }finally{
-    // Controls
-    document.getElementById("submitBtn").addEventListener("click", submit);
-
-    // Fade out loader
-    els.loader.classList.add("hidden");
-    setTimeout(()=>{ try{ els.loader.remove(); }catch{} }, 450);
-  }
+    if(chosen){ state.puzzle=chosen; state.order=deterministicShuffle(chosen.items.map((_,i)=>i),"ordera-init-"+state.id); els.catText.textContent=chosen.category; els.titleBanner.textContent=chosen.title; applyCategoryTheme(chosen.category); renderAll(); }
+    else{ document.querySelector("main").innerHTML = `<div class="endgame" style="display:block"><h2>No puzzles found</h2><p>Check your Sheet headers: Category | Title | Event | Year.</p></div>`; }
+  }catch(e){ console.error(e); document.querySelector("main").innerHTML = `<div class="endgame" style="display:block"><h2>Couldn’t load puzzles</h2><p>${String(e)}</p></div>`; }
+  finally{ bootFinalize(); }
 }
 
 window.addEventListener("DOMContentLoaded", boot);
