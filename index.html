@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ORDERA</title>
+<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:"Staatliches",sans-serif;background:#f1f1f1;color:#111;text-align:center;}
+header{background:#111;color:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;}
+.wordmark{font-size:40px;}
+.cat-pill{background:#333;padding:6px 14px;border-radius:20px;}
+ul{list-style:none;padding:0;margin:20px auto;max-width:600px;}
+.tile{background:#fff;border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;cursor:grab;}
+.tile.locked{opacity:.7;pointer-events:none;}
+.rank{width:36px;height:36px;display:grid;place-items:center;background:#ccc;border-radius:8px;margin-right:8px;}
+.rank.correct{background:#20a844;color:#fff;}
+button{margin:5px;padding:10px 16px;font-size:18px;border:none;border-radius:10px;cursor:pointer;}
+.primary{background:#20a844;color:#fff;}
+.catBtn{background:#333;color:#fff;}
+#loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#111;color:#fff;font-size:32px;}
+#loader.hidden{display:none;}
+/* ❌ shake effect */
+#xOverlay {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 120px;
+  font-weight: 900;
+  color: red;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+#xOverlay.show {
+  animation: shake 0.5s ease, fadeOut 0.6s ease forwards;
+}
+@keyframes shake {
+  0%,100% { transform: translate(-50%, -50%) rotate(0deg); }
+  20% { transform: translate(-52%, -50%) rotate(-10deg); }
+  40% { transform: translate(-48%, -50%) rotate(10deg); }
+  60% { transform: translate(-52%, -50%) rotate(-10deg); }
+  80% { transform: translate(-48%, -50%) rotate(10deg); }
+}
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+</style>
+</head>
+<body>
+<div id="loader">Loading ORDERA…</div>
+<header>
+  <div class="wordmark">ORDERA</div>
+  <div class="cat-pill" id="catText">Category</div>
+</header>
+<h2 id="titleBanner"></h2>
+<div>
+  <button id="shuffleBtn" class="catBtn">Shuffle</button>
+  <button id="resetBtn" class="catBtn">Reset</button>
+  <button id="submitBtn" class="primary">Submit</button>
+</div>
+<div>Attempts: <span id="attemptsUsed">0</span>/6</div>
+<ul id="eventsList"></ul>
+<footer>© ORDERAgames</footer>
+<div id="xOverlay">❌</div>
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFwFuI5Uhh-6yjFPqVm2Ub_IHBq05HWjVBTUq13gOv9Q6cMp3jUVtt7rc8o3GCTP-qRw/exec";
+const els = {
+  loader:document.getElementById("loader"),
+  catText:document.getElementById("catText"),
+  title:document.getElementById("titleBanner"),
+  used:document.getElementById("attemptsUsed"),
+  events:document.getElementById("eventsList"),
+  xOverlay:document.getElementById("xOverlay")
+};
+const state={puzzle:null,order:[],lockedMap:{},used:0,selected:null};
+
+async function fetchData(){
+  const res = await fetch(APPS_SCRIPT_URL+"?min=8&max=12");
+  return await res.json();
+}
+function todayPuzzle(list){
+  const idx=(new Date()).getDate()-1;
+  return list[idx%list.length];
+}
+function render(){
+  els.events.innerHTML="";
+  state.order.forEach((i,pos)=>{
+    const li=document.createElement("li");
+    li.className="tile";
+    if(state.lockedMap[pos]===i) li.classList.add("locked");
+    const rank=document.createElement("div");
+    rank.className="rank";
+    rank.textContent=pos+1;
+    if(state.lockedMap[pos]===i) rank.classList.add("correct");
+    const txt=document.createElement("div"); txt.textContent=state.puzzle.items[i].t;
+    li.append(rank,txt);
+    li.onclick=()=>onTap(pos);
+    els.events.appendChild(li);
+  });
+  els.used.textContent=state.used;
+}
+function onTap(pos){
+  if(state.selected==null){state.selected=pos;els.events.children[pos].style.outline="3px solid #0af";return;}
+  const src=state.selected;const dst=pos;
+  [state.order[src],state.order[dst]]=[state.order[dst],state.order[src]];
+  els.events.children[src].style.outline="none";
+  state.selected=null;render();
+}
+function showX(){
+  els.xOverlay.classList.remove("show");
+  void els.xOverlay.offsetWidth; // restart animation
+  els.xOverlay.classList.add("show");
+  els.xOverlay.style.opacity=1;
+}
+function submit(){
+  const correct=state.puzzle.correct;
+  const curr=state.order.map(i=>state.puzzle.items[i]);
+  let newlyCorrect=false;
+  curr.forEach((it,i)=>{
+    if(it.t===correct[i].t && !(i in state.lockedMap)){
+      state.lockedMap[i]=state.order[i];
+      newlyCorrect=true;
+    }
+  });
+  if(!newlyCorrect){ showX(); }
+  state.used++;render();
+}
+async function boot(){
+  const puzzles=await fetchData();
+  const p=todayPuzzle(puzzles);
+  state.puzzle={title:p.title,category:p.category,items:p.events.map(e=>({t:e.event,y:e.year})),correct:p.events.slice()};
+  state.order=state.puzzle.items.map((_,i)=>i).sort(()=>Math.random()-0.5);
+  els.catText.textContent=p.category;els.title.textContent=p.title;
+  render();
+  document.getElementById("submitBtn").onclick=submit;
+  document.getElementById("resetBtn").onclick=()=>{state.lockedMap={};state.used=0;state.order=state.puzzle.items.map((_,i)=>i).sort(()=>Math.random()-0.5);render();};
+  document.getElementById("shuffleBtn").onclick=()=>{state.order.sort(()=>Math.random()-0.5);render();};
+  els.loader.classList.add("hidden");
+}
+boot();
+</script>
+</body>
+</html>
