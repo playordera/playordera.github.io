@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ORDERA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;font-family:"Staatliches",sans-serif;background:#e7e9ff;color:#111;text-align:center}
+    .app-header{background:#111;color:#fff;padding:10px}
+    .wordmark{font-size:64px;color:#6956e8}
+    .cat-pill{background:#6956e8;padding:6px 14px;border-radius:20px;color:#fff}
+    .events{list-style:none;padding:0;max-width:760px;margin:auto}
+    .tile{background:#fff;border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;cursor:default}
+    .tile.locked{opacity:.7;pointer-events:none}
+    .rank{width:36px;height:36px;display:grid;place-items:center;background:#ccc;border-radius:8px;margin-right:8px}
+    .rank.correct{background:#20a844;color:#fff}
+    .handle{font-size:20px;opacity:.7;cursor:grab}
+    .tile.selected{outline:3px solid #6956e8}
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="wordmark">ORDERA</div>
+    <span class="cat-pill"><span id="catText">Category</span></span>
+  </header>
+  <main>
+    <h2 id="titleBanner">—</h2>
+    <div class="attempts">Attempts: <span id="attemptsUsed">0</span>/6</div>
+    <div class="buttons">
+      <button id="shuffleBtn" class="catBtn">Shuffle</button>
+      <button id="resetBtn" class="catBtn">Reset</button>
+      <button id="submitBtn" class="primary">Submit</button>
+    </div>
+    <ul id="eventsList" class="events"></ul>
+  </main>
+  <script>
+    const els = {list:document.getElementById("eventsList")};
+    const state={order:[0,1,2,3],selected:null};
+    const sample=["Event A","Event B","Event C","Event D"];
+    function makeTile(i,pos){
+      const li=document.createElement("li");li.className="tile";li.dataset.pos=pos;
+      const rank=document.createElement("div");rank.className="rank";rank.textContent=pos+1;
+      const txt=document.createElement("div");txt.textContent=sample[i];
+      const handle=document.createElement("div");handle.className="handle";handle.textContent="≡";
+      handle.onpointerdown=(e)=>startDrag(e,li);
+      li.onclick=()=>onTap(pos);
+      li.append(rank,txt,handle);
+      return li;
+    }
+    function renderList(){els.list.innerHTML="";state.order.forEach((i,pos)=>els.list.appendChild(makeTile(i,pos)));}
+    function onTap(pos){
+      if(state.selected==null){state.selected=pos;els.list.children[pos].classList.add("selected");return;}
+      const src=state.selected,dst=pos;[state.order[src],state.order[dst]]=[state.order[dst],state.order[src]];
+      els.list.children[src].classList.remove("selected");state.selected=null;renderList();
+    }
+    function startDrag(e,tile){
+      const parent=els.list;const rect=tile.getBoundingClientRect();let grabY=e.clientY-rect.top;
+      const ph=document.createElement("li");ph.className="tile";ph.style.height=rect.height+"px";parent.insertBefore(ph,tile.nextSibling);
+      tile.classList.add("dragging");tile.style.width=rect.width+"px";tile.style.position="fixed";tile.style.left=rect.left+"px";tile.style.top=(e.clientY-grabY)+"px";tile.style.zIndex=1000;
+      document.body.appendChild(tile);
+      const move=(ev)=>{
+        tile.style.top=(ev.clientY-grabY)+"px";
+        const kids=[...parent.children].filter(c=>c!==ph);
+        for(let k of kids){const r=k.getBoundingClientRect();if(ev.clientY<r.top+r.height/2){parent.insertBefore(ph,k);return;}}
+        parent.appendChild(ph);
+      };
+      const up=()=>{
+        document.removeEventListener("pointermove",move);document.removeEventListener("pointerup",up);
+        parent.insertBefore(tile,ph);parent.removeChild(ph);
+        tile.classList.remove("dragging");tile.removeAttribute("style");
+        state.order=[...els.list.children].map(li=>parseInt(li.dataset.pos));renderList();
+      };
+      document.addEventListener("pointermove",move);document.addEventListener("pointerup",up);
+    }
+    renderList();
+  </script>
+</body>
+</html>
