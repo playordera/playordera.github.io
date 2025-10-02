@@ -8,44 +8,40 @@
 
 <style>
 :root {
-  --bg1: #1e1e2f;
-  --bg2: #2a2a40;
-  --bg3: #3b3b52;
   --fg: #fff;
-  --accent1: #3b82f6;
-  --accent2: #ef4444;
-  --accent3: #10b981;
-  --accent4: #f59e0b;
   --radius: 12px;
+
+  /* Vibrant professional colors */
+  --c1: #4f46e5; /* indigo */
+  --c2: #0ea5e9; /* cyan/blue */
+  --c3: #e11d48; /* crimson */
+  --c4: #f59e0b; /* amber */
+  --correct: #10b981;
+  --wrong: #ef4444;
 }
 
+/* Animated gradient background */
 body {
   margin:0; padding:0;
   font-family:'Bungee', sans-serif;
-  background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), var(--bg2));
-  background-size: 400% 400%;
-  animation: gradientShift 20s ease infinite;
+  background: linear-gradient(270deg, #0f172a, #1e293b, #312e81, #0f766e);
+  background-size: 800% 800%;
+  animation: bgShift 20s ease infinite;
   color:var(--fg);
   display:flex; flex-direction:column;
-  min-height:100vh;
-  overflow-x:hidden;
+  height:100vh;
+  overflow:hidden;
 }
-
-@keyframes gradientShift {
+@keyframes bgShift {
   0% {background-position:0% 50%;}
   50% {background-position:100% 50%;}
   100% {background-position:0% 50%;}
 }
 
-/* Header */
+/* Layout */
 header {
   text-align:center;
-  padding:20px 10px 5px;
-  animation: headerPulse 6s infinite ease-in-out;
-}
-@keyframes headerPulse {
-  0%,100% {opacity:1;}
-  50% {opacity:0.85;}
+  padding:15px 10px 5px;
 }
 header h1 {
   font-size:40px; margin:0;
@@ -56,7 +52,6 @@ header h2 {
   font-weight:400; opacity:0.85;
 }
 
-/* Game area */
 #game {
   flex:1; display:flex; flex-direction:column;
   align-items:center; justify-content:center;
@@ -69,51 +64,44 @@ header h2 {
   max-width:420px;
 }
 
+/* Tiles */
 .option {
   display:flex; align-items:center; justify-content:center;
   border-radius:var(--radius);
-  font-size:24px; line-height:1.2; text-align:center;
+  font-size:22px; line-height:1.2; text-align:center;
   cursor:pointer; user-select:none;
   aspect-ratio:1/1;
   color:#fff; padding:10px;
-  transition:transform 0.2s ease;
   perspective:1000px;
+  transition:transform 0.2s ease;
+  position:relative;
+  overflow:hidden;
 }
 .option span { display:block; }
 
-/* Colors */
-.option:nth-child(1){ background:var(--accent1);}
-.option:nth-child(2){ background:var(--accent2);}
-.option:nth-child(3){ background:var(--accent3);}
-.option:nth-child(4){ background:var(--accent4);}
+/* Vibrant theme colors */
+.option:nth-child(1){ background:var(--c1); }
+.option:nth-child(2){ background:var(--c2); }
+.option:nth-child(3){ background:var(--c3); }
+.option:nth-child(4){ background:var(--c4); }
 
-/* Animations */
-.option:active { transform:scale(0.93) rotate(-1deg); }
-
-/* Flip animations */
-.option.flip {
-  animation: flipTile 0.6s forwards;
+/* Subtle pattern */
+.option::after {
+  content:"";
+  position:absolute; inset:0;
+  background-image:linear-gradient(45deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.08) 75%);
+  background-size:20px 20px;
+  pointer-events:none;
 }
-.option.correct { background:#10b981 !important; }
-.option.wrong { background:#ef4444 !important; }
 
+.option.flip { animation: flipTile 0.6s forwards; }
+.option.correct { background:var(--correct) !important; }
+.option.wrong { background:var(--wrong) !important; }
 @keyframes flipTile {
   0% {transform:rotateY(0);}
   50% {transform:rotateY(90deg);}
   100% {transform:rotateY(0);}
 }
-
-/* End screen */
-#endScreen { text-align:center; margin-top:20px; }
-button {
-  padding:12px 20px; font-size:16px; border-radius:var(--radius);
-  border:none; cursor:pointer; margin-top:14px;
-  font-family:'Bungee', sans-serif;
-  transition:transform 0.2s ease;
-}
-button.primary { background:var(--accent1); color:white; font-weight:600; }
-button:hover { transform:scale(1.05); }
-.hidden { display:none; }
 
 /* Overlay */
 #feedbackOverlay {
@@ -121,29 +109,34 @@ button:hover { transform:scale(1.05); }
   align-items:center; justify-content:center; flex-direction:column;
   background:rgba(0,0,0,0.92);
   z-index:100; text-align:center; padding:20px;
-  animation: fadeIn 0.3s ease;
 }
-#feedbackOverlay.correct .symbol { color:#10b981; }
-#feedbackOverlay.wrong .symbol { color:#ef4444; }
+#feedbackOverlay.correct .symbol { color:var(--correct); }
+#feedbackOverlay.wrong .symbol { color:var(--wrong); }
 #feedbackOverlay .symbol {
   font-size:100px; font-weight:900; margin-bottom:18px;
-  animation: popIn 0.4s ease;
 }
 #feedbackOverlay .text {
   font-size:36px; font-weight:800; margin-bottom:14px;
-  animation: popIn 0.4s ease;
 }
 #feedbackOverlay .explanation {
-  font-size:18px; color:var(--fg); max-width:360px;
-  animation: fadeIn 0.5s ease;
+  font-size:18px; color:var(--fg); max-width:360px; margin-bottom:20px;
 }
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-@keyframes popIn { 0%{transform:scale(0.6);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+#feedbackOverlay button {
+  padding:12px 20px; border:none; border-radius:var(--radius);
+  background:var(--c1); color:#fff; font-size:16px; cursor:pointer;
+  transition:transform 0.2s ease;
+}
+#feedbackOverlay button:hover { transform:scale(1.05); }
 
-/* Footer */
+/* End screen */
+#endScreen { text-align:center; margin-top:20px; }
+button.primary { background:var(--c1); color:white; font-weight:600; }
+.hidden { display:none; }
+
+/* Footer pinned */
 footer {
   text-align:center; font-size:14px;
-  opacity:0.8; padding:10px;
+  opacity:0.85; padding:10px;
 }
 </style>
 </head>
@@ -166,6 +159,7 @@ footer {
   <div class="symbol"></div>
   <div class="text"></div>
   <div class="explanation"></div>
+  <button id="continueBtn">Continue</button>
 </div>
 
 <footer id="footerInfo"></footer>
@@ -176,6 +170,7 @@ const DIFFICULTIES = ["easy","medium","hard"];
 const tz = "America/Edmonton";
 
 let puzzles=[], todaySet=[], currentIndex=0, results=[], usedSeeds=[];
+let pendingCallback=null;
 
 function toYMD(date, tz){
   const z = new Date(date.toLocaleString('en-US',{timeZone:tz}));
@@ -183,14 +178,7 @@ function toYMD(date, tz){
 }
 function mulberry32(a){ return function(){ let t=a+=0x6D2B79F5; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return((t^t>>>14)>>>0)/4294967296; } }
 function seededPick(rng, arr){ return arr[Math.floor(rng()*arr.length)]; }
-
-function shuffleArray(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+function shuffleArray(arr){ for (let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} return arr;}
 
 const optEl=document.getElementById("options");
 const endScreen=document.getElementById("endScreen");
@@ -200,6 +188,7 @@ const overlay=document.getElementById("feedbackOverlay");
 const overlaySymbol=overlay.querySelector(".symbol");
 const overlayText=overlay.querySelector(".text");
 const overlayExp=overlay.querySelector(".explanation");
+const continueBtn=document.getElementById("continueBtn");
 const footerInfo=document.getElementById("footerInfo");
 
 async function loadData(){
@@ -211,8 +200,6 @@ async function loadData(){
 
 function setupDaily(){
   const seed=toYMD(new Date(),tz);
-  if(usedSeeds.includes(seed)) return; 
-  usedSeeds.push(seed);
   const rng=mulberry32(Number(seed));
   todaySet=DIFFICULTIES.map(diff=>{
     const pool=puzzles.filter(p=>p.difficulty===diff);
@@ -225,7 +212,7 @@ function setupDaily(){
 function startPuzzle(i){
   currentIndex=i;
   const p=todaySet[i];
-  let shuffled = shuffleArray([...p.items]); 
+  let shuffled=shuffleArray([...p.items]);
   optEl.innerHTML="";
   shuffled.forEach(item=>{
     const div=document.createElement("div");
@@ -242,19 +229,19 @@ function showOverlay(correct, explanation, callback){
   overlayText.textContent=correct?"Correct":"Game Over";
   overlay.className=correct?"correct":"wrong";
   overlayExp.textContent=explanation;
-  setTimeout(()=>{
-    overlay.style.display="none";
-    callback();
-  },1800);
+  pendingCallback=callback;
 }
+
+continueBtn.onclick=()=>{
+  overlay.style.display="none";
+  if(pendingCallback){ pendingCallback(); pendingCallback=null; }
+};
 
 function choose(tile, choice,puzzle){
   Array.from(optEl.children).forEach(c=>c.onclick=null);
   const correct=(choice===puzzle.answer);
   tile.classList.add("flip");
-  setTimeout(()=>{
-    tile.classList.add(correct?"correct":"wrong");
-  },300);
+  setTimeout(()=>{ tile.classList.add(correct?"correct":"wrong"); },300);
   if(correct){
     results.push("✅");
     showOverlay(true,puzzle.explanation,()=>{
