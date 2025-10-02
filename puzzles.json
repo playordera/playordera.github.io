@@ -1,359 +1,236 @@
 {
-  "version": 1,
-  "calendar": {
-    "20251002": "animals"
-  },
   "themes": [
     {
-      "id": "shapes",
-      "name": "Shapes",
-      "puzzles": [
-        {
-          "difficulty": "easy",
-          "items": [
-            "🔺",
-            "🔺",
-            "🔺",
-            "🔴"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "easy",
-          "items": [
-            "🟩",
-            "🟩",
-            "🟩",
-            "🟪"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "easy",
-          "items": [
-            "◼️",
-            "◼️",
-            "◼️",
-            "⬛",
-            "🍎"
-          ],
-          "odd_index": 4
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "⬜️",
-            "⬜️",
-            "⬜️",
-            "🟨",
-            "⬜️"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "🔷",
-            "🔷",
-            "🔷",
-            "🔶"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "◻️",
-            "◻️",
-            "◻️",
-            "◻️",
-            "🔺"
-          ],
-          "odd_index": 4
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "🟦",
-            "🟦",
-            "🟦",
-            "🟦",
-            "🔵",
-            "🟦"
-          ],
-          "odd_index": 4
-        }
-      ]
+      "id": "planets_easy",
+      "difficulty": "easy",
+      "category": "Planets",
+      "items": ["Venus", "Mars", "Mercury", "Sun"],
+      "answer": "Sun",
+      "explanation": "Venus, Mars, and Mercury are planets; the Sun is a star."
     },
     {
-      "id": "animals",
-      "name": "Animals",
-      "puzzles": [
-        {
-          "difficulty": "easy",
-          "items": [
-            "🐶",
-            "🐱",
-            "🦊",
-            "🚗"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "easy",
-          "items": [
-            "🐭",
-            "🐹",
-            "🐰",
-            "🐢"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "🦁",
-            "🐯",
-            "🐆",
-            "🐸"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "🐟",
-            "🐠",
-            "🐡",
-            "🦅"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "🦇",
-            "🦉",
-            "🦅",
-            "🐧",
-            "🦋"
-          ],
-          "odd_index": 4
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "🦈",
-            "🐬",
-            "🐳",
-            "🦀",
-            "🐊"
-          ],
-          "odd_index": 4
-        }
-      ]
+      "id": "capitals_easy",
+      "difficulty": "easy",
+      "category": "Capital Cities",
+      "items": ["Paris", "London", "Rome", "Brazil"],
+      "answer": "Brazil",
+      "explanation": "Paris, London, and Rome are capital cities; Brazil is a country, not a city."
     },
     {
-      "id": "fruits",
-      "name": "Fruits",
-      "puzzles": [
-        {
-          "difficulty": "easy",
-          "items": [
-            "🍎",
-            "🍎",
-            "🍎",
-            "🍊"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "easy",
-          "items": [
-            "🍌",
-            "🍌",
-            "🍌",
-            "🍌",
-            "🍓"
-          ],
-          "odd_index": 4
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "🍇",
-            "🍇",
-            "🍇",
-            "🥦"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "🍉",
-            "🍉",
-            "🍉",
-            "🍈",
-            "🍔"
-          ],
-          "odd_index": 4
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "🍒",
-            "🍓",
-            "🍎",
-            "🍅"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "🍍",
-            "🥭",
-            "🍑",
-            "🧀"
-          ],
-          "odd_index": 3
-        }
-      ]
+      "id": "sports_easy",
+      "difficulty": "easy",
+      "category": "Sports",
+      "items": ["Soccer", "Basketball", "Tennis", "Chess"],
+      "answer": "Chess",
+      "explanation": "Soccer, Basketball, and Tennis are physical sports; Chess is a board game."
     },
     {
-      "id": "numbers",
-      "name": "Numbers",
-      "puzzles": [
-        {
-          "difficulty": "easy",
-          "items": [
-            "2",
-            "2",
-            "2",
-            "5"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "easy",
-          "items": [
-            "10",
-            "10",
-            "10",
-            "11"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "3",
-            "6",
-            "9",
-            "8"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "4",
-            "8",
-            "12",
-            "13"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "2",
-            "3",
-            "5",
-            "6"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "7",
-            "14",
-            "21",
-            "25"
-          ],
-          "odd_index": 3
-        }
-      ]
+      "id": "animals_easy",
+      "difficulty": "easy",
+      "category": "Animals",
+      "items": ["Dog", "Cat", "Horse", "Whale"],
+      "answer": "Whale",
+      "explanation": "Dog, Cat, and Horse are land mammals; Whale is a marine mammal."
     },
     {
-      "id": "colors",
-      "name": "Colors",
-      "puzzles": [
-        {
-          "difficulty": "easy",
-          "items": [
-            "🔴",
-            "🔴",
-            "🔴",
-            "🔵"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "easy",
-          "items": [
-            "🟢",
-            "🟢",
-            "🟢",
-            "🟡"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "🟦",
-            "🟦",
-            "🟦",
-            "🟪"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "medium",
-          "items": [
-            "🟧",
-            "🟧",
-            "🟧",
-            "⚫️"
-          ],
-          "odd_index": 3
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "🟥",
-            "🟥",
-            "🟥",
-            "🟥",
-            "🟨"
-          ],
-          "odd_index": 4
-        },
-        {
-          "difficulty": "hard",
-          "items": [
-            "🟪",
-            "🟪",
-            "🟪",
-            "🟪",
-            "🟩"
-          ],
-          "odd_index": 4
-        }
-      ]
+      "id": "seasons_easy",
+      "difficulty": "easy",
+      "category": "Seasons",
+      "items": ["Spring", "Summer", "Winter", "Monday"],
+      "answer": "Monday",
+      "explanation": "Spring, Summer, and Winter are seasons; Monday is a day of the week."
+    },
+    {
+      "id": "colors_easy",
+      "difficulty": "easy",
+      "category": "Colors",
+      "items": ["Red", "Blue", "Green", "Pink"],
+      "answer": "Pink",
+      "explanation": "Red, Blue, and Green are primary additive colors; Pink is not a primary color."
+    },
+    {
+      "id": "jobs_easy",
+      "difficulty": "easy",
+      "category": "Occupations",
+      "items": ["Doctor", "Teacher", "Lawyer", "Hospital"],
+      "answer": "Hospital",
+      "explanation": "Doctor, Teacher, and Lawyer are jobs; Hospital is a place."
+    },
+    {
+      "id": "oceans_easy",
+      "difficulty": "easy",
+      "category": "Geography",
+      "items": ["Pacific", "Atlantic", "Indian", "Sahara"],
+      "answer": "Sahara",
+      "explanation": "Pacific, Atlantic, and Indian are oceans; the Sahara is a desert."
+    },
+    {
+      "id": "months_easy",
+      "difficulty": "easy",
+      "category": "Calendar",
+      "items": ["January", "March", "June", "Sunday"],
+      "answer": "Sunday",
+      "explanation": "January, March, and June are months; Sunday is a day."
+    },
+    {
+      "id": "flowers_easy",
+      "difficulty": "easy",
+      "category": "Nature",
+      "items": ["Rose", "Lily", "Tulip", "Oak"],
+      "answer": "Oak",
+      "explanation": "Rose, Lily, and Tulip are flowers; Oak is a tree."
+    },
+    {
+      "id": "instruments_medium",
+      "difficulty": "medium",
+      "category": "Music",
+      "items": ["Violin", "Piano", "Guitar", "Trumpet"],
+      "answer": "Trumpet",
+      "explanation": "Violin, Piano, and Guitar are string instruments; Trumpet is a brass instrument."
+    },
+    {
+      "id": "countries_medium",
+      "difficulty": "medium",
+      "category": "Countries",
+      "items": ["Poland", "Sweden", "Denmark", "Madrid"],
+      "answer": "Madrid",
+      "explanation": "Poland, Sweden, and Denmark are countries; Madrid is a capital city."
+    },
+    {
+      "id": "sciences_medium",
+      "difficulty": "medium",
+      "category": "Fields of Study",
+      "items": ["Physics", "Biology", "Chemistry", "Astrology"],
+      "answer": "Astrology",
+      "explanation": "Physics, Biology, and Chemistry are sciences; Astrology is not a science."
+    },
+    {
+      "id": "shapes_medium",
+      "difficulty": "medium",
+      "category": "Shapes",
+      "items": ["Triangle", "Square", "Circle", "Cube"],
+      "answer": "Cube",
+      "explanation": "Triangle, Square, and Circle are 2D shapes; Cube is 3D."
+    },
+    {
+      "id": "transport_medium",
+      "difficulty": "medium",
+      "category": "Transport",
+      "items": ["Car", "Bus", "Train", "Hotel"],
+      "answer": "Hotel",
+      "explanation": "Car, Bus, and Train are transport methods; Hotel is accommodation."
+    },
+    {
+      "id": "continents_medium",
+      "difficulty": "medium",
+      "category": "Geography",
+      "items": ["Asia", "Europe", "Africa", "Greenland"],
+      "answer": "Greenland",
+      "explanation": "Asia, Europe, and Africa are continents; Greenland is the world’s largest island."
+    },
+    {
+      "id": "literary_medium",
+      "difficulty": "medium",
+      "category": "Writers",
+      "items": ["Orwell", "Huxley", "Shakespeare", "Beethoven"],
+      "answer": "Beethoven",
+      "explanation": "Orwell, Huxley, and Shakespeare were writers; Beethoven was a composer."
+    },
+    {
+      "id": "currencies_medium",
+      "difficulty": "medium",
+      "category": "Money",
+      "items": ["Dollar", "Euro", "Yen", "Peso"],
+      "answer": "Peso",
+      "explanation": "Dollar, Euro, and Yen are major reserve currencies; Peso is not."
+    },
+    {
+      "id": "mythology_medium",
+      "difficulty": "medium",
+      "category": "Mythology",
+      "items": ["Zeus", "Athena", "Apollo", "Socrates"],
+      "answer": "Socrates",
+      "explanation": "Zeus, Athena, and Apollo are Greek gods; Socrates was a philosopher."
+    },
+    {
+      "id": "inventors_medium",
+      "difficulty": "medium",
+      "category": "People",
+      "items": ["Tesla", "Edison", "Newton", "Mozart"],
+      "answer": "Mozart",
+      "explanation": "Tesla, Edison, and Newton were scientists/inventors; Mozart was a composer."
+    },
+    {
+      "id": "prime_hard",
+      "difficulty": "hard",
+      "category": "Math",
+      "items": ["2", "11", "17", "21"],
+      "answer": "21",
+      "explanation": "2, 11, and 17 are prime numbers; 21 is composite."
+    },
+    {
+      "id": "authors_hard",
+      "difficulty": "hard",
+      "category": "Authors",
+      "items": ["Tolstoy", "Dickens", "Hemingway", "Picasso"],
+      "answer": "Picasso",
+      "explanation": "Tolstoy, Dickens, and Hemingway were authors; Picasso was a painter."
+    },
+    {
+      "id": "physics_hard",
+      "difficulty": "hard",
+      "category": "Physics",
+      "items": ["Gravity", "Relativity", "Quantum", "Evolution"],
+      "answer": "Evolution",
+      "explanation": "Gravity, Relativity, and Quantum are physics concepts; Evolution is biology."
+    },
+    {
+      "id": "capitals_hard",
+      "difficulty": "hard",
+      "category": "Capitals",
+      "items": ["Tokyo", "Beijing", "Seoul", "Thailand"],
+      "answer": "Thailand",
+      "explanation": "Tokyo, Beijing, and Seoul are capitals; Thailand is a country."
+    },
+    {
+      "id": "literature_hard",
+      "difficulty": "hard",
+      "category": "Literature",
+      "items": ["Iliad", "Odyssey", "Hamlet", "Da Vinci"],
+      "answer": "Da Vinci",
+      "explanation": "Iliad, Odyssey, and Hamlet are literary works; Da Vinci was an artist/inventor."
+    },
+    {
+      "id": "elements_hard",
+      "difficulty": "hard",
+      "category": "Science",
+      "items": ["Oxygen", "Hydrogen", "Helium", "Water"],
+      "answer": "Water",
+      "explanation": "Oxygen, Hydrogen, and Helium are elements; Water is a compound."
+    },
+    {
+      "id": "mythology_hard",
+      "difficulty": "hard",
+      "category": "Mythology",
+      "items": ["Thor", "Odin", "Loki", "Einstein"],
+      "answer": "Einstein",
+      "explanation": "Thor, Odin, and Loki are Norse gods; Einstein was a physicist."
+    },
+    {
+      "id": "languages_hard",
+      "difficulty": "hard",
+      "category": "Languages",
+      "items": ["English", "Spanish", "French", "Celtic"],
+      "answer": "Celtic",
+      "explanation": "English, Spanish, and French are widely spoken modern languages; Celtic is a historical group of languages."
+    },
+    {
+      "id": "rivers_hard",
+      "difficulty": "hard",
+      "category": "Geography",
+      "items": ["Amazon", "Nile", "Yangtze", "Everest"],
+      "answer": "Everest",
+      "explanation": "Amazon, Nile, and Yangtze are rivers; Everest is a mountain."
     }
   ]
 }
