@@ -16,19 +16,19 @@
   --accent2: #ef4444;
   --accent3: #10b981;
   --accent4: #f59e0b;
-  --radius: 14px;
+  --radius: 12px;
 }
 
 body {
   margin:0; padding:0;
-  font-family: 'Bungee', sans-serif;
+  font-family:'Bungee', sans-serif;
   background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3), var(--bg2));
   background-size: 400% 400%;
-  animation: gradientShift 18s ease infinite;
-  color: var(--fg);
+  animation: gradientShift 20s ease infinite;
+  color:var(--fg);
   display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  height:100vh; overflow:hidden;
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
 @keyframes gradientShift {
@@ -37,57 +37,85 @@ body {
   100% {background-position:0% 50%;}
 }
 
+/* Header */
 header {
   text-align:center;
-  font-size:42px; font-weight:900;
-  margin-bottom:20px;
+  padding:20px 10px 5px;
+  animation: headerPulse 6s infinite ease-in-out;
+}
+@keyframes headerPulse {
+  0%,100% {opacity:1;}
+  50% {opacity:0.85;}
+}
+header h1 {
+  font-size:40px; margin:0;
   letter-spacing:2px;
 }
+header h2 {
+  font-size:16px; margin:5px 0 10px;
+  font-weight:400; opacity:0.85;
+}
 
+/* Game area */
 #game {
-  display:flex; flex-direction:column;
+  flex:1; display:flex; flex-direction:column;
   align-items:center; justify-content:center;
-  width:100%; max-width:500px;
+  padding:0 20px;
 }
 
 #options {
   display:grid; grid-template-columns:repeat(2,1fr);
-  gap:18px; width:100%;
-  padding:0 16px;
+  gap:16px; width:100%;
+  max-width:420px;
 }
 
 .option {
   display:flex; align-items:center; justify-content:center;
   border-radius:var(--radius);
-  font-size:28px; line-height:1.2; text-align:center;
+  font-size:24px; line-height:1.2; text-align:center;
   cursor:pointer; user-select:none;
   aspect-ratio:1/1;
-  color:#fff;
-  transition:transform 0.2s ease, filter 0.3s ease;
-  padding:10px;
+  color:#fff; padding:10px;
+  transition:transform 0.2s ease;
+  perspective:1000px;
 }
 .option span { display:block; }
-.option:active { transform:scale(0.92); filter:brightness(1.1); }
 
-/* Colors rotate */
+/* Colors */
 .option:nth-child(1){ background:var(--accent1);}
 .option:nth-child(2){ background:var(--accent2);}
 .option:nth-child(3){ background:var(--accent3);}
 .option:nth-child(4){ background:var(--accent4);}
 
-#endScreen {
-  text-align:center; margin-top:20px;
+/* Animations */
+.option:active { transform:scale(0.93) rotate(-1deg); }
+
+/* Flip animations */
+.option.flip {
+  animation: flipTile 0.6s forwards;
 }
+.option.correct { background:#10b981 !important; }
+.option.wrong { background:#ef4444 !important; }
+
+@keyframes flipTile {
+  0% {transform:rotateY(0);}
+  50% {transform:rotateY(90deg);}
+  100% {transform:rotateY(0);}
+}
+
+/* End screen */
+#endScreen { text-align:center; margin-top:20px; }
 button {
   padding:12px 20px; font-size:16px; border-radius:var(--radius);
   border:none; cursor:pointer; margin-top:14px;
   font-family:'Bungee', sans-serif;
+  transition:transform 0.2s ease;
 }
-button.primary {
-  background:var(--accent1); color:white; font-weight:600;
-}
+button.primary { background:var(--accent1); color:white; font-weight:600; }
+button:hover { transform:scale(1.05); }
 .hidden { display:none; }
 
+/* Overlay */
 #feedbackOverlay {
   position:fixed; inset:0; display:none;
   align-items:center; justify-content:center; flex-direction:column;
@@ -99,19 +127,33 @@ button.primary {
 #feedbackOverlay.wrong .symbol { color:#ef4444; }
 #feedbackOverlay .symbol {
   font-size:100px; font-weight:900; margin-bottom:18px;
+  animation: popIn 0.4s ease;
 }
 #feedbackOverlay .text {
   font-size:36px; font-weight:800; margin-bottom:14px;
+  animation: popIn 0.4s ease;
 }
 #feedbackOverlay .explanation {
   font-size:18px; color:var(--fg); max-width:360px;
+  animation: fadeIn 0.5s ease;
 }
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+@keyframes popIn { 0%{transform:scale(0.6);opacity:0;} 100%{transform:scale(1);opacity:1;} }
+
+/* Footer */
+footer {
+  text-align:center; font-size:14px;
+  opacity:0.8; padding:10px;
+}
 </style>
 </head>
 
 <body>
-<header>ALTERA</header>
+<header>
+  <h1>ALTERA</h1>
+  <h2>Find the odd one out</h2>
+</header>
+
 <div id="game">
   <div id="options"></div>
   <div id="endScreen" class="hidden">
@@ -125,6 +167,8 @@ button.primary {
   <div class="text"></div>
   <div class="explanation"></div>
 </div>
+
+<footer id="footerInfo"></footer>
 
 <script>
 const DATA_URL = "puzzles.json"; 
@@ -156,6 +200,7 @@ const overlay=document.getElementById("feedbackOverlay");
 const overlaySymbol=overlay.querySelector(".symbol");
 const overlayText=overlay.querySelector(".text");
 const overlayExp=overlay.querySelector(".explanation");
+const footerInfo=document.getElementById("footerInfo");
 
 async function loadData(){
   const res=await fetch(DATA_URL);
@@ -166,20 +211,21 @@ async function loadData(){
 
 function setupDaily(){
   const seed=toYMD(new Date(),tz);
-  if(usedSeeds.includes(seed)) return; // don’t repeat
+  if(usedSeeds.includes(seed)) return; 
   usedSeeds.push(seed);
   const rng=mulberry32(Number(seed));
   todaySet=DIFFICULTIES.map(diff=>{
     const pool=puzzles.filter(p=>p.difficulty===diff);
     return seededPick(rng,pool);
   });
+  footerInfo.textContent=`Seed: ${seed} | ${new Date().toLocaleDateString('en-CA',{timeZone:tz})}`;
   startPuzzle(0);
 }
 
 function startPuzzle(i){
   currentIndex=i;
   const p=todaySet[i];
-  let shuffled = shuffleArray([...p.items]); // randomize answer position
+  let shuffled = shuffleArray([...p.items]); 
   optEl.innerHTML="";
   shuffled.forEach(item=>{
     const div=document.createElement("div");
@@ -205,6 +251,10 @@ function showOverlay(correct, explanation, callback){
 function choose(tile, choice,puzzle){
   Array.from(optEl.children).forEach(c=>c.onclick=null);
   const correct=(choice===puzzle.answer);
+  tile.classList.add("flip");
+  setTimeout(()=>{
+    tile.classList.add(correct?"correct":"wrong");
+  },300);
   if(correct){
     results.push("✅");
     showOverlay(true,puzzle.explanation,()=>{
