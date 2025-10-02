@@ -4,56 +4,57 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Odd One Out — Daily</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg-gradient: linear-gradient(180deg, #f0f4ff 0%, #fafafa 100%);
-  --fg: #222;
-  --muted: #555;
-  --accent: #3b82f6;
+  --bg-gradient: linear-gradient(135deg, #16222A 0%, #3A6073 100%);
+  --fg: #fff;
+  --muted: #ddd;
   --radius: 14px;
+  --tile-size: 120px;
 }
 body {
-  margin:0;
-  font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg-gradient);
-  color: var(--fg);
-  display:flex; flex-direction:column;
-  height:100vh; overflow:hidden;
+  margin:0; font-family: 'Poppins', system-ui, sans-serif;
+  background: var(--bg-gradient); color: var(--fg);
+  display:flex; flex-direction:column; height:100vh;
+  align-items:center; justify-content:flex-start;
+  overflow:hidden;
 }
 header {
-  width:100%; text-align:center;
-  font-weight:800; font-size:24px;
-  padding:16px 0; letter-spacing:1px;
-  color:white; background: var(--accent);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  width:100%; text-align:center; padding:16px 0;
+  font-family:'Bebas Neue', sans-serif; font-size:34px;
+  letter-spacing:2px; font-weight:800;
+  background:rgba(0,0,0,0.25);
 }
 #game {
   flex:1; display:flex; flex-direction:column;
   align-items:center; justify-content:center;
-  width:100%; max-width:480px; margin:0 auto;
-  padding:20px; box-sizing:border-box;
+  width:100%; max-width:520px; padding:20px;
 }
-#question {
-  font-size:18px; font-weight:600;
-  margin-bottom:20px; text-align:center;
-}
+#question { font-size:20px; margin-bottom:24px; text-align:center; }
 #options {
   display:grid; grid-template-columns:repeat(2,1fr);
-  gap:14px; width:100%;
+  gap:16px; width:100%;
 }
 .option {
   display:flex; align-items:center; justify-content:center;
   border-radius: var(--radius);
-  padding:16px; font-size:18px; font-weight:600;
-  cursor:pointer; user-select:none; height:80px;
+  font-size:26px; font-weight:700;
+  cursor:pointer; user-select:none;
+  height: var(--tile-size);
   color:#fff; text-align:center;
-  transition: transform 0.1s ease;
+  transition: transform 0.25s ease, background 0.25s ease;
+  perspective:1000px;
 }
-.option:active { transform:scale(0.96); }
-.option:nth-child(1){ background:#3b82f6; } /* blue */
-.option:nth-child(2){ background:#f59e0b; } /* amber */
-.option:nth-child(3){ background:#10b981; } /* green */
-.option:nth-child(4){ background:#ef4444; } /* red */
+.option span {
+  display:block; transform:rotateY(0); transition: transform 0.4s;
+}
+.option.flip span { transform:rotateY(180deg); }
+.option:active { transform:scale(0.95); }
+.option:nth-child(1){ background:#FF5A5F; }
+.option:nth-child(2){ background:#FFB400; }
+.option:nth-child(3){ background:#00A699; }
+.option:nth-child(4){ background:#007A87; }
 #endScreen {
   text-align:center; margin-top:20px;
 }
@@ -62,32 +63,34 @@ button {
   border:none; cursor:pointer; margin-top:14px;
 }
 button.primary {
-  background:#3b82f6; color:white; font-weight:600;
+  background:#FF5A5F; color:white; font-weight:600;
 }
 .hidden { display:none; }
 #feedbackOverlay {
   position:fixed; inset:0; display:none;
   align-items:center; justify-content:center; flex-direction:column;
-  background:rgba(255,255,255,0.97);
+  background:rgba(0,0,0,0.85);
   z-index:100; text-align:center; padding:20px;
+  animation: fadeIn 0.3s ease;
 }
-#feedbackOverlay.correct .symbol { color:#10b981; }
-#feedbackOverlay.wrong .symbol { color:#ef4444; }
+#feedbackOverlay.correct { background:rgba(0,150,80,0.9); }
+#feedbackOverlay.wrong { background:rgba(200,40,40,0.9); }
 #feedbackOverlay .symbol {
-  font-size:80px; font-weight:900; margin-bottom:18px;
+  font-size:90px; font-weight:900; margin-bottom:18px;
 }
 #feedbackOverlay .text {
-  font-size:28px; font-weight:700; margin-bottom:14px;
+  font-size:30px; font-weight:800; margin-bottom:14px;
 }
 #feedbackOverlay .explanation {
-  font-size:16px; color:var(--muted); max-width:320px;
+  font-size:17px; color:var(--fg); max-width:360px;
 }
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 </style>
 </head>
 <body>
 <header>ODD ONE OUT</header>
 <div id="game">
-  <div id="question"></div>
+  <div id="question">Pick the odd one out</div>
   <div id="options"></div>
   <div id="endScreen" class="hidden">
     <div id="summary"></div>
@@ -142,15 +145,19 @@ function setupDaily(){
 function startPuzzle(i){
   currentIndex=i;
   const p=todaySet[i];
-  qEl.textContent=`Puzzle ${i+1} (${p.category})`;
+  qEl.textContent=`Puzzle ${i+1}`;
   optEl.innerHTML="";
   p.items.forEach(item=>{
     const div=document.createElement("div");
     div.className="option";
-    div.textContent=item;
-    div.onclick=()=>choose(item,p);
+    div.innerHTML=`<span>${item}</span>`;
+    div.onclick=()=>choose(div,item,p);
     optEl.appendChild(div);
   });
+}
+function flipTile(tile, correct){
+  tile.classList.add("flip");
+  setTimeout(()=>{ tile.style.background=correct?"#10B981":"#EF4444"; },200);
 }
 function showOverlay(correct, explanation, callback){
   overlay.style.display="flex";
@@ -161,11 +168,13 @@ function showOverlay(correct, explanation, callback){
   setTimeout(()=>{
     overlay.style.display="none";
     callback();
-  },1800);
+  },2000);
 }
-function choose(choice,puzzle){
+function choose(tile, choice,puzzle){
   Array.from(optEl.children).forEach(c=>c.onclick=null);
-  if(choice===puzzle.answer){
+  const correct=(choice===puzzle.answer);
+  flipTile(tile,correct);
+  if(correct){
     results.push("✅");
     showOverlay(true,puzzle.explanation,()=>{
       if(currentIndex<2){ startPuzzle(currentIndex+1); }
@@ -180,7 +189,7 @@ function finishGame(won){
   optEl.innerHTML="";
   qEl.textContent="";
   endScreen.classList.remove("hidden");
-  summaryEl.textContent=`Result: ${results.join(" ")} (${won?"You cleared all puzzles!":"Game over"})`;
+  summaryEl.textContent=`${results.join(" ")} (${won?"You cleared all puzzles!":"Game over"})`;
   shareBtn.classList.remove("hidden");
 }
 shareBtn.onclick=()=>{
