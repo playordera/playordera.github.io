@@ -1,282 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<title>Altera — Find the Odd One Out</title>
-
-<!-- Never cache the HTML -->
-<meta http-equiv="Cache-Control" content="no-store" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-
-<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Altera</title>
 <style>
-:root{
-  --fg:#fff;
-  --radius:14px;
-  --c1:#5b6cff; --c2:#2ec6ff; --c3:#ff477e; --c4:#ffb020;
-  --correct:#10b981; --wrong:#ef4444;
-  --bg1:#142049; --bg2:#20306d; --bg3:#244688; --bg4:#267ca6;
-}
-html,body{height:100%;margin:0;font-family:'Bungee',sans-serif;color:var(--fg);}
-body{
-  display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;
-  background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3),var(--bg4));
-  background-size:220% 220%;animation:bgSoft 20s ease-in-out infinite;
-}
-@keyframes bgSoft{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  :root {
+    --c1:#4facfe; --c2:#ff6b6b; --c3:#fbc531; --c4:#24e07f;
+    --bg:#0d1b2a;
+    --tile1:#4a90e2; --tile2:#50e3c2; --tile3:#f5a623; --tile4:#d0021b;
+  }
+  body {
+    margin:0;
+    font-family: 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg,#1e2a47,#0d1b2a);
+    color:white; text-align:center;
+    display:flex; flex-direction:column;
+    min-height:100vh; overflow:hidden;
+  }
+  header { padding:10px 0 0; }
+  .logo {
+    font-size:2.8em; font-weight:900;
+    background: linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c1));
+    -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+    background-clip:text;
+    background-size:300% auto;
+    animation: logoFade 18s linear infinite;
+  }
+  @keyframes logoFade {
+    0%{background-position:0% 50%}100%{background-position:100% 50%}
+  }
+  .subtitle { font-size:1em; margin:0; }
+  .puzzle-count { font-size:1em; margin:5px 0 10px; color:#ddd; }
 
-header{text-align:center;padding:6px 0 0}
-.logo{
-  margin:0;font-size:50px;
-  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4));
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-size:200% auto;
-  animation:logoFade 12s linear infinite; /* seamless loop */
-}
-@keyframes logoFade{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.sub{margin:0;font-size:16px;opacity:.95}
-#progress{font-size:14px;margin:4px 0 8px;opacity:.95}
+  .tiles {
+    display:grid; grid-template-columns:repeat(2,1fr);
+    gap:12px; padding:0 20px; flex-grow:1;
+    justify-content:center; align-content:center;
+  }
+  .tile {
+    display:flex; justify-content:center; align-items:center;
+    font-size:1.4em; font-weight:bold;
+    border-radius:12px; min-height:110px;
+    cursor:pointer; transition:transform .2s,box-shadow .2s,background .2s;
+  }
+  .tile:active { transform:scale(.95); }
+  .correct { background:#22c55e!important; color:white!important; }
+  .wrong { background:#ef4444!important; color:white!important; }
 
-#game{display:flex;align-items:center;justify-content:center;min-height:0}
-#options{
-  width:100%;max-width:460px;padding:0 20px;
-  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
-}
+  /* Level 3 subtle glow */
+  .lvl3 { animation: softGlow 4s ease-in-out infinite; }
+  .lvl3:nth-child(2){animation-delay:1s;}
+  .lvl3:nth-child(3){animation-delay:2s;}
+  .lvl3:nth-child(4){animation-delay:3s;}
+  @keyframes softGlow {
+    0%,100%{box-shadow:0 0 6px rgba(255,255,255,.3);}
+    50%{box-shadow:0 0 22px rgba(255,255,255,.7);}
+  }
 
-.option{
-  position:relative;display:flex;align-items:center;justify-content:center;
-  color:#fff;border-radius:var(--radius);aspect-ratio:1/1;
-  font-size:22px;cursor:pointer;user-select:none;overflow:hidden;
-  box-shadow:0 6px 18px rgba(0,0,0,.25);transition:transform .2s ease;
-}
-.option:active{transform:scale(.95)}
-.option span{display:block}
-.option:nth-child(1){background:var(--c1)}
-.option:nth-child(2){background:var(--c2)}
-.option:nth-child(3){background:var(--c3)}
-.option:nth-child(4){background:var(--c4)}
+  .overlay {
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,0.85);display:none;
+    flex-direction:column;justify-content:center;align-items:center;
+    padding:20px;z-index:10;
+  }
+  .overlay.show{display:flex;}
+  .overlay h1{font-size:2em;margin:0 0 10px;}
+  .overlay p{font-size:1.2em;}
 
-/* Level 3 only: big glow (Level 1/2 are static) */
-.lvl3{animation:pulseGlow 2s ease-in-out infinite;}
-@keyframes pulseGlow{
-  0%{box-shadow:0 0 10px rgba(255,255,255,.55);}
-  50%{box-shadow:0 0 70px rgba(255,255,255,1);}
-  100%{box-shadow:0 0 10px rgba(255,255,255,.55);}
-}
+  .overlay button{
+    margin-top:15px;padding:12px 24px;font-size:1em;
+    border:none;border-radius:8px;cursor:pointer;
+    background:#22c55e;color:white;font-weight:bold;
+  }
 
-/* Feedback overlay */
-#feedbackOverlay{
-  position:fixed;inset:0;display:none;z-index:200;
-  align-items:center;justify-content:center;flex-direction:column;
-  background:rgba(0,0,0,.9);text-align:center;padding:20px;
-}
-#feedbackOverlay .symbol{margin-bottom:18px}
-#feedbackOverlay .text{font-size:34px;margin-bottom:12px}
-#feedbackOverlay .explanation{font-size:18px;max-width:360px;margin-bottom:18px;color:#fff}
-#continueBtn{padding:14px 28px;border:none;border-radius:var(--radius);background:var(--wrong);color:#fff;font-size:18px;cursor:pointer}
-#feedbackOverlay.correct #continueBtn{background:var(--correct)}
+  .end-screen h1{font-size:2.2em;margin-bottom:15px;}
+  .end-icons{font-size:3em;margin-bottom:10px;}
+  .end-icons span{margin:0 10px;}
+  .share-btn{
+    padding:12px 24px;font-size:1.1em;
+    border:none;border-radius:8px;cursor:pointer;
+    background:#4a90e2;color:white;font-weight:bold;margin-top:15px;
+  }
 
-/* Token icons (filled background + white glyph) */
-.token{width:96px;height:96px;display:inline-block}
-.token.small{width:56px;height:56px}
-.token .bg{fill:var(--correct)}
-.token .glyph{stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.token.red .bg{fill:var(--wrong)}
-
-/* End screen */
-#endScreen{
-  position:fixed;inset:0;display:none;z-index:150;
-  align-items:center;justify-content:center;flex-direction:column;gap:18px;
-  text-align:center;padding:20px;
-}
-#summary{font-size:26px}
-#finalChecks{display:flex;gap:12px;align-items:center;justify-content:center}
-#shareBtn{
-  display:none;
-  background:var(--c1);color:#fff;font-size:20px;
-  padding:16px 32px;border-radius:var(--radius);border:none;cursor:pointer;
-  box-shadow:0 10px 24px rgba(0,0,0,.25);
-}
-
-footer{text-align:center;font-size:12px;opacity:.95;padding:6px 8px 10px;line-height:1.35em}
+  footer{font-size:.8em;padding:8px 0;line-height:1.4;}
 </style>
 </head>
 <body>
   <header>
-    <h1 class="logo">ALTERA</h1>
-    <div class="sub">Find the odd one out</div>
-    <div id="progress"></div>
+    <div class="logo">ALTERA</div>
+    <div class="subtitle">FIND THE ODD ONE OUT</div>
+    <div class="puzzle-count">Puzzle 1/3</div>
   </header>
+  <div class="tiles"></div>
 
-  <main id="game">
-    <div id="options"></div>
-  </main>
-
-  <!-- End screen -->
-  <div id="endScreen" aria-live="polite">
-    <div id="finalChecks"></div>
-    <div id="summary"></div>
-    <button id="shareBtn">Share</button>
-  </div>
-
-  <!-- Feedback overlay -->
-  <div id="feedbackOverlay">
-    <div class="symbol"></div>
-    <div class="text"></div>
-    <div class="explanation"></div>
+  <div class="overlay" id="feedback">
+    <h1 id="result"></h1>
+    <p id="explanation"></p>
     <button id="continueBtn">Continue</button>
   </div>
 
-  <footer id="footerInfo"></footer>
+  <div class="overlay end-screen" id="end">
+    <div class="end-icons" id="endIcons"></div>
+    <h1 id="endText">Game Over</h1>
+    <button class="share-btn" id="shareBtn">Share</button>
+  </div>
 
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <footer>
+    <div id="seedLine"></div>
+    <div id="dateLine"></div>
+    <div id="streakLine">🔥 Streak: 0 (Best: 0)</div>
+  </footer>
+
 <script>
-/* -------- Daily data & cache-busting -------- */
-const DATA_URL="puzzles.json";
-const DIFFICULTIES=["easy","medium","hard"];
-const tz="America/Edmonton";
+let puzzles=[];
+let today=new Date();
+let seed=today.getFullYear()+""+String(today.getMonth()+1).padStart(2,'0')+String(today.getDate()).padStart(2,'0');
+let dateStr=today.toISOString().split('T')[0];
+let puzzleIndex=0;
+let streak=parseInt(localStorage.getItem("streak")||0);
+let best=parseInt(localStorage.getItem("bestStreak")||0);
 
-/* -------- State -------- */
-let puzzles=[], todaySet=[], currentIndex=0, results=[];
-let streakData={ current:0, best:0, lastDate:null };
-let pendingCallback=null;
+const tilesDiv=document.querySelector(".tiles"),
+feedback=document.getElementById("feedback"),
+result=document.getElementById("result"),
+explanation=document.getElementById("explanation"),
+continueBtn=document.getElementById("continueBtn"),
+end=document.getElementById("end"),
+endIcons=document.getElementById("endIcons"),
+endText=document.getElementById("endText"),
+shareBtn=document.getElementById("shareBtn"),
+seedLine=document.getElementById("seedLine"),
+dateLine=document.getElementById("dateLine"),
+streakLine=document.getElementById("streakLine");
 
-/* -------- DOM -------- */
-const optEl=document.getElementById("options");
-const endScreen=document.getElementById("endScreen");
-const summaryEl=document.getElementById("summary");
-const finalChecks=document.getElementById("finalChecks");
-const shareBtn=document.getElementById("shareBtn");
-const overlay=document.getElementById("feedbackOverlay");
-const overlaySymbol=overlay.querySelector(".symbol");
-const overlayText=overlay.querySelector(".text");
-const overlayExp=overlay.querySelector(".explanation");
-const continueBtn=document.getElementById("continueBtn");
-const footerInfo=document.getElementById("footerInfo");
-const progressEl=document.getElementById("progress");
+seedLine.textContent="Seed: "+seed;
+dateLine.textContent="Date: "+dateStr;
 
-/* -------- Utils -------- */
-function loadStreak(){const s=localStorage.getItem("altera_streak");if(s){streakData=JSON.parse(s);}}
-function saveStreak(){localStorage.setItem("altera_streak",JSON.stringify(streakData));}
-function toYMD(date,tz){const z=new Date(date.toLocaleString('en-US',{timeZone:tz}));return `${z.getFullYear()}${String(z.getMonth()+1).padStart(2,'0')}${String(z.getDate()).padStart(2,'0')}`;}
-function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296;}}
-function seededPick(rng,arr){return arr[Math.floor(rng()*arr.length)]}
-function shuffleArray(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-
-/* Token svg builders (filled) */
-function tokenCheckSVG(size="96"){return `
-<svg class="token" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">
-  <circle class="bg" cx="32" cy="32" r="30"></circle>
-  <path class="glyph" d="M20 33l7 7 18-18"></path>
-</svg>`;}
-function tokenCrossSVG(size="96"){return `
-<svg class="token red" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">
-  <circle class="bg" cx="32" cy="32" r="30"></circle>
-  <path class="glyph" d="M22 22l20 20M42 22L22 42"></path>
-</svg>`;}
-
-/* -------- Boot -------- */
-loadStreak(); loadData();
-
-async function loadData(){
-  const dailySeed = toYMD(new Date(), tz);
-  // force-fresh json every day
-  const res = await fetch(DATA_URL + "?v=" + dailySeed, { cache: "no-store" });
-  const data = await res.json();
-  puzzles = data.themes;
-  setupDaily();
-}
-
-function setupDaily(){
-  const seed=toYMD(new Date(),tz);const rng=mulberry32(Number(seed));
-  todaySet=DIFFICULTIES.map(d=>seededPick(rng,puzzles.filter(p=>p.difficulty===d)));
-  updateFooter(seed);startPuzzle(0);
-}
-
-function updateFooter(seed){
-  const today=new Date().toLocaleDateString('en-CA',{timeZone:tz});
-  footerInfo.innerHTML=`Seed: ${seed}<br>Date: ${today}<br>🔥 Streak: ${streakData.current} (Best: ${streakData.best})`;
-}
-
-function startPuzzle(i){
-  currentIndex=i;progressEl.textContent=`Puzzle ${i+1}/3`;
-  const p=todaySet[i];const shuffled=shuffleArray([...p.items]);
-  optEl.innerHTML="";
-  shuffled.forEach((item)=>{
-    const tile=document.createElement("div");
-    tile.className="option lvl"+(i+1); // lvl1/lvl2 are static, lvl3 glows
-    tile.innerHTML=`<span>${item}</span>`;
-    tile.onclick=()=>choose(tile,item,p);
-    optEl.appendChild(tile);
+function renderPuzzle(){
+  document.querySelector(".puzzle-count").textContent=`Puzzle ${puzzleIndex+1}/3`;
+  tilesDiv.innerHTML="";
+  let p=puzzles[puzzleIndex];
+  let shuffled=[...p.words].sort(()=>Math.random()-.5);
+  shuffled.forEach((w,i)=>{
+    let t=document.createElement("div");
+    t.className="tile lvl"+(puzzleIndex+1);
+    t.style.background=[ "var(--tile1)","var(--tile2)","var(--tile3)","var(--tile4)" ][i%4];
+    t.textContent=w;
+    t.onclick=()=>check(w,t);
+    tilesDiv.appendChild(t);
   });
 }
-
-function choose(tile,choice,puzzle){
-  if(navigator.vibrate) navigator.vibrate(50);
-  Array.from(optEl.children).forEach(c=>c.onclick=null);
-  const correct=(choice===puzzle.answer);
-  if(correct){
-    results.push("✔");
-    showOverlay(true,puzzle.explanation,()=>{ 
-      if(currentIndex<2){ startPuzzle(currentIndex+1); }
-      else{ finishGame(true); }
-    });
+function check(choice,tile){
+  let p=puzzles[puzzleIndex];
+  document.querySelectorAll(".tile").forEach(x=>x.style.pointerEvents="none");
+  if(choice===p.odd){
+    tile.classList.add("correct");
+    showFeedback(true,p.explanation);
   }else{
-    results.push("✖");
-    showOverlay(false,puzzle.explanation,()=>finishGame(false));
+    tile.classList.add("wrong");
+    showFeedback(false,p.explanation);
   }
 }
-
-/* Overlay */
-function showOverlay(correct,explanation,cb){
-  overlay.style.display="flex";
-  overlay.className = correct ? "correct" : "wrong";
-  overlaySymbol.innerHTML = correct ? tokenCheckSVG() : tokenCrossSVG();
-  overlayText.textContent = correct ? "Correct" : "Game Over";
-  overlayExp.textContent = explanation;
-  pendingCallback=cb;
+function showFeedback(ok,ex){
+  feedback.classList.add("show");
+  result.innerHTML= ok ? "<span style='color:#22c55e'>✔ CORRECT</span>" :
+                         "<span style='color:#ef4444'>✖ WRONG</span>";
+  explanation.textContent=ex;
 }
-continueBtn.onclick=()=>{overlay.style.display="none";if(pendingCallback){pendingCallback();pendingCallback=null;}};
-
-/* End of game */
-function finishGame(won){
-  optEl.innerHTML="";
-  endScreen.style.display="flex";
-
-  // Build big colored tokens for summary row
-  finalChecks.innerHTML = results.map(r => r==="✔" ? tokenCheckSVG("56") : tokenCrossSVG("56")).join("");
-
-  summaryEl.textContent = won ? "Cleared all!" : "Game over";
-  shareBtn.style.display="inline-flex";
-
-  if(won){
-    // streak increments immediately on win for this device/day
-    const todaySeed=toYMD(new Date(),tz);
-    if(streakData.lastDate!==todaySeed){
-      streakData.current = (streakData.current + 1);
-      streakData.best = Math.max(streakData.best, streakData.current);
-      streakData.lastDate = todaySeed; saveStreak();
-    }
-    updateFooter(todaySeed);
-    confetti({particleCount:250,spread:100,origin:{y:.6}});
-  }
-}
-
-/* Share */
-shareBtn.onclick=()=>{
-  const d=new Date().toLocaleDateString('en-CA',{timeZone:tz});
-  let msg="";
-  if(results[0]==="✖"){msg="Altera humbled me today 💀 (0/3)";}
-  else if(results[1]==="✖"){msg="I only cracked 1 puzzle on Altera 🫠 (1/3)";}
-  else if(results[2]==="✖"){msg="So close! 2/3 puzzles solved on Altera 😤";}
-  else{msg="Flawless! 3/3 puzzles solved on Altera 🎉";}
-  const text=`Altera ${d}\n${msg}\n🔥 Streak: ${streakData.current}`;
-  if(navigator.share){navigator.share({title:"Altera",text});}
-  else{navigator.clipboard.writeText(text).then(()=>alert("Results copied!")); }
+continueBtn.onclick=()=>{
+  feedback.classList.remove("show");
+  if(++puzzleIndex<3){renderPuzzle();}
+  else{finish(true);}
 };
+function finish(win){
+  end.classList.add("show");
+  if(win){
+    streak++; if(streak>best) best=streak;
+    localStorage.setItem("streak",streak);
+    localStorage.setItem("bestStreak",best);
+    endIcons.innerHTML="<span style='color:#22c55e'>✔✔✔</span>";
+    endText.textContent="You Win!";
+  }else{
+    streak=0; localStorage.setItem("streak",0);
+    endIcons.innerHTML="<span style='color:#ef4444'>✖</span>";
+    endText.textContent="Game Over";
+  }
+  streakLine.textContent=`🔥 Streak: ${streak} (Best: ${best})`;
+}
+shareBtn.onclick=()=>{
+  let msg=`I played Altera and ${puzzleIndex>=3?"won all 3!":"lost at "+(puzzleIndex+1)+"/3."} 🔗 playordera.github.io`;
+  if(navigator.share){navigator.share({text:msg});}
+  else{navigator.clipboard.writeText(msg);alert("Copied share text!");}
+};
+
+fetch("puzzles.json")
+.then(res=>res.json())
+.then(data=>{
+  let dayIndex=parseInt(seed)%data.length;
+  puzzles=data[dayIndex];
+  puzzleIndex=0;
+  renderPuzzle();
+  streakLine.textContent=`🔥 Streak: ${streak} (Best: ${best})`;
+});
 </script>
 </body>
 </html>
