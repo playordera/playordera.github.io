@@ -7,76 +7,90 @@
 <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
 <style>
 :root{
-  --fg:#fff;
+  --fg:#0e1320;             /* darker text when needed */
+  --fg-inv:#ffffff;         /* on color */
   --radius:14px;
   /* Brand / tile colors */
-  --c1:#4f46e5; /* indigo */
-  --c2:#0ea5e9; /* cyan */
-  --c3:#e11d48; /* crimson */
-  --c4:#f59e0b; /* amber */
+  --c1:#5b6cff; /* indigo */
+  --c2:#2ec6ff; /* cyan */
+  --c3:#ff477e; /* crimson/pink */
+  --c4:#ffb020; /* amber */
   --correct:#10b981;
   --wrong:#ef4444;
-  --bg:#0f172a;
+
+  --bg1:#0f1830;  /* brighter background spectrum */
+  --bg2:#1d2c5d;
+  --bg3:#243b82;
+  --bg4:#157ea8;
 }
 
-/* App layout: header / main / footer with no scroll */
+/* Layout: header / main / footer — no scroll */
 html,body{height:100%}
 body{
   margin:0;
   font-family:'Bungee',sans-serif;
-  color:var(--fg);
-  background:var(--bg);
+  color:var(--fg-inv);
+  background: linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3), var(--bg2), var(--bg4));
+  background-size: 220% 220%;
+  animation: bgSoft 22s ease-in-out infinite;
   display:grid;
   grid-template-rows:auto 1fr auto;
   overflow:hidden;
 }
+@keyframes bgSoft{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
 
 /* Header */
-header{ text-align:center; padding:6px 8px 0; }
+header{ text-align:center; padding:6px 8px 0 }
 .logo{
   margin:0;
-  font-size:52px;
-  animation:logoColor 14s linear infinite, logoPulse 8s ease-in-out infinite;
+  font-size:50px;
+  /* Soft color cycle (not a sweeping gradient) */
+  color:var(--c1);
+  animation: logoColor 14s linear infinite, logoPulse 8s ease-in-out infinite;
 }
 @keyframes logoColor{
-  0%{color:#4f46e5}
-  25%{color:#0ea5e9}
-  50%{color:#e11d48}
-  75%{color:#f59e0b}
-  100%{color:#4f46e5} /* seamless loop */
+  0%{color:var(--c1)}
+  25%{color:var(--c2)}
+  50%{color:var(--c3)}
+  75%{color:var(--c4)}
+  100%{color:var(--c1)}
 }
 @keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
 
-header h2{
+.sub{
   margin:2px 0 2px;
   font-size:15px;
   font-weight:400;
-  opacity:.85;
+  opacity:.9;
 }
 #progress{
   font-size:14px;
-  opacity:.75;
+  opacity:.85;
   margin:2px 0 6px;
+  letter-spacing:.5px;
 }
 
-/* Main */
+/* Main — perfectly centered between header/footer */
 #game{
   display:flex;
   align-items:center;
-  justify-content:center;   /* centers tiles vertically between header/footer */
-  min-height:0;             /* prevents overflow in grid layout */
+  justify-content:center;
+  min-height:0;
 }
-
 #options{
   width:100%;
-  max-width:440px;
+  max-width:460px;
   padding:0 18px;
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:16px;
 }
 
-/* Tile base */
+/* Base tile */
 .option{
   position:relative;
   display:flex;
@@ -91,80 +105,107 @@ header h2{
   cursor:pointer;
   overflow:hidden;
   transform:translateZ(0);
-  transition:transform .2s ease;
+  transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
   will-change:transform;
   padding:10px;
 }
 .option:active{ transform:scale(.96) }
-.option span{display:block;}
+.option span{display:block}
 
-/* Level color assignment (we still color by grid position so it's consistent) */
+/* Base colors by grid position for consistent identity */
 .option:nth-child(1){ background:var(--c1) }
 .option:nth-child(2){ background:var(--c2) }
 .option:nth-child(3){ background:var(--c3) }
 .option:nth-child(4){ background:var(--c4) }
 
-/* ---------- Level style system (12 total) ---------- */
-/* Level 1 (easy): SOLID (no ::after) */
-.option.lvl1:after{content:none}
+/* Depth common */
+.option{ box-shadow: 0 6px 18px rgba(0,0,0,.25) }
 
-/* Level 2 (medium): STATIC patterns (subtle, modern) */
-.pattern-stripes::after,
-.pattern-dots::after,
-.pattern-grid::after,
-.pattern-hatch::after{
-  content:""; position:absolute; inset:0; pointer-events:none; opacity:1;
-}
-.pattern-stripes::after{
-  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.10) 0, rgba(255,255,255,.10) 1.5px, transparent 1.5px, transparent 10px);
-}
-.pattern-dots::after{
-  background-image:radial-gradient(rgba(255,255,255,.14) 1.3px, transparent 1.3px);
-  background-size:14px 14px;
-}
-.pattern-grid::after{
+/* ---------- LEVEL SYSTEM (12 styles total) ---------- */
+/* L1 (easy): solid, tactile (no pattern) */
+.lvl1{ 
+  /* subtle inner highlight */
   background-image:
-    repeating-linear-gradient(0deg,   rgba(255,255,255,.10) 0, rgba(255,255,255,.10) 2px, transparent 2px, transparent 14px),
-    repeating-linear-gradient(90deg,  rgba(255,255,255,.10) 0, rgba(255,255,255,.10) 2px, transparent 2px, transparent 14px);
-}
-.pattern-hatch::after{
-  background-image:repeating-linear-gradient(-45deg, rgba(255,255,255,.10) 0, rgba(255,255,255,.10) 2px, transparent 2px, transparent 12px);
+    radial-gradient(120% 140% at 50% -10%, rgba(255,255,255,.18), transparent 45%);
 }
 
-/* Level 3 (hard): ANIMATED patterns (each unique & subtle) */
-.pattern-slide::after,
-.pattern-drift::after,
-.pattern-shift::after,
-.pattern-pulse::after{
-  content:""; position:absolute; inset:0; pointer-events:none;
+/* L2 (medium): “badge” treatments (static, game-like) */
+.badge-rim::before,
+.badge-cut::before,
+.badge-glow::before,
+.badge-grid::before{
+  content:""; position:absolute; inset:0; border-radius:calc(var(--radius) + 2px); pointer-events:none;
 }
-.pattern-slide::after{
-  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.14) 0, rgba(255,255,255,.14) 2px, transparent 2px, transparent 12px);
-  animation:slideBg 6s linear infinite;
-}
-.pattern-drift::after{
-  background-image:radial-gradient(rgba(255,255,255,.18) 1.8px, transparent 1.8px);
-  background-size:16px 16px;
-  animation:driftBg 9s linear infinite;
-}
-.pattern-shift::after{
-  background:linear-gradient(135deg, rgba(255,255,255,.12) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.12) 50%, rgba(255,255,255,.12) 75%, transparent 75%, transparent);
-  background-size:20px 20px;
-  animation:shiftBg 12s linear infinite;
-}
-.pattern-pulse::after{
-  background-image:radial-gradient(rgba(255,255,255,.18) 15%, transparent 16%);
-  background-size:120% 120%;
-  animation:pulseBg 5s ease-in-out infinite;
+.badge-rim::before{ outline:2px solid rgba(255,255,255,.22); outline-offset:-6px }
+.badge-cut{ clip-path: polygon(6% 0, 94% 0, 100% 6%, 100% 94%, 94% 100%, 6% 100%, 0 94%, 0 6%) }
+.badge-glow::before{ box-shadow: inset 0 0 0 2px rgba(255,255,255,.18), inset 0 0 30px rgba(255,255,255,.15) }
+.badge-grid::before{
+  background-image:
+    linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-radius:inherit;
 }
 
-/* Animated pattern keyframes */
-@keyframes slideBg{ from{background-position:0 0} to{background-position:40px 40px} }
-@keyframes driftBg{ from{background-position:0 0} to{background-position:0 40px} }
-@keyframes shiftBg{ from{background-position:0 0} to{background-position:40px 0} }
-@keyframes pulseBg{
-  0%,100%{opacity:.12; transform:scale(1)}
-  50%{opacity:.22; transform:scale(1.04)}
+/* L3 (hard): animated effects (subtle, each unique) */
+.fx-sheen::after,
+.fx-orbit::after,
+.fx-ripple::after,
+.fx-sparkle::after{
+  content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+}
+
+/* Sheen sweep */
+.fx-sheen::after{
+  background:linear-gradient(120deg, transparent 35%, rgba(255,255,255,.28) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: sheen 2.6s ease-in-out infinite;
+}
+@keyframes sheen{
+  0%{ transform:translateX(-120%) }
+  45%{ transform:translateX(140%) }
+  100%{ transform:translateX(140%) }
+}
+
+/* Orbit dots (slow, elegant) */
+.fx-orbit::after{
+  background-image:
+    radial-gradient(rgba(255,255,255,.22) 2px, transparent 3px),
+    radial-gradient(rgba(255,255,255,.12) 1.2px, transparent 2px);
+  background-size: 12px 12px, 22px 22px;
+  animation: orbit 9s linear infinite;
+  opacity:.8;
+}
+@keyframes orbit{
+  from{ background-position: 0 0, 0 0 }
+  to{   background-position: 80px 0, -60px 0 }
+}
+
+/* Ripple (center out) */
+.fx-ripple::after{
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.24), transparent 40%);
+  animation: ripple 2.8s ease-in-out infinite;
+  opacity:.45;
+}
+@keyframes ripple{
+  0%{ transform:scale(0.8); opacity:.0 }
+  25%{ transform:scale(1.0); opacity:.45 }
+  60%{ transform:scale(1.25); opacity:.18 }
+  100%{ transform:scale(1.35); opacity:0 }
+}
+
+/* Sparkle (light noise twinkle) */
+.fx-sparkle::after{
+  background-image:
+    radial-gradient(rgba(255,255,255,.28) 1.4px, transparent 1.4px),
+    radial-gradient(rgba(255,255,255,.14) 1px, transparent 1px);
+  background-size: 10px 10px, 18px 18px;
+  animation: sparkle 4.5s ease-in-out infinite;
+  opacity:.85;
+}
+@keyframes sparkle{
+  0%,100%{ filter:brightness(1) }
+  50%{ filter:brightness(1.12) }
 }
 
 /* Flip + result */
@@ -185,24 +226,38 @@ header h2{
 #feedbackOverlay .text{ font-size:36px; font-weight:800; margin-bottom:14px }
 #feedbackOverlay .explanation{ font-size:18px; max-width:360px; margin-bottom:20px }
 #feedbackOverlay button{
-  padding:14px 26px; border:none; border-radius:var(--radius);
-  background:var(--c1); color:#fff; font-size:18px; cursor:pointer; transition:transform .2s ease;
+  padding:16px 28px; border:none; border-radius:var(--radius);
+  background:var(--c1); color:#fff; font-size:20px; cursor:pointer;
+  transition:transform .2s ease;
 }
-#feedbackOverlay button:hover{ transform:scale(1.06) }
+#feedbackOverlay button:hover{ transform:scale(1.05) }
 
-/* End screen */
-#endScreen{text-align:center}
+/* End screen — CENTER the share button */
+#endScreen{
+  width:100%;
+  max-width:460px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;        /* center contents */
+  justify-content:center;
+  gap:12px;
+  margin-top:12px;
+  text-align:center;
+}
+#summary{ font-size:18px }
 button.primary{
   background:var(--c1); color:#fff; font-weight:600;
-  padding:20px 36px; font-size:22px; border-radius:var(--radius); margin-top:22px;
+  padding:20px 36px; font-size:22px; border-radius:var(--radius);
+  margin: 0 auto; display:block; /* ensure true centering */
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
 }
 .hidden{display:none}
 
-/* Footer */
+/* Footer (stacked, compact) */
 footer{
   text-align:center;
   font-size:12px;
-  opacity:.9;
+  opacity:.95;
   padding:6px 8px 10px;
   line-height:1.35em;
 }
@@ -211,12 +266,13 @@ footer{
 <body>
   <header>
     <h1 class="logo" id="logo">ALTERA</h1>
-    <h2>Find the odd one out</h2>
+    <div class="sub">Find the odd one out</div>
     <div id="progress"></div>
   </header>
 
   <main id="game">
     <div id="options"></div>
+
     <div id="endScreen" class="hidden">
       <div id="summary"></div>
       <button class="primary hidden" id="shareBtn">Share</button>
@@ -264,9 +320,9 @@ const continueBtn=document.getElementById("continueBtn");
 const footerInfo=document.getElementById("footerInfo");
 const progressEl=document.getElementById("progress");
 
-/* --------- Patterns per level (12 total) --------- */
-const level2Classes=["pattern-stripes","pattern-dots","pattern-grid","pattern-hatch"];   // static
-const level3Classes=["pattern-slide","pattern-drift","pattern-shift","pattern-pulse"];   // animated
+/* --------- Level styles (12 total) --------- */
+const level2Classes=["badge-rim","badge-cut","badge-glow","badge-grid"]; // static, game-y
+const level3Classes=["fx-sheen","fx-orbit","fx-ripple","fx-sparkle"];     // animated, subtle
 
 /* --------- Init --------- */
 loadStreak();
@@ -304,7 +360,7 @@ function startPuzzle(i){
     const tile=document.createElement("div");
     tile.className="option lvl"+(i+1); // lvl1|lvl2|lvl3
 
-    // assign pattern per level (12 total styles across 3 levels)
+    // Assign style variants for level 2 & 3
     if(i===1){ tile.classList.add(level2Classes[idx]); }
     if(i===2){ tile.classList.add(level3Classes[idx]); }
 
@@ -348,24 +404,26 @@ continueBtn.onclick=()=>{
 };
 
 function finishGame(won){
-  optEl.innerHTML="";
-  endScreen.classList.remove("hidden");
-  summaryEl.textContent=`${results.join(" ")} (${won?"Cleared all!":"Game over"})`;
-  shareBtn.classList.remove("hidden");
-
-  const today=toYMD(new Date(),tz);
-  if(streakData.lastDate!==today){
+  // Update streak immediately, then update UI before showing share
+  const todaySeed=toYMD(new Date(),tz);
+  if(streakData.lastDate!==todaySeed){
     if(won){
       const yesterday=toYMD(new Date(Date.now()-86400000),tz);
-      if(streakData.lastDate===yesterday){ streakData.current++; } else { streakData.current=1; }
+      streakData.current = (streakData.lastDate===yesterday) ? (streakData.current+1) : 1;
       streakData.best=Math.max(streakData.best, streakData.current);
     }else{
       streakData.current=0;
     }
-    streakData.lastDate=today;
+    streakData.lastDate=todaySeed;
     saveStreak();
   }
-  updateFooter(today);
+  updateFooter(todaySeed); // <-- refresh UI immediately
+
+  // End screen
+  optEl.innerHTML="";
+  endScreen.classList.remove("hidden");
+  summaryEl.textContent=`${results.join(" ")} (${won?"Cleared all!":"Game over"})`;
+  shareBtn.classList.remove("hidden");
 }
 
 shareBtn.onclick=()=>{
