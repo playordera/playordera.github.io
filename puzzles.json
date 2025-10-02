@@ -1,123 +1,123 @@
 {
   "days": [
-    [
-      {
-        "words": ["Eye", "Nose", "Mouth", "Hand"],
-        "odd": "Hand",
-        "explanation": "Eye, nose, and mouth are parts of the face; hand is not."
-      },
-      {
-        "words": ["Mercury", "Venus", "Earth", "Pluto"],
-        "odd": "Pluto",
-        "explanation": "Mercury, Venus, and Earth are classified planets; Pluto is a dwarf planet."
-      },
-      {
-        "words": ["Palindrome", "Level", "Radar", "Paper"],
-        "odd": "Paper",
-        "explanation": "Level, radar, and palindrome are palindromes; paper is not."
-      }
-    ],
-    [
-      {
-        "words": ["Triangle", "Square", "Circle", "Cube"],
-        "odd": "Cube",
-        "explanation": "Triangle, square, and circle are 2D shapes; cube is 3D."
-      },
-      {
-        "words": ["Violin", "Guitar", "Piano", "Drums"],
-        "odd": "Drums",
-        "explanation": "Violin, guitar, and piano are string instruments; drums are percussion."
-      },
-      {
-        "words": ["Shakespeare", "Dickens", "Tolstoy", "Einstein"],
-        "odd": "Einstein",
-        "explanation": "Shakespeare, Dickens, and Tolstoy are authors; Einstein was a physicist."
-      }
-    ],
-    [
-      {
-        "words": ["January", "April", "July", "Tuesday"],
-        "odd": "Tuesday",
-        "explanation": "January, April, and July are months; Tuesday is a day of the week."
-      },
-      {
-        "words": ["Sodium", "Iron", "Oxygen", "Carbon"],
-        "odd": "Iron",
-        "explanation": "Sodium, oxygen, and carbon are in the first two rows of the periodic table; iron is much heavier."
-      },
-      {
-        "words": ["Rome", "Athens", "Cairo", "Amazon"],
-        "odd": "Amazon",
-        "explanation": "Rome, Athens, and Cairo are cities; Amazon is a river."
-      }
-    ],
-    [
-      {
-        "words": ["Red", "Green", "Blue", "Cyan"],
-        "odd": "Cyan",
-        "explanation": "Red, green, and blue are primary light colors; cyan is secondary."
-      },
-      {
-        "words": ["Chess", "Poker", "Sudoku", "Scrabble"],
-        "odd": "Poker",
-        "explanation": "Chess, sudoku, and scrabble are skill-based games; poker relies heavily on chance."
-      },
-      {
-        "words": ["Venus", "Mars", "Jupiter", "Polaris"],
-        "odd": "Polaris",
-        "explanation": "Venus, Mars, and Jupiter are planets; Polaris is a star."
-      }
-    ],
-    [
-      {
+    {
+      "easy": {
         "words": ["Dog", "Cat", "Cow", "Eagle"],
         "odd": "Eagle",
         "explanation": "Dog, cat, and cow are mammals; eagle is a bird."
       },
-      {
-        "words": ["Square", "Pentagon", "Hexagon", "Sphere"],
-        "odd": "Sphere",
-        "explanation": "Square, pentagon, and hexagon are polygons; sphere is not."
+      "medium": {
+        "words": ["Triangle", "Square", "Circle", "Cube"],
+        "odd": "Cube",
+        "explanation": "Triangle, square, and circle are 2D shapes; cube is 3D."
       },
-      {
-        "words": ["Python", "Java", "C++", "Excel"],
-        "odd": "Excel",
-        "explanation": "Python, Java, and C++ are programming languages; Excel is software."
+      "hard": {
+        "words": ["Mercury", "Venus", "Jupiter", "Polaris"],
+        "odd": "Polaris",
+        "explanation": "Mercury, Venus, and Jupiter are planets; Polaris is a star."
       }
-    ],
-    [
-      {
-        "words": ["Water", "Gold", "Diamond", "Air"],
-        "odd": "Air",
-        "explanation": "Water, gold, and diamond are tangible substances; air is a mixture of gases."
+    },
+    {
+      "easy": {
+        "words": ["Fork", "Spoon", "Knife", "Plate"],
+        "odd": "Plate",
+        "explanation": "Fork, spoon, and knife are utensils; plate is a dish."
       },
-      {
-        "words": ["Amazon", "Nile", "Yangtze", "Everest"],
-        "odd": "Everest",
-        "explanation": "Amazon, Nile, and Yangtze are rivers; Everest is a mountain."
+      "medium": {
+        "words": ["Soccer", "Basketball", "Tennis", "Monopoly"],
+        "odd": "Monopoly",
+        "explanation": "Soccer, basketball, and tennis are sports; Monopoly is a board game."
       },
-      {
-        "words": ["Tesla", "Edison", "Newton", "Picasso"],
+      "hard": {
+        "words": ["Gold", "Silver", "Copper", "Quartz"],
+        "odd": "Quartz",
+        "explanation": "Gold, silver, and copper are metals; quartz is a mineral."
+      }
+    },
+    {
+      "easy": {
+        "words": ["January", "March", "May", "Monday"],
+        "odd": "Monday",
+        "explanation": "January, March, and May are months; Monday is a day of the week."
+      },
+      "medium": {
+        "words": ["Violin", "Guitar", "Flute", "Cello"],
+        "odd": "Flute",
+        "explanation": "Violin, guitar, and cello are string instruments; flute is a woodwind."
+      },
+      "hard": {
+        "words": ["Einstein", "Newton", "Darwin", "Picasso"],
         "odd": "Picasso",
-        "explanation": "Tesla, Edison, and Newton were scientists; Picasso was a painter."
+        "explanation": "Einstein, Newton, and Darwin were scientists; Picasso was an artist."
       }
-    ],
-    [
-      {
-        "words": ["North", "East", "South", "Up"],
-        "odd": "Up",
-        "explanation": "North, east, and south are compass directions; up is not."
+    },
+    {
+      "easy": {
+        "words": ["Carrot", "Potato", "Apple", "Onion"],
+        "odd": "Apple",
+        "explanation": "Carrot, potato, and onion are vegetables; apple is a fruit."
       },
-      {
-        "words": ["Copper", "Silver", "Gold", "Sand"],
+      "medium": {
+        "words": ["Rome", "Paris", "Tokyo", "Amazon"],
+        "odd": "Amazon",
+        "explanation": "Rome, Paris, and Tokyo are cities; Amazon is a river."
+      },
+      "hard": {
+        "words": ["Hydrogen", "Oxygen", "Nitrogen", "Carbon"],
+        "odd": "Carbon",
+        "explanation": "Hydrogen, oxygen, and nitrogen are gases at room temperature; carbon is a solid."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Red", "Blue", "Yellow", "Black"],
+        "odd": "Black",
+        "explanation": "Red, blue, and yellow are primary colors; black is not."
+      },
+      "medium": {
+        "words": ["Shirt", "Pants", "Shoes", "Hat"],
+        "odd": "Shoes",
+        "explanation": "Shirt, pants, and hat are clothing worn on the body; shoes are worn on the feet."
+      },
+      "hard": {
+        "words": ["Saturn", "Mars", "Neptune", "Sirius"],
+        "odd": "Sirius",
+        "explanation": "Saturn, Mars, and Neptune are planets; Sirius is a star."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Water", "Milk", "Juice", "Bread"],
+        "odd": "Bread",
+        "explanation": "Water, milk, and juice are drinks; bread is food."
+      },
+      "medium": {
+        "words": ["Hammer", "Screwdriver", "Wrench", "Candle"],
+        "odd": "Candle",
+        "explanation": "Hammer, screwdriver, and wrench are tools; candle is not."
+      },
+      "hard": {
+        "words": ["Copper", "Iron", "Zinc", "Sand"],
         "odd": "Sand",
-        "explanation": "Copper, silver, and gold are metals; sand is not."
-      },
-      {
-        "words": ["Einstein", "Curie", "Darwin", "Mozart"],
-        "odd": "Mozart",
-        "explanation": "Einstein, Curie, and Darwin were scientists; Mozart was a composer."
+        "explanation": "Copper, iron, and zinc are metals; sand is not."
       }
-    ]
+    },
+    {
+      "easy": {
+        "words": ["Cow", "Sheep", "Goat", "Shark"],
+        "odd": "Shark",
+        "explanation": "Cow, sheep, and goat are land mammals; shark is a fish."
+      },
+      "medium": {
+        "words": ["Soccer", "Hockey", "Cricket", "Piano"],
+        "odd": "Piano",
+        "explanation": "Soccer, hockey, and cricket are sports; piano is an instrument."
+      },
+      "hard": {
+        "words": ["Oxygen", "Nitrogen", "Helium", "Mercury"],
+        "odd": "Mercury",
+        "explanation": "Oxygen, nitrogen, and helium are gases; mercury is a liquid metal."
+      }
+    }
   ]
 }
