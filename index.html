@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>Altera — Find the Odd One Out</title>
 
-<!-- Force browsers to never cache this file -->
+<!-- Never cache the HTML -->
 <meta http-equiv="Cache-Control" content="no-store" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 
-<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet" />
 <style>
 :root{
   --fg:#fff;
@@ -34,12 +34,9 @@ header{text-align:center;padding:6px 0 0}
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;
   background-size:200% auto;
-  animation:logoFade 12s linear infinite;
+  animation:logoFade 12s linear infinite; /* seamless loop */
 }
-@keyframes logoFade{
-  0%{background-position:0% 50%}
-  100%{background-position:200% 50%}
-}
+@keyframes logoFade{0%{background-position:0% 50%}100%{background-position:200% 50%}}
 .sub{margin:0;font-size:16px;opacity:.95}
 #progress{font-size:14px;margin:4px 0 8px;opacity:.95}
 
@@ -62,12 +59,12 @@ header{text-align:center;padding:6px 0 0}
 .option:nth-child(3){background:var(--c3)}
 .option:nth-child(4){background:var(--c4)}
 
-/* Level 3 glow */
+/* Level 3 only: big glow (Level 1/2 are static) */
 .lvl3{animation:pulseGlow 2s ease-in-out infinite;}
 @keyframes pulseGlow{
-  0%{box-shadow:0 0 8px rgba(255,255,255,0.6);}
-  50%{box-shadow:0 0 60px rgba(255,255,255,1);}
-  100%{box-shadow:0 0 8px rgba(255,255,255,0.6);}
+  0%{box-shadow:0 0 10px rgba(255,255,255,.55);}
+  50%{box-shadow:0 0 70px rgba(255,255,255,1);}
+  100%{box-shadow:0 0 10px rgba(255,255,255,.55);}
 }
 
 /* Feedback overlay */
@@ -82,15 +79,12 @@ header{text-align:center;padding:6px 0 0}
 #continueBtn{padding:14px 28px;border:none;border-radius:var(--radius);background:var(--wrong);color:#fff;font-size:18px;cursor:pointer}
 #feedbackOverlay.correct #continueBtn{background:var(--correct)}
 
-/* Check / Cross SVGs */
-.checkmark {
-  width: 90px; height: 90px;
-  fill: var(--correct);
-}
-.crossmark {
-  width: 90px; height: 90px;
-  fill: var(--wrong);
-}
+/* Token icons (filled background + white glyph) */
+.token{width:96px;height:96px;display:inline-block}
+.token.small{width:56px;height:56px}
+.token .bg{fill:var(--correct)}
+.token .glyph{stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.token.red .bg{fill:var(--wrong)}
 
 /* End screen */
 #endScreen{
@@ -99,9 +93,7 @@ header{text-align:center;padding:6px 0 0}
   text-align:center;padding:20px;
 }
 #summary{font-size:26px}
-.bigChecks{font-size:64px;margin-bottom:8px}
-.bigChecks span.correct{color:var(--correct);}
-.bigChecks span.wrong{color:var(--wrong);}
+#finalChecks{display:flex;gap:12px;align-items:center;justify-content:center}
 #shareBtn{
   display:none;
   background:var(--c1);color:#fff;font-size:20px;
@@ -125,7 +117,7 @@ footer{text-align:center;font-size:12px;opacity:.95;padding:6px 8px 10px;line-he
 
   <!-- End screen -->
   <div id="endScreen" aria-live="polite">
-    <div class="bigChecks" id="finalChecks"></div>
+    <div id="finalChecks"></div>
     <div id="summary"></div>
     <button id="shareBtn">Share</button>
   </div>
@@ -142,14 +134,17 @@ footer{text-align:center;font-size:12px;opacity:.95;padding:6px 8px 10px;line-he
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script>
+/* -------- Daily data & cache-busting -------- */
 const DATA_URL="puzzles.json";
 const DIFFICULTIES=["easy","medium","hard"];
 const tz="America/Edmonton";
 
+/* -------- State -------- */
 let puzzles=[], todaySet=[], currentIndex=0, results=[];
 let streakData={ current:0, best:0, lastDate:null };
 let pendingCallback=null;
 
+/* -------- DOM -------- */
 const optEl=document.getElementById("options");
 const endScreen=document.getElementById("endScreen");
 const summaryEl=document.getElementById("summary");
@@ -163,6 +158,7 @@ const continueBtn=document.getElementById("continueBtn");
 const footerInfo=document.getElementById("footerInfo");
 const progressEl=document.getElementById("progress");
 
+/* -------- Utils -------- */
 function loadStreak(){const s=localStorage.getItem("altera_streak");if(s){streakData=JSON.parse(s);}}
 function saveStreak(){localStorage.setItem("altera_streak",JSON.stringify(streakData));}
 function toYMD(date,tz){const z=new Date(date.toLocaleString('en-US',{timeZone:tz}));return `${z.getFullYear()}${String(z.getMonth()+1).padStart(2,'0')}${String(z.getDate()).padStart(2,'0')}`;}
@@ -170,9 +166,24 @@ function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>1
 function seededPick(rng,arr){return arr[Math.floor(rng()*arr.length)]}
 function shuffleArray(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
 
+/* Token svg builders (filled) */
+function tokenCheckSVG(size="96"){return `
+<svg class="token" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">
+  <circle class="bg" cx="32" cy="32" r="30"></circle>
+  <path class="glyph" d="M20 33l7 7 18-18"></path>
+</svg>`;}
+function tokenCrossSVG(size="96"){return `
+<svg class="token red" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true">
+  <circle class="bg" cx="32" cy="32" r="30"></circle>
+  <path class="glyph" d="M22 22l20 20M42 22L22 42"></path>
+</svg>`;}
+
+/* -------- Boot -------- */
 loadStreak(); loadData();
+
 async function loadData(){
   const dailySeed = toYMD(new Date(), tz);
+  // force-fresh json every day
   const res = await fetch(DATA_URL + "?v=" + dailySeed, { cache: "no-store" });
   const data = await res.json();
   puzzles = data.themes;
@@ -184,6 +195,7 @@ function setupDaily(){
   todaySet=DIFFICULTIES.map(d=>seededPick(rng,puzzles.filter(p=>p.difficulty===d)));
   updateFooter(seed);startPuzzle(0);
 }
+
 function updateFooter(seed){
   const today=new Date().toLocaleDateString('en-CA',{timeZone:tz});
   footerInfo.innerHTML=`Seed: ${seed}<br>Date: ${today}<br>🔥 Streak: ${streakData.current} (Best: ${streakData.best})`;
@@ -195,7 +207,7 @@ function startPuzzle(i){
   optEl.innerHTML="";
   shuffled.forEach((item)=>{
     const tile=document.createElement("div");
-    tile.className="option lvl"+(i+1);
+    tile.className="option lvl"+(i+1); // lvl1/lvl2 are static, lvl3 glows
     tile.innerHTML=`<span>${item}</span>`;
     tile.onclick=()=>choose(tile,item,p);
     optEl.appendChild(tile);
@@ -209,8 +221,8 @@ function choose(tile,choice,puzzle){
   if(correct){
     results.push("✔");
     showOverlay(true,puzzle.explanation,()=>{ 
-      if(currentIndex<2){startPuzzle(currentIndex+1);} 
-      else{finishGame(true);} 
+      if(currentIndex<2){ startPuzzle(currentIndex+1); }
+      else{ finishGame(true); }
     });
   }else{
     results.push("✖");
@@ -218,37 +230,42 @@ function choose(tile,choice,puzzle){
   }
 }
 
+/* Overlay */
 function showOverlay(correct,explanation,cb){
   overlay.style.display="flex";
   overlay.className = correct ? "correct" : "wrong";
-  overlaySymbol.innerHTML= correct ? 
-    `<svg class="checkmark" viewBox="0 0 52 52"><path d="M14 27l7 7 16-16"/></svg>` 
-    : `<svg class="crossmark" viewBox="0 0 52 52"><line x1="16" y1="16" x2="36" y2="36" stroke-width="6" stroke="red"/><line x1="36" y1="16" x2="16" y2="36" stroke-width="6" stroke="red"/></svg>`;
-  overlayText.textContent=correct?"Correct":"Game Over";
-  overlayExp.textContent=explanation;
+  overlaySymbol.innerHTML = correct ? tokenCheckSVG() : tokenCrossSVG();
+  overlayText.textContent = correct ? "Correct" : "Game Over";
+  overlayExp.textContent = explanation;
   pendingCallback=cb;
 }
 continueBtn.onclick=()=>{overlay.style.display="none";if(pendingCallback){pendingCallback();pendingCallback=null;}};
 
+/* End of game */
 function finishGame(won){
   optEl.innerHTML="";
   endScreen.style.display="flex";
-  finalChecks.innerHTML=results.map(r=> r==="✔" ? `<span class="correct">✔</span>` : `<span class="wrong">✖</span>`).join(" ");
-  summaryEl.textContent=`${won?"Cleared all!":"Game over"}`;
+
+  // Build big colored tokens for summary row
+  finalChecks.innerHTML = results.map(r => r==="✔" ? tokenCheckSVG("56") : tokenCrossSVG("56")).join("");
+
+  summaryEl.textContent = won ? "Cleared all!" : "Game over";
   shareBtn.style.display="inline-flex";
 
   if(won){
+    // streak increments immediately on win for this device/day
     const todaySeed=toYMD(new Date(),tz);
     if(streakData.lastDate!==todaySeed){
-      streakData.current=(streakData.current+1);
-      streakData.best=Math.max(streakData.best,streakData.current);
-      streakData.lastDate=todaySeed;saveStreak();
+      streakData.current = (streakData.current + 1);
+      streakData.best = Math.max(streakData.best, streakData.current);
+      streakData.lastDate = todaySeed; saveStreak();
     }
     updateFooter(todaySeed);
     confetti({particleCount:250,spread:100,origin:{y:.6}});
   }
 }
 
+/* Share */
 shareBtn.onclick=()=>{
   const d=new Date().toLocaleDateString('en-CA',{timeZone:tz});
   let msg="";
