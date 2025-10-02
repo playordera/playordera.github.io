@@ -56,27 +56,27 @@ header{text-align:center;padding:6px 0 0}
 .option:nth-child(3){background:var(--c3)}
 .option:nth-child(4){background:var(--c4)}
 
-/* Level 2 glow */
-.lvl2{animation:pulseGlow 3s ease-in-out infinite;}
+/* Level 2 glow (intense) */
+.lvl2{animation:pulseGlow 2s ease-in-out infinite;}
 @keyframes pulseGlow{
-  0%{box-shadow:0 0 0 rgba(255,255,255,0.1);}
-  50%{box-shadow:0 0 20px rgba(255,255,255,0.25);}
-  100%{box-shadow:0 0 0 rgba(255,255,255,0.1);}
+  0%{box-shadow:0 0 8px rgba(255,255,255,0.6);}
+  50%{box-shadow:0 0 60px rgba(255,255,255,1);}
+  100%{box-shadow:0 0 8px rgba(255,255,255,0.6);}
 }
 
-/* Level 3 shimmer + wiggle */
+/* Level 3 shimmer + wiggle (intense) */
 .lvl3{
-  animation:wiggle 6s ease-in-out infinite;
+  animation:wiggle 5s ease-in-out infinite;
 }
 .lvl3::after{
   content:"";position:absolute;inset:0;border-radius:inherit;
-  background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,.32) 50%,transparent 60%);
+  background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);
   transform:translateX(-150%);
-  animation:sheen 3s ease-in-out infinite;
+  animation:sheen 2.5s ease-in-out infinite;
   animation-delay:var(--delay,0s);
 }
 @keyframes sheen{0%{transform:translateX(-150%)}50%{transform:translateX(150%)}100%{transform:translateX(150%)}}
-@keyframes wiggle{0%,100%{transform:rotate(0deg);}25%{transform:rotate(1deg);}75%{transform:rotate(-1deg);}}
+@keyframes wiggle{0%,100%{transform:rotate(0deg);}25%{transform:rotate(3deg);}75%{transform:rotate(-3deg);}}
 
 /* Feedback overlay */
 #feedbackOverlay{
@@ -84,19 +84,23 @@ header{text-align:center;padding:6px 0 0}
   align-items:center;justify-content:center;flex-direction:column;
   background:rgba(0,0,0,.9);text-align:center;padding:20px;
 }
-#feedbackOverlay.correct .text{color:var(--correct)}
-#feedbackOverlay.wrong .text{color:var(--wrong)}
 #feedbackOverlay .symbol{margin-bottom:18px}
 #feedbackOverlay .text{font-size:34px;margin-bottom:12px}
 #feedbackOverlay .explanation{font-size:18px;max-width:360px;margin-bottom:18px;color:#fff}
 #continueBtn{padding:14px 28px;border:none;border-radius:var(--radius);background:var(--wrong);color:#fff;font-size:18px;cursor:pointer}
 #feedbackOverlay.correct #continueBtn{background:var(--correct)}
 
-/* SVG checkmark style */
+/* Filled check / X */
 .checkmark {
   width: 90px; height: 90px;
-  stroke-width: 6; stroke: var(--correct);
-  fill: none; stroke-linecap: round; stroke-linejoin: round;
+  fill: var(--correct);
+  stroke: var(--correct);
+  stroke-width: 4;
+  animation: scaleIn .4s ease forwards;
+}
+.crossmark {
+  font-size:90px;
+  color: var(--wrong);
   animation: scaleIn .4s ease forwards;
 }
 @keyframes scaleIn{from{transform:scale(0.5);opacity:0;}to{transform:scale(1);opacity:1;}}
@@ -209,19 +213,41 @@ function choose(tile,choice,puzzle){
   Array.from(optEl.children).forEach(c=>c.onclick=null);
   const correct=(choice===puzzle.answer);
   if(correct){
-    results.push("✔"); // use ✔ for consistency with SVG
-    showOverlay(true,puzzle.explanation,()=>{ if(currentIndex<2){startPuzzle(currentIndex+1);} else{finishGame(true);} });
+    results.push("✔");
+    showOverlay(true,puzzle.explanation,()=>{ 
+      confettiBurst(currentIndex); 
+      if(currentIndex<2){startPuzzle(currentIndex+1);} 
+      else{finishGame(true);} 
+    });
   }else{
     results.push("✖");
     showOverlay(false,puzzle.explanation,()=>finishGame(false));
   }
 }
 
+function confettiBurst(level){
+  let count=80;
+  if(level===0) count=50;
+  if(level===1) count=100;
+  if(level===2) count=150;
+  confetti({particleCount:count,spread:70,origin:{y:.6}});
+  // streak update immediately on final win
+  if(level===2){
+    const todaySeed=toYMD(new Date(),tz);
+    if(streakData.lastDate!==todaySeed){
+      streakData.current=(streakData.current+1);
+      streakData.best=Math.max(streakData.best,streakData.current);
+      streakData.lastDate=todaySeed;saveStreak();
+    }
+    updateFooter(todaySeed);
+  }
+}
+
 function showOverlay(correct,explanation,cb){
-  overlay.style.display="flex";overlay.className=correct?"correct":"wrong";
+  overlay.style.display="flex";
   overlaySymbol.innerHTML= correct ? 
     `<svg class="checkmark" viewBox="0 0 52 52"><path d="M14 27l7 7 16-16"/></svg>` 
-    : `<div style="font-size:80px;color:var(--wrong)">✖</div>`;
+    : `<div class="crossmark">✖</div>`;
   overlayText.textContent=correct?"Correct":"Game Over";
   overlayExp.textContent=explanation;
   pendingCallback=cb;
@@ -229,21 +255,11 @@ function showOverlay(correct,explanation,cb){
 continueBtn.onclick=()=>{overlay.style.display="none";if(pendingCallback){pendingCallback();pendingCallback=null;}};
 
 function finishGame(won){
-  const todaySeed=toYMD(new Date(),tz);
-  if(streakData.lastDate!==todaySeed){
-    if(won){streakData.current=(streakData.current+1);} else{streakData.current=0;}
-    streakData.best=Math.max(streakData.best,streakData.current);
-    streakData.lastDate=todaySeed; saveStreak();
-  }
-  updateFooter(todaySeed);
-
   optEl.innerHTML="";
   endScreen.style.display="flex";
   finalChecks.textContent=results.join(" ");
   summaryEl.textContent=`${won?"Cleared all!":"Game over"}`;
   shareBtn.style.display="inline-flex";
-
-  if(won){confetti({particleCount:150,spread:80,origin:{y:.6}});}
 }
 
 shareBtn.onclick=()=>{
