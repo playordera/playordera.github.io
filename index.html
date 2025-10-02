@@ -32,32 +32,24 @@ body {
 }
 
 /* Header */
-header { text-align:center; padding:8px; }
+header { text-align:center; padding:4px; }
 .logo {
-  font-size:50px; margin:0;
+  font-size:54px; margin:0;
   background: linear-gradient(90deg, #f59e0b, #e11d48, #0ea5e9, #4f46e5);
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradientLogo 8s ease infinite, logoPulse 5s ease-in-out infinite;
+  animation: shimmer 6s linear infinite, logoPulse 5s ease-in-out infinite;
 }
-@keyframes gradientLogo {
-  0% {background-position:0% 50%;}
-  50% {background-position:100% 50%;}
-  100% {background-position:0% 50%;}
+@keyframes shimmer {
+  0% {background-position: -200% 0;}
+  100% {background-position: 200% 0;}
 }
 @keyframes logoPulse {
   0%,100% {transform:scale(1);}
   50% {transform:scale(1.03);}
 }
-.logo.pop {
-  animation: popOnce 0.5s ease forwards, gradientLogo 8s ease infinite, logoPulse 5s ease-in-out infinite;
-}
-@keyframes popOnce {
-  0% {transform:scale(0.8); opacity:0.5;}
-  100% {transform:scale(1); opacity:1;}
-}
-header h2 { font-size:15px; margin:4px 0 8px; font-weight:400; opacity:0.85; }
+header h2 { font-size:15px; margin:2px 0 6px; font-weight:400; opacity:0.85; }
 
 /* Game area */
 #game { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 20px; margin-top:-6px; }
@@ -80,12 +72,25 @@ header h2 { font-size:15px; margin:4px 0 8px; font-weight:400; opacity:0.85; }
 .option:nth-child(3){ background:var(--c3);}
 .option:nth-child(4){ background:var(--c4);}
 
-/* Bold patterns */
-.option:nth-child(1)::after {content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.3) 0, rgba(255,255,255,0.3) 4px, transparent 4px, transparent 10px);}
-.option:nth-child(2)::after {content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.35) 2px, transparent 2px);background-size:14px 14px;}
-.option:nth-child(3)::after {content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(0deg, rgba(255,255,255,0.25) 0, rgba(255,255,255,0.25) 3px, transparent 3px, transparent 10px),
-repeating-linear-gradient(90deg, rgba(255,255,255,0.25) 0, rgba(255,255,255,0.25) 3px, transparent 3px, transparent 10px);}
-.option:nth-child(4)::after {content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(-45deg, rgba(255,255,255,0.35) 0, rgba(255,255,255,0.35) 3px, transparent 3px, transparent 10px);}
+/* Subtle patterns */
+.option:nth-child(1)::after {
+  content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 1px, transparent 1px, transparent 8px);
+}
+.option:nth-child(2)::after {
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px);
+  background-size:12px 12px;
+}
+.option:nth-child(3)::after {
+  content:"";position:absolute;inset:0;
+  background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 2px, transparent 2px, transparent 12px);
+}
+.option:nth-child(4)::after {
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+  background-size:18px 18px;
+}
 
 /* Flip animations */
 .option.flip { animation: flipTile 0.6s forwards; }
@@ -112,12 +117,12 @@ repeating-linear-gradient(90deg, rgba(255,255,255,0.25) 0, rgba(255,255,255,0.25
 button.primary { background:var(--c1); color:white; font-weight:600; padding:20px 36px; font-size:22px; border-radius:var(--radius); margin-top:24px; }
 .hidden { display:none; }
 
-/* Footer pinned */
+/* Footer stacked layout */
 footer {
-  text-align:center; font-size:14px;
-  opacity:0.9; padding:10px;
+  text-align:center; font-size:12px;
+  opacity:0.85; padding:6px;
   position:absolute; bottom:0; width:100%;
-  white-space:normal; word-break:break-word;
+  line-height:1.4em;
 }
 </style>
 </head>
@@ -195,14 +200,17 @@ function setupDaily(){
 
 function updateFooter(seed){
   const today=new Date().toLocaleDateString('en-CA',{timeZone:tz});
-  footerInfo.textContent=`Seed: ${seed} | ${today} | 🔥 Streak: ${streakData.current} (Best: ${streakData.best})`;
+  footerInfo.innerHTML=
+    `Seed: ${seed}<br>`+
+    `Date: ${today}<br>`+
+    `🔥 Streak: ${streakData.current} (Best: ${streakData.best})`;
 }
 
 function startPuzzle(i){
   currentIndex=i;
-  const p=todaySet[i];
   logo.classList.add("pop");
   setTimeout(()=>logo.classList.remove("pop"),600);
+  const p=todaySet[i];
   let shuffled=shuffleArray([...p.items]);
   optEl.innerHTML="";
   shuffled.forEach(item=>{
