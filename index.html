@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,viewport-fit=cover,user-scalable=no" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0,maximum-scale=1.0,viewport-fit=cover,user-scalable=no" />
   <title>Altera</title>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet" />
 
@@ -12,16 +13,22 @@
     --wrong:#ef4444;
     --tile1:#5b6cff; --tile2:#2ec6ff; --tile3:#ff477e; --tile4:#ffb020;
   }
+
+  * { box-sizing:border-box; margin:0; padding:0; }
+
   body {
-    margin:0; font-family:'Bungee',sans-serif; color:#fff;
-    background:#142049; display:flex; flex-direction:column;
-    height:100vh; overflow:hidden;
+    font-family:'Bungee',sans-serif;
+    color:#fff;
+    background:#142049;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
     text-align:center;
   }
 
   /* Header always visible */
-  header { 
-    padding:18px 0 12px; 
+  header {
+    padding:18px 0 12px;
     flex-shrink:0;
   }
   .logo {
@@ -31,11 +38,11 @@
   .sub { font-size:16px; margin:6px 0; color:#ffffff; opacity:0.95; }
   #progress { font-size:14px; margin:4px 0 12px; color:#ffffff; }
 
-  /* Game Area */
-  main { 
-    flex:1; 
+  /* Game Area grows */
+  main {
+    flex:1;
     display:flex; justify-content:center; align-items:center;
-    padding:0 20px; box-sizing:border-box;
+    padding:0 20px;
   }
   #options {
     width:100%; max-width:460px;
@@ -80,10 +87,11 @@
     color:#fff; cursor:pointer;
   }
 
-  /* Footer pinned */
-  footer { 
-    font-size:12px; padding:6px 0; opacity:.85; line-height:1.3; 
-    flex-shrink:0; 
+  /* Footer pinned at bottom */
+  footer {
+    font-size:12px; padding:8px 0; opacity:.85; line-height:1.3;
+    flex-shrink:0;
+    background:#0e1633;
   }
   </style>
 </head>
@@ -192,8 +200,8 @@
   function finish(win){
     options.innerHTML="";
     endScreen.classList.add("show");
-    endIcons.innerHTML=results.map(r=> r==="✓" 
-      ? `<span style="color:var(--correct)">✓</span>` 
+    endIcons.innerHTML=results.map(r=> r==="✓"
+      ? `<span style="color:var(--correct)">✓</span>`
       : `<span style="color:var(--wrong)">✗</span>`).join(" ");
     if(win){
       endText.textContent="You Win!";
