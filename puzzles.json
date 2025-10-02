@@ -1,0 +1,58 @@
+[
+  {
+    "cat": "Technology",
+    "subcat": "Evolution of Smartphones",
+    "tiles": [
+      "First BlackBerry released (1999)",
+      "Nokia 6600 becomes a bestseller (2003)",
+      "Apple unveils first iPhone (2007)",
+      "Android 1.0 is released (2008)",
+      "First Samsung Galaxy S (2010)",
+      "4G LTE networks launch widely (2011)",
+      "Apple introduces Face ID (2017)",
+      "Foldable phones reach mainstream (2019)"
+    ]
+  },
+  {
+    "cat": "World History",
+    "subcat": "Major 20th Century Events",
+    "tiles": [
+      "Titanic sinks in the North Atlantic (1912)",
+      "Women gain the right to vote in the U.S. (1920)",
+      "Start of World War II (1939)",
+      "United Nations founded (1945)",
+      "First man in space (1961)",
+      "Fall of Saigon ends Vietnam War (1975)",
+      "Fall of the Berlin Wall (1989)",
+      "World Wide Web is publicly released (1991)"
+    ]
+  },
+  {
+    "cat": "Film",
+    "subcat": "Superhero Cinema Milestones",
+    "tiles": [
+      "Superman starring Christopher Reeve (1978)",
+      "Batman directed by Tim Burton (1989)",
+      "X‑Men launches modern era (2000)",
+      "Spider‑Man shatters records (2002)",
+      "The Dark Knight elevates the genre (2008)",
+      "Marvel's The Avengers crossover (2012)",
+      "Wonder Woman becomes a global hit (2017)",
+      "Avengers: Endgame tops box office (2019)"
+    ]
+  },
+  {
+    "cat": "Science",
+    "subcat": "Space Exploration Firsts",
+    "tiles": [
+      "Sputnik 1 becomes first artificial satellite (1957)",
+      "First human in orbit (Yuri Gagarin) (1961)",
+      "First human on the Moon (1969)",
+      "Voyager 1 launches (1977)",
+      "Hubble Space Telescope launches (1990)",
+      "International Space Station begins habitation (2000)",
+      "Curiosity rover lands on Mars (2012)",
+      "First image of a black hole released (2019)"
+    ]
+  }
+]
