@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<title>ORDERA — Daily Chronology Puzzle</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="icon" href="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?> <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'><rect width='256' height='256' rx='44' fill='%230b1020'/><g fill='%23fff'><text x='128' y='156' font-family='Staatliches, system-ui, -apple-system, Segoe UI, Roboto' font-size='120' text-anchor='middle'>O</text></g></svg>">
+<style>
+:root{
+  --bg:#0b1020; --fg:#eef1f8; --ink:#0b1020; --muted:#23314f;
+  --acc:#7b61ff; --acc2:#a78bfa; --ok:#22b34b; --bad:#ff4d6d; --warn:#f6c44f;
+  --tile:#101735; --tileHi:#17224a; --tileBorder: #2a3c6a;
+  --radius:16px; --maxw:840px; --pad:14px;
+  --fontBase:18px; --fontTile:18px; --fontCat:14px; --fontLogo:64px;
+  --tileH:78px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:linear-gradient(180deg,#0b1020 0%,#0b142a 100%);
+  color:var(--fg); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,system-ui,Arial;
+  font-size:var(--fontBase); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+#app{max-width:var(--maxw); margin:0 auto; min-height:100dvh; display:flex; flex-direction:column; gap:8px; padding:12px 12px 20dvh}
+header{
+  display:flex; align-items:center; justify-content:space-between; gap:10px; padding:6px 2px 2px;
+  position:sticky; top:0; background:linear-gradient(180deg,#0b1020 70%,transparent); z-index:5;
+  -webkit-user-select:none; user-select:none;
+}
+.brand{display:flex; align-items:center; gap:10px}
+.logo{
+  width:44px; height:44px; border-radius:12px; background:#0b1020; outline:2px solid #324883;
+  display:grid; place-items:center; font-weight:800; letter-spacing:2px;
+}
+.logo span{font-size:22px}
+.titleblock{line-height:1}
+h1{margin:0; font-size:28px; letter-spacing:1px; font-weight:800}
+.subs{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+.badge{font-size:var(--fontCat); background:#dcdfff15; color:#dcdfff; padding:6px 10px; border-radius:999px; border:1px solid #a78bfa55}
+#game{
+  flex:1; display:flex; flex-direction:column; gap:10px;
+}
+#tiles{
+  display:flex; flex-direction:column; gap:10px; width:100%;
+}
+.tile{
+  display:grid; grid-template-columns:44px 1fr; align-items:center;
+  background:var(--tile); border:1px solid var(--tileBorder);
+  border-radius:var(--radius);
+  height:var(--tileH);
+  padding:0; overflow:hidden; touch-action:manipulation;
+  box-shadow: 0 4px 0 #00000030;
+}
+.tile[aria-disabled="true"]{opacity:.6}
+.handle{
+  height:100%; display:grid; place-items:center; font-size:22px; color:#dcdfff; background:var(--tileHi);
+  border-right:1px solid var(--tileBorder); -webkit-user-select:none; user-select:none;
+}
+.handle:active{background:#202d5c}
+.content{
+  padding:0 14px; font-size:var(--fontTile); line-height:1.2; -webkit-user-select:none; user-select:none;
+}
+/* Tap-to-swap */
+.tile.selected{outline:3px solid var(--acc2); transform:translateY(-1px);}
+.swapBlink{animation:blink .2s ease-in-out 2}
+@keyframes blink{50%{background:var(--tileHi)}}
+/* Drag ghost */
+.dragging{opacity:.9; transform:scale(1.02)}
+.placeholder{
+  height:var(--tileH); border:2px dashed #a78bfa99; border-radius:var(--radius);
+}
+.controls{
+  position:fixed; left:0; right:0; bottom:0; padding:14px 12px 20px; background:linear-gradient(180deg,transparent,rgba(11,16,32,.9) 30%, rgba(11,16,32,1) 70%);
+}
+.row{max-width:var(--maxw); margin:0 auto; display:flex; gap:10px; align-items:center; justify-content:space-between}
+#submitBtn{
+  flex:1; appearance:none; border:none; border-radius:14px; height:56px;
+  font-size:18px; font-weight:800; letter-spacing:.4px;
+  color:#0b1020; background:linear-gradient(180deg,#bfa9ff,#8f78ff);
+  box-shadow:0 8px 18px #00000050, inset 0 0 0 1px #ffffff80;
+}
+#submitBtn:active{transform:translateY(1px)}
+.meta{display:flex; gap:10px; align-items:center}
+.pill{background:#14224d; border:1px solid #2b3e72; color:#cfe1ff; padding:8px 10px; border-radius:999px; font-size:14px; -webkit-user-select:none; user-select:none;}
+.success{color:#0aff95}
+.fail{color:var(--bad)}
+#toast{position:fixed; left:50%; bottom:92px; transform:translateX(-50%); background:#111a3b; border:1px solid #31457f; color:#fff; padding:10px 14px; border-radius:999px; font-size:15px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(-4px)}
+footer{opacity:.7; font-size:14px; text-align:center; padding:16px 0 120px}
+/* Make text non-selectable */
+h1, .badge, .content, .pill, #submitBtn { -webkit-user-select:none; user-select:none; }
+/* Larger touch targets */
+.tile, #submitBtn { -webkit-tap-highlight-color: transparent; }
+@media (min-width:768px){
+  :root{ --fontBase:19px; --fontTile:19px; --fontLogo:72px; }
+  #app{padding-bottom:18dvh}
+}
+</style>
+</head>
+<body>
+<div id="app" aria-live="polite">
+  <header>
+    <div class="brand">
+      <div class="logo" aria-hidden="true"><span>O</span></div>
+      <div class="titleblock">
+        <h1 id="gameName" aria-label="ORDERA">ORDERA</h1>
+        <div class="subs">
+          <span id="cat" class="badge">Loading…</span>
+          <span id="subcat" class="badge"></span>
+        </div>
+      </div>
+    </div>
+    <div class="meta">
+      <span id="attempts" class="pill">Attempts: —</span>
+      <span id="statusPill" class="pill">Daily</span>
+    </div>
+  </header>
+
+  <main id="game">
+    <div id="tiles" role="list" aria-label="Reorder the events into chronological order"></div>
+  </main>
+
+  <div class="controls">
+    <div class="row">
+      <button id="submitBtn" aria-label="Submit your order">SUBMIT</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="shareBtn" class="pill" style="font-weight:700">Share</button>
+      <span id="resultText" class="pill" style="min-width:120px; text-align:center">—</span>
+    </div>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    Tip: Tap two tiles to swap, or drag using the ≡ handle.
+  </footer>
+</div>
+
+<script>
+/* ========= Utilities ========= */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+
+// Deterministic PRNG (Mulberry32)
+function mulberry32(a){ return function(){ var t = a += 0x6D2B79F5; t = Math.imul(t ^ t >>> 15, t | 1); t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; }}
+
+// Simple date seed (YYYY-MM-DD → int)
+function seedFromDate(date = new Date()){
+  const y = date.getUTCFullYear();
+  const m = (date.getUTCMonth()+1).toString().padStart(2,'0');
+  const d = date.getUTCDate().toString().padStart(2,'0');
+  const str = `${y}${m}${d}`;
+  let h = 2166136261;
+  for(let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h += (h<<1)+(h<<4)+(h<<7)+(h<<8)+(h<<24); }
+  return h>>>0;
+}
+
+// Fisher-Yates shuffle with PRNG
+function shuffle(arr, rnd=Math.random){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(rnd()* (i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),1400); }
+
+/* ========= Game State ========= */
+const MAX_ATTEMPTS = 6;
+let attempts = 0;
+let solutionOrder = [];   // indices 0..7 in correct order
+let currentOrder = [];    // indices in current visual order
+let tilesData = [];       // [{text, idx}] in solution order
+let selectedIdx = null;   // tap-to-swap selection (visual index)
+let locked = false;
+let puzzleMeta = {cat:"", subcat:""};
+
+// Query helpers
+const params = new URLSearchParams(location.search);
+const mode = params.get("mode")==="random" ? "random":"daily";
+$("#statusPill").textContent = mode==="daily" ? "Daily" : "Random";
+
+/* ========= DOM Rendering ========= */
+function renderTiles(order){
+  const wrap = $("#tiles");
+  wrap.innerHTML = "";
+  order.forEach((solIdx, visualPos)=>{
+    const item = tilesData[solIdx];
+    const li = document.createElement("div");
+    li.className = "tile";
+    li.setAttribute("role","listitem");
+    li.dataset.solIdx = String(solIdx);
+    li.dataset.pos = String(visualPos);
+
+    // handle
+    const h = document.createElement("div");
+    h.className = "handle";
+    h.setAttribute("aria-label","Drag handle");
+    h.innerHTML = "&#8801;"; // ≡
+    li.appendChild(h);
+
+    // content
+    const c = document.createElement("div");
+    c.className = "content";
+    c.textContent = item.text;
+    li.appendChild(c);
+
+    // tap-to-swap selection
+    li.addEventListener("click", (e)=>{
+      if(locked) return;
+      // Only count a tap on the main body (not the share, not the submit area)
+      if(e.target.closest(".handle")) return; // ignore handle (drag starts)
+      tapSelect(li);
+    }, {passive:true});
+
+    // drag-n-drop via handle
+    enableDrag(li, h);
+
+    wrap.appendChild(li);
+  });
+  currentOrder = order.slice();
+  updateAttempts();
+}
+
+// Tap-to-swap logic
+function tapSelect(el){
+  const tiles = $$("#tiles .tile");
+  const idx = tiles.indexOf(el);
+  if(selectedIdx===null){
+    selectedIdx = idx;
+    el.classList.add("selected");
+  }else if(selectedIdx===idx){
+    // deselect
+    tiles[selectedIdx].classList.remove("selected");
+    selectedIdx = null;
+  }else{
+    // swap
+    const a = selectedIdx; const b = idx;
+    tiles[a].classList.remove("selected");
+    selectedIdx = null;
+    // Update order
+    const newOrder = currentOrder.slice();
+    [newOrder[a], newOrder[b]] = [newOrder[b], newOrder[a]];
+    // Quick visual swap with re-render
+    renderTiles(newOrder);
+    // Blink to acknowledge
+    $$("#tiles .tile")[a]?.classList.add("swapBlink");
+    $$("#tiles .tile")[b]?.classList.add("swapBlink");
+  }
+}
+
+// Drag-and-drop (touch-friendly, handle-based)
+function enableDrag(tileEl, handleEl){
+  let dragging = false;
+  let startY = 0;
+  let startIndex = 0;
+  let placeholder = null;
+
+  const onPointerDown = (ev)=>{
+    if(locked) return;
+    if(ev.pointerType === 'touch' || ev.pointerType === 'pen' || ev.pointerType === 'mouse'){
+      // only start drag if finger is on handle
+      if(!ev.target.closest(".handle")) return;
+      dragging = true;
+      tileEl.setPointerCapture(ev.pointerId);
+      startY = ev.clientY;
+      startIndex = $$("#tiles .tile").indexOf(tileEl);
+      placeholder = document.createElement("div");
+      placeholder.className = "placeholder";
+      tileEl.after(placeholder);
+      tileEl.classList.add("dragging");
+      tileEl.style.position="absolute";
+      const rect = tileEl.getBoundingClientRect();
+      const parentRect = $("#tiles").getBoundingClientRect();
+      tileEl.style.width = rect.width+"px";
+      tileEl.style.left = (rect.left - parentRect.left)+"px";
+      tileEl.style.top = (rect.top - parentRect.top)+"px";
+      tileEl.style.zIndex = "10";
+      ev.preventDefault();
+    }
+  };
+  const onPointerMove = (ev)=>{
+    if(!dragging) return;
+    const dy = ev.clientY - startY;
+    const top = parseFloat(tileEl.style.top || "0");
+    tileEl.style.top = (top + dy)+"px";
+    startY = ev.clientY;
+
+    // find placeholder position
+    const siblings = $$("#tiles .tile").filter(n=>n!==tileEl);
+    const phRect = placeholder.getBoundingClientRect();
+    for(const sib of siblings){
+      const r = sib.getBoundingClientRect();
+      const mid = r.top + r.height/2;
+      if(phRect.top < mid){
+        $("#tiles").insertBefore(placeholder, sib);
+        break;
+      }else{
+        $("#tiles").appendChild(placeholder);
+      }
+    }
+  };
+  const onPointerUp = (ev)=>{
+    if(!dragging) return;
+    dragging = false;
+    tileEl.releasePointerCapture(ev.pointerId);
+    tileEl.classList.remove("dragging");
+    tileEl.style.position="";
+    tileEl.style.left="";
+    tileEl.style.top="";
+    tileEl.style.width="";
+    tileEl.style.zIndex="";
+    // insert tile at placeholder position
+    placeholder.replaceWith(tileEl);
+    placeholder = null;
+
+    // recompute currentOrder from DOM
+    const newOrder = $$("#tiles .tile").map(el=>parseInt(el.dataset.solIdx,10));
+    renderTiles(newOrder);
+  };
+
+  handleEl.addEventListener("pointerdown", onPointerDown, {passive:false});
+  window.addEventListener("pointermove", onPointerMove, {passive:false});
+  window.addEventListener("pointerup", onPointerUp, {passive:true});
+}
+
+// Validate
+function isCorrect(){
+  return currentOrder.every((idx, pos)=> idx === solutionOrder[pos]);
+}
+
+function updateAttempts(){
+  $("#attempts").textContent = `Attempts: ${attempts}/${MAX_ATTEMPTS}`;
+}
+
+// Lock tiles
+function lockTiles(){
+  locked = true;
+  $$("#tiles .tile").forEach(t=>t.setAttribute("aria-disabled","true"));
+}
+
+// Share
+async function doShare(text){
+  try{
+    if(navigator.share){
+      await navigator.share({
+        title:"ORDERA — Daily Chronology",
+        text,
+      });
+    }else{
+      await navigator.clipboard.writeText(text);
+      toast("Result copied!");
+    }
+  }catch(e){
+    console.log("share failed", e);
+    toast("Could not share.");
+  }
+}
+
+// Format result for share
+function buildShareText(won){
+  const date = new Date();
+  const y = date.getFullYear();
+  const m = (date.getMonth()+1).toString().padStart(2,'0');
+  const d = date.getDate().toString().padStart(2,'0');
+  const header = `ORDERA ${mode==="daily" ? `${y}-${m}-${d}` : "Random"}`;
+  const cat = `${puzzleMeta.cat} — ${puzzleMeta.subcat}`;
+  const outcome = won ? `Solved in ${attempts}/${MAX_ATTEMPTS}` : `Failed ${attempts}/${MAX_ATTEMPTS}`;
+  // tiny visualization: show indexes (1..8) in final order
+  const seq = currentOrder.map(i=>i+1).join(" ");
+  return `${header}\n${cat}\n${outcome}\nOrder: ${seq}\n`;
+}
+
+/* ========= Boot ========= */
+async function boot(){
+  $("#resultText").textContent = "—";
+  $("#cat").textContent = "Loading…";
+  $("#subcat").textContent = "";
+
+  let data;
+  try{
+    const res = await fetch("puzzles.json", {cache:"no-store"});
+    data = await res.json();
+  }catch(err){
+    console.error(err);
+    toast("Couldn't load puzzles.json");
+    $("#cat").textContent = "Load error";
+    return;
+  }
+
+  const list = Array.isArray(data) ? data : [data];
+  // pick puzzle
+  let rnd = Math.random;
+  if(mode==="daily"){
+    const seed = seedFromDate(new Date());
+    rnd = mulberry32(seed);
+  }
+  const pick = list[Math.floor(rnd()*list.length)];
+  puzzleMeta = {cat: pick.cat, subcat: pick.subcat || ""};
+  $("#cat").textContent = pick.cat || "Category";
+  $("#subcat").textContent = pick.subcat || "";
+  // Build tilesData in solution order
+  tilesData = (pick.tiles||[]).slice(0,8).map((t,i)=>({text:t, idx:i}));
+  if(tilesData.length<8){
+    // pad if fewer (dev safety)
+    while(tilesData.length<8) tilesData.push({text:`(placeholder ${tilesData.length+1})`, idx: tilesData.length});
+  }
+  solutionOrder = tilesData.map(t=>t.idx);
+  // Shuffle to starting order
+  const startOrder = shuffle(solutionOrder, rnd);
+  renderTiles(startOrder);
+
+  // Controls
+  $("#submitBtn").onclick = ()=>{
+    if(locked) return;
+    attempts++;
+    updateAttempts();
+    if(isCorrect()){
+      lockTiles();
+      $("#resultText").textContent = "✅ Correct!";
+      $("#resultText").classList.remove("fail");
+      $("#resultText").classList.add("success");
+      toast("Nice! You nailed the timeline.");
+    }else{
+      $("#resultText").textContent = "❌ Not quite";
+      $("#resultText").classList.remove("success");
+      $("#resultText").classList.add("fail");
+      if(attempts>=MAX_ATTEMPTS){
+        lockTiles();
+        toast("Out of attempts. Better luck tomorrow!");
+      }else{
+        toast(`Try again (${attempts}/${MAX_ATTEMPTS})`);
+      }
+    }
+  };
+
+  $("#shareBtn").onclick = ()=>{
+    const won = isCorrect();
+    const text = buildShareText(won);
+    doShare(text);
+  };
+}
+
+document.addEventListener("DOMContentLoaded", boot);
+</script>
+</body>
+</html>
