@@ -2,36 +2,155 @@
   "days": [
     {
       "easy": {
-        "words": ["Dog", "Cat", "Cow", "Eagle"],
-        "odd": "Eagle",
-        "explanation": "Dog, cat, and cow are mammals; eagle is a bird."
+        "words": ["Rose", "Tulip", "Daisy", "Oak"],
+        "odd": "Oak",
+        "explanation": "Rose, tulip, and daisy are flowers; oak is a tree."
       },
       "medium": {
-        "words": ["Triangle", "Square", "Circle", "Cube"],
-        "odd": "Cube",
-        "explanation": "Triangle, square, and circle are 2D shapes; cube is 3D."
+        "words": ["Piano", "Guitar", "Violin", "Trumpet"],
+        "odd": "Trumpet",
+        "explanation": "Piano, guitar, and violin are string instruments; trumpet is brass."
       },
       "hard": {
-        "words": ["Mercury", "Venus", "Jupiter", "Polaris"],
-        "odd": "Polaris",
-        "explanation": "Mercury, Venus, and Jupiter are planets; Polaris is a star."
+        "words": ["Bacon", "Close", "Munch", "Whistler"],
+        "odd": "Bacon",
+        "explanation": "All are surnames of famous painters (Francis Bacon, Chuck Close, Edvard Munch, James Whistler), but Bacon sounds like food making it seem different."
       }
     },
     {
       "easy": {
-        "words": ["Fork", "Spoon", "Knife", "Plate"],
-        "odd": "Plate",
-        "explanation": "Fork, spoon, and knife are utensils; plate is a dish."
+        "words": ["Mercury", "Venus", "Earth", "Sun"],
+        "odd": "Sun",
+        "explanation": "Mercury, Venus, and Earth are planets; the Sun is a star."
       },
       "medium": {
-        "words": ["Soccer", "Basketball", "Tennis", "Monopoly"],
-        "odd": "Monopoly",
-        "explanation": "Soccer, basketball, and tennis are sports; Monopoly is a board game."
+        "words": ["Harvard", "Yale", "Princeton", "Stanford"],
+        "odd": "Stanford",
+        "explanation": "Harvard, Yale, and Princeton are Ivy League schools; Stanford is not."
       },
       "hard": {
-        "words": ["Gold", "Silver", "Copper", "Quartz"],
-        "odd": "Quartz",
-        "explanation": "Gold, silver, and copper are metals; quartz is a mineral."
+        "words": ["Parishioner", "Catwoman", "Deus Ex Machina", "Pyromania"],
+        "odd": "Parishioner",
+        "explanation": "Parishioner starts with PARIS (a capital city); the others end with country names: catwOMAN, maCHINA, pyROMANIA."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Hammer", "Screwdriver", "Wrench", "Pencil"],
+        "odd": "Pencil",
+        "explanation": "Hammer, screwdriver, and wrench are tools; pencil is a writing instrument."
+      },
+      "medium": {
+        "words": ["Washington", "Lincoln", "Jefferson", "Hamilton"],
+        "odd": "Hamilton",
+        "explanation": "Washington, Lincoln, and Jefferson were US presidents; Hamilton was not."
+      },
+      "hard": {
+        "words": ["Steam", "Tire", "Waffle", "Pump"],
+        "odd": "Pump",
+        "explanation": "Steam iron, tire iron, and waffle iron are nouns; 'pump iron' is a verb phrase."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Carrot", "Broccoli", "Spinach", "Apple"],
+        "odd": "Apple",
+        "explanation": "Carrot, broccoli, and spinach are vegetables; apple is a fruit."
+      },
+      "medium": {
+        "words": ["Mars", "Venus", "Jupiter", "Moon"],
+        "odd": "Moon",
+        "explanation": "Mars, Venus, and Jupiter are planets; the Moon is a satellite."
+      },
+      "hard": {
+        "words": ["Petals", "Plates", "Pleats", "Pedals"],
+        "odd": "Pedals",
+        "explanation": "Petals, plates, and pleats are anagrams of each other; pedals is not."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Lion", "Tiger", "Bear", "Eagle"],
+        "odd": "Eagle",
+        "explanation": "Lion, tiger, and bear are mammals; eagle is a bird."
+      },
+      "medium": {
+        "words": ["Gold", "Silver", "Bronze", "Copper"],
+        "odd": "Bronze",
+        "explanation": "Gold, silver, and copper are chemical elements; bronze is an alloy."
+      },
+      "hard": {
+        "words": ["Spotlight", "Moonlight", "Limelight", "Gaslight"],
+        "odd": "Limelight",
+        "explanation": "Spotlight, Moonlight, and Gaslight won Best Picture Oscars; Limelight did not."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Soccer", "Basketball", "Tennis", "Chess"],
+        "odd": "Chess",
+        "explanation": "Soccer, basketball, and tennis are physical sports; chess is a board game."
+      },
+      "medium": {
+        "words": ["Hamlet", "Macbeth", "Othello", "Romeo"],
+        "odd": "Romeo",
+        "explanation": "Hamlet, Macbeth, and Othello are Shakespeare play titles; Romeo is a character name."
+      },
+      "hard": {
+        "words": ["State", "Labor", "Energy", "Justice"],
+        "odd": "Justice",
+        "explanation": "All are US Cabinet departments, but Justice is the oldest established in 1789; the others were created later."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Red", "Blue", "Green", "Square"],
+        "odd": "Square",
+        "explanation": "Red, blue, and green are colors; square is a shape."
+      },
+      "medium": {
+        "words": ["Spanish", "French", "Italian", "Latin"],
+        "odd": "Latin",
+        "explanation": "Spanish, French, and Italian are living Romance languages; Latin is dead."
+      },
+      "hard": {
+        "words": ["125", "216", "343", "392"],
+        "odd": "392",
+        "explanation": "125 (5³), 216 (6³), and 343 (7³) are perfect cubes; 392 is not."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Cup", "Plate", "Bowl", "Fork"],
+        "odd": "Fork",
+        "explanation": "Cup, plate, and bowl are containers; fork is a utensil."
+      },
+      "medium": {
+        "words": ["Rome", "Athens", "Cairo", "Amazon"],
+        "odd": "Amazon",
+        "explanation": "Rome, Athens, and Cairo are cities; Amazon is a river."
+      },
+      "hard": {
+        "words": ["Eggs", "Roses", "Jurors", "Months"],
+        "odd": "Roses",
+        "explanation": "Eggs (dozen), jurors (12), and months (12) definitionally come in 12; roses are just commonly sold by the dozen."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Dog", "Cat", "Hamster", "Shark"],
+        "odd": "Shark",
+        "explanation": "Dog, cat, and hamster are common pets; shark is not."
+      },
+      "medium": {
+        "words": ["2", "3", "5", "9"],
+        "odd": "9",
+        "explanation": "2, 3, and 5 are prime numbers; 9 is composite."
+      },
+      "hard": {
+        "words": ["Baltic", "Mediterranean", "Boardwalk", "Broadway"],
+        "odd": "Broadway",
+        "explanation": "Baltic, Mediterranean, and Boardwalk are Monopoly properties; Broadway is not on the board."
       }
     },
     {
@@ -41,72 +160,310 @@
         "explanation": "January, March, and May are months; Monday is a day of the week."
       },
       "medium": {
-        "words": ["Violin", "Guitar", "Flute", "Cello"],
-        "odd": "Flute",
-        "explanation": "Violin, guitar, and cello are string instruments; flute is a woodwind."
+        "words": ["Triangle", "Square", "Circle", "Cube"],
+        "odd": "Cube",
+        "explanation": "Triangle, square, and circle are 2D shapes; cube is 3D."
       },
       "hard": {
-        "words": ["Einstein", "Newton", "Darwin", "Picasso"],
-        "odd": "Picasso",
-        "explanation": "Einstein, Newton, and Darwin were scientists; Picasso was an artist."
+        "words": ["Column", "Post", "Pillar", "Pole"],
+        "odd": "Pole",
+        "explanation": "All mean vertical support, but 'pole' can also mean endpoint/extremity (North Pole), making the wordplay different."
       }
     },
     {
       "easy": {
-        "words": ["Carrot", "Potato", "Apple", "Onion"],
-        "odd": "Apple",
-        "explanation": "Carrot, potato, and onion are vegetables; apple is a fruit."
+        "words": ["Elephant", "Giraffe", "Zebra", "Penguin"],
+        "odd": "Penguin",
+        "explanation": "Elephant, giraffe, and zebra live in warm climates; penguin lives in cold."
       },
       "medium": {
-        "words": ["Rome", "Paris", "Tokyo", "Amazon"],
-        "odd": "Amazon",
-        "explanation": "Rome, Paris, and Tokyo are cities; Amazon is a river."
+        "words": ["Physics", "Chemistry", "Literature", "Mathematics"],
+        "odd": "Mathematics",
+        "explanation": "Physics, Chemistry, and Literature are Nobel Prize categories; Mathematics is not."
       },
       "hard": {
+        "words": ["Fantasy", "Hero", "Honey", "Vision"],
+        "odd": "Vision",
+        "explanation": "Fantasy, Hero, and Honey are Mariah Carey song titles; Vision is not."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Milk", "Water", "Juice", "Bread"],
+        "odd": "Bread",
+        "explanation": "Milk, water, and juice are liquids; bread is solid."
+      },
+      "medium": {
+        "words": ["A", "E", "I", "Y"],
+        "odd": "Y",
+        "explanation": "A, E, and I are always vowels; Y is sometimes a vowel."
+      },
+      "hard": {
+        "words": ["Genie", "Parrot", "Monkey", "Princess"],
+        "odd": "Princess",
+        "explanation": "All are characters in Disney's Aladdin, but Princess is the main love interest while the others are sidekicks."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Airplane", "Train", "Car", "Bicycle"],
+        "odd": "Bicycle",
+        "explanation": "Airplane, train, and car require fuel/power; bicycle is human-powered."
+      },
+      "medium": {
+        "words": ["Whale", "Dolphin", "Shark", "Seal"],
+        "odd": "Shark",
+        "explanation": "Whale, dolphin, and seal are mammals; shark is a fish."
+      },
+      "hard": {
+        "words": ["Melt", "Freeze", "Condense", "Dissolve"],
+        "odd": "Dissolve",
+        "explanation": "Melt, freeze, and condense are phase changes of matter; dissolve is a mixing process."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Chair", "Table", "Desk", "Spoon"],
+        "odd": "Spoon",
+        "explanation": "Chair, table, and desk are furniture; spoon is cutlery."
+      },
+      "medium": {
         "words": ["Hydrogen", "Oxygen", "Nitrogen", "Carbon"],
         "odd": "Carbon",
-        "explanation": "Hydrogen, oxygen, and nitrogen are gases at room temperature; carbon is a solid."
+        "explanation": "Hydrogen, oxygen, and nitrogen are gases at room temperature; carbon is solid."
+      },
+      "hard": {
+        "words": ["Temperature", "Angle", "Latitude", "Altitude"],
+        "odd": "Altitude",
+        "explanation": "Temperature, angle, and latitude are measured in degrees; altitude is measured in feet/meters."
       }
     },
     {
       "easy": {
-        "words": ["Red", "Blue", "Yellow", "Black"],
-        "odd": "Black",
-        "explanation": "Red, blue, and yellow are primary colors; black is not."
+        "words": ["Shirt", "Pants", "Jacket", "Shoe"],
+        "odd": "Shoe",
+        "explanation": "Shirt, pants, and jacket are worn on the upper/mid body; shoe is worn on feet."
       },
       "medium": {
-        "words": ["Shirt", "Pants", "Shoes", "Hat"],
-        "odd": "Shoes",
-        "explanation": "Shirt, pants, and hat are clothing worn on the body; shoes are worn on the feet."
+        "words": ["Finland", "Iceland", "Poland", "Ireland"],
+        "odd": "Ireland",
+        "explanation": "All end in '-land', but Ireland has different etymology (Éire + land vs. native '-land')."
       },
       "hard": {
-        "words": ["Saturn", "Mars", "Neptune", "Sirius"],
-        "odd": "Sirius",
-        "explanation": "Saturn, Mars, and Neptune are planets; Sirius is a star."
+        "words": ["Knight", "Receipt", "Island", "Salmon"],
+        "odd": "Island",
+        "explanation": "All have silent letters, but Island's silent 'S' is unique; others have K, P, and L."
       }
     },
     {
       "easy": {
-        "words": ["Water", "Milk", "Juice", "Bread"],
-        "odd": "Bread",
-        "explanation": "Water, milk, and juice are drinks; bread is food."
+        "words": ["Apple", "Banana", "Orange", "Carrot"],
+        "odd": "Carrot",
+        "explanation": "Apple, banana, and orange are fruits; carrot is a vegetable."
       },
       "medium": {
-        "words": ["Hammer", "Screwdriver", "Wrench", "Candle"],
-        "odd": "Candle",
-        "explanation": "Hammer, screwdriver, and wrench are tools; candle is not."
+        "words": ["Solid", "Liquid", "Gas", "Fire"],
+        "odd": "Fire",
+        "explanation": "Solid, liquid, and gas are states of matter; fire is a chemical reaction/phenomenon."
       },
       "hard": {
+        "words": ["Turn", "Come", "Look", "Take"],
+        "odd": "Come",
+        "explanation": "Overturn, overlook, and overtake can be compound words; overcome is always one word."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Book", "Magazine", "Newspaper", "Television"],
+        "odd": "Television",
+        "explanation": "Book, magazine, and newspaper are print media; television is broadcast."
+      },
+      "medium": {
+        "words": ["Asia", "Europe", "Africa", "Australia"],
+        "odd": "Australia",
+        "explanation": "All are continents, but Australia is also a single country."
+      },
+      "hard": {
+        "words": ["4", "9", "16", "18"],
+        "odd": "18",
+        "explanation": "4 (2²), 9 (3²), and 16 (4²) are perfect squares; 18 is not."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Guitar", "Piano", "Drums", "Microphone"],
+        "odd": "Microphone",
+        "explanation": "Guitar, piano, and drums are musical instruments; microphone is audio equipment."
+      },
+      "medium": {
         "words": ["Copper", "Iron", "Zinc", "Sand"],
         "odd": "Sand",
         "explanation": "Copper, iron, and zinc are metals; sand is not."
+      },
+      "hard": {
+        "words": ["Brave", "Flow", "Frozen", "Up"],
+        "odd": "Flow",
+        "explanation": "All are Oscar Best Animated Feature winners, but Flow won in 2025 while others are older."
       }
     },
     {
       "easy": {
-        "words": ["Cow", "Sheep", "Goat", "Shark"],
-        "odd": "Shark",
-        "explanation": "Cow, sheep, and goat are land mammals; shark is a fish."
+        "words": ["Summer", "Winter", "Spring", "January"],
+        "odd": "January",
+        "explanation": "Summer, winter, and spring are seasons; January is a month."
+      },
+      "medium": {
+        "words": ["Carbon", "Argon", "Radon", "Neon"],
+        "odd": "Carbon",
+        "explanation": "Argon, radon, and neon are noble gases ending in '-on'; carbon is not."
+      },
+      "hard": {
+        "words": ["Follow", "Mind", "Observe", "Regard"],
+        "odd": "Mind",
+        "explanation": "All mean 'to heed', but 'mind' has multiple distinct meanings (brain, care for, obey)."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Circle", "Square", "Triangle", "Red"],
+        "odd": "Red",
+        "explanation": "Circle, square, and triangle are shapes; red is a color."
+      },
+      "medium": {
+        "words": ["Butterfly", "Dragonfly", "Firefly", "Mayfly"],
+        "odd": "Butterfly",
+        "explanation": "Dragonfly, firefly, and mayfly are actually flies; butterfly is not."
+      },
+      "hard": {
+        "words": ["1", "1", "2", "4"],
+        "odd": "4",
+        "explanation": "1, 1, 2 are the first three Fibonacci numbers; 4 doesn't follow (should be 3)."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Cow", "Pig", "Chicken", "Lion"],
+        "odd": "Lion",
+        "explanation": "Cow, pig, and chicken are farm animals; lion is wild."
+      },
+      "medium": {
+        "words": ["Oxygen", "Nitrogen", "Helium", "Mercury"],
+        "odd": "Mercury",
+        "explanation": "Oxygen, nitrogen, and helium are gases; mercury is a liquid metal."
+      },
+      "hard": {
+        "words": ["Dirt", "Information", "Intelligence", "Secrets"],
+        "odd": "Dirt",
+        "explanation": "All are things gathered by spies, but 'dirt' is slang while others are formal terms."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Cat", "Dog", "Bird", "Fish"],
+        "odd": "Fish",
+        "explanation": "Cat, dog, and bird are land/air animals; fish is aquatic."
+      },
+      "medium": {
+        "words": ["Violin", "Cello", "Bass", "Flute"],
+        "odd": "Flute",
+        "explanation": "Violin, cello, and bass are string instruments; flute is woodwind."
+      },
+      "hard": {
+        "words": ["Heart", "Cell", "Body", "Nucleus"],
+        "odd": "Heart",
+        "explanation": "Cell, body, and nucleus are prison-related terms; heart is an organ."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Hot", "Cold", "Warm", "Blue"],
+        "odd": "Blue",
+        "explanation": "Hot, cold, and warm are temperatures; blue is a color."
+      },
+      "medium": {
+        "words": ["Einstein", "Newton", "Darwin", "Picasso"],
+        "odd": "Picasso",
+        "explanation": "Einstein, Newton, and Darwin were scientists; Picasso was an artist."
+      },
+      "hard": {
+        "words": ["Speak", "Say", "Voice", "Whisper"],
+        "odd": "Voice",
+        "explanation": "Speak, say, and whisper are verbs; voice is primarily a noun (though can be verbed)."
+      }
+    },
+    {
+      "easy": {
+        "words": ["North", "South", "East", "Up"],
+        "odd": "Up",
+        "explanation": "North, south, and east are cardinal directions; up is vertical."
+      },
+      "medium": {
+        "words": ["King", "Queen", "Bishop", "Checkmate"],
+        "odd": "Checkmate",
+        "explanation": "King, queen, and bishop are chess pieces; checkmate is a game state."
+      },
+      "hard": {
+        "words": ["RST", "DEF", "LMN", "QRS"],
+        "odd": "QRS",
+        "explanation": "RST, DEF, and LMN are consecutive alphabet letters; QRS skips P."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Pen", "Pencil", "Crayon", "Eraser"],
+        "odd": "Eraser",
+        "explanation": "Pen, pencil, and crayon are used to write/draw; eraser removes marks."
+      },
+      "medium": {
+        "words": ["Saturn", "Mars", "Neptune", "Sirius"],
+        "odd": "Sirius",
+        "explanation": "Saturn, Mars, and Neptune are planets; Sirius is a star."
+      },
+      "hard": {
+        "words": ["Come", "Down", "Heel", "Stay"],
+        "odd": "Down",
+        "explanation": "All are dog commands, but 'down' has multiple meanings (direction, command, feathers)."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Run", "Jump", "Skip", "Sleep"],
+        "odd": "Sleep",
+        "explanation": "Run, jump, and skip are active movements; sleep is rest."
+      },
+      "medium": {
+        "words": ["I", "V", "X", "A"],
+        "odd": "A",
+        "explanation": "I, V, and X are Roman numerals; A is not."
+      },
+      "hard": {
+        "words": ["Grimace", "Barney", "Eggplant", "Mets"],
+        "odd": "Eggplant",
+        "explanation": "Grimace (McDonald's), Barney (dinosaur), and Mets (team colors) are purple pop culture references; eggplant is just naturally purple."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Sun", "Moon", "Stars", "Cloud"],
+        "odd": "Cloud",
+        "explanation": "Sun, moon, and stars are celestial bodies; cloud is weather."
+      },
+      "medium": {
+        "words": ["Bucket", "Guest", "Wish", "Shopping"],
+        "odd": "Shopping",
+        "explanation": "Bucket list, guest list, and wish list are common phrases; shopping list is more mundane."
+      },
+      "hard": {
+        "words": ["Left", "Placed", "Put", "Set"],
+        "odd": "Left",
+        "explanation": "All mean 'situated/positioned', but 'left' also means direction or departed."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Happy", "Sad", "Angry", "Table"],
+        "odd": "Table",
+        "explanation": "Happy, sad, and angry are emotions; table is furniture."
       },
       "medium": {
         "words": ["Soccer", "Hockey", "Cricket", "Piano"],
@@ -114,9 +471,43 @@
         "explanation": "Soccer, hockey, and cricket are sports; piano is an instrument."
       },
       "hard": {
-        "words": ["Oxygen", "Nitrogen", "Helium", "Mercury"],
-        "odd": "Mercury",
-        "explanation": "Oxygen, nitrogen, and helium are gases; mercury is a liquid metal."
+        "words": ["Due", "Fair", "Just", "Right"],
+        "odd": "Right",
+        "explanation": "All mean 'deserved/proper', but 'right' has the most alternate meanings (direction, correct, entitlement)."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Red", "Blue", "Yellow", "Tuesday"],
+        "odd": "Tuesday",
+        "explanation": "Red, blue, and yellow are colors; Tuesday is a day."
+      },
+      "medium": {
+        "words": ["Gold", "Silver", "Copper", "Quartz"],
+        "odd": "Quartz",
+        "explanation": "Gold, silver, and copper are metals; quartz is a mineral."
+      },
+      "hard": {
+        "words": ["Bacon", "Egg", "Pancake", "Omelet"],
+        "odd": "Bacon",
+        "explanation": "All are breakfast foods, but Bacon is also a painter's surname (Francis Bacon)."
+      }
+    },
+    {
+      "easy": {
+        "words": ["Walk", "Run", "Jog", "Fly"],
+        "odd": "Fly",
+        "explanation": "Walk, run, and jog are ground movements; fly is aerial."
+      },
+      "medium": {
+        "words": ["Tokyo", "Paris", "London", "Africa"],
+        "odd": "Africa",
+        "explanation": "Tokyo, Paris, and London are cities; Africa is a continent."
+      },
+      "hard": {
+        "words": ["Juror", "Rose", "Month", "Egg"],
+        "odd": "Egg",
+        "explanation": "All come in dozens, but 'egg' is the only food item while others are conceptual groups."
       }
     }
   ]
