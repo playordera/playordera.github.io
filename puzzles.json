@@ -1,364 +1,123 @@
 {
-  "themes": [
-    {
-      "id": "easy_silent_letters_1",
-      "difficulty": "easy",
-      "items": [
-        "Knife",
-        "Hour",
-        "Honest",
-        "Quick"
-      ],
-      "answer": "Quick",
-      "explanation": "Knife, Hour, and Honest contain silent letters; Quick does not."
-    },
-    {
-      "id": "easy_capital_trick_2",
-      "difficulty": "easy",
-      "items": [
-        "Canberra",
-        "Ottawa",
-        "Bern",
-        "Sydney"
-      ],
-      "answer": "Sydney",
-      "explanation": "Canberra, Ottawa, and Bern are national capitals; Sydney is not."
-    },
-    {
-      "id": "easy_month_days_3",
-      "difficulty": "easy",
-      "items": [
-        "March",
-        "July",
-        "October",
-        "April"
-      ],
-      "answer": "April",
-      "explanation": "March, July, and October have 31 days; April has 30."
-    },
-    {
-      "id": "easy_planet_status_4",
-      "difficulty": "easy",
-      "items": [
-        "Mercury",
-        "Earth",
-        "Mars",
-        "Pluto"
-      ],
-      "answer": "Pluto",
-      "explanation": "Mercury, Earth, and Mars are planets; Pluto is classified as a dwarf planet."
-    },
-    {
-      "id": "easy_capital_vs_city_5",
-      "difficulty": "easy",
-      "items": [
-        "Cairo",
-        "Ankara",
-        "Madrid",
-        "Barcelona"
-      ],
-      "answer": "Barcelona",
-      "explanation": "Cairo, Ankara, and Madrid are capitals; Barcelona is not a national capital."
-    },
-    {
-      "id": "easy_palindrome_6",
-      "difficulty": "easy",
-      "items": [
-        "Evening",
-        "Level",
-        "Rotor",
-        "Civic"
-      ],
-      "answer": "Evening",
-      "explanation": "Level, Rotor, and Civic are palindromes; Evening is not."
-    },
-    {
-      "id": "easy_y_only_vowel_7",
-      "difficulty": "easy",
-      "items": [
-        "Rhythm",
-        "Crypt",
-        "Lynx",
-        "Quartz"
-      ],
-      "answer": "Quartz",
-      "explanation": "Rhythm, Crypt, and Lynx have no traditional vowels (only 'y'); Quartz contains vowels."
-    },
-    {
-      "id": "easy_even_numbers_8",
-      "difficulty": "easy",
-      "items": [
-        "Two",
-        "Four",
-        "Six",
-        "Nine"
-      ],
-      "answer": "Nine",
-      "explanation": "Two, Four, and Six are even numbers; Nine is odd."
-    },
-    {
-      "id": "easy_homophones_9",
-      "difficulty": "easy",
-      "items": [
-        "Their",
-        "There",
-        "They're",
-        "Those"
-      ],
-      "answer": "Those",
-      "explanation": "Their, There, and They're are homophones; Those is not."
-    },
-    {
-      "id": "easy_mammal_fish_10",
-      "difficulty": "easy",
-      "items": [
-        "Whale",
-        "Dolphin",
-        "Shark",
-        "Porpoise"
-      ],
-      "answer": "Shark",
-      "explanation": "Whale, Dolphin, and Porpoise are mammals; Shark is a fish."
-    },
-    {
-      "id": "med_alkali_vs_noble_1",
-      "difficulty": "medium",
-      "items": [
-        "Helium",
-        "Lithium",
-        "Sodium",
-        "Potassium"
-      ],
-      "answer": "Helium",
-      "explanation": "Lithium, Sodium, and Potassium are alkali metals; Helium is a noble gas."
-    },
-    {
-      "id": "med_capital_not_2",
-      "difficulty": "medium",
-      "items": [
-        "Wellington",
-        "Pretoria",
-        "Rabat",
-        "Casablanca"
-      ],
-      "answer": "Casablanca",
-      "explanation": "Wellington, Pretoria, and Rabat are capitals; Casablanca is not a national capital."
-    },
-    {
-      "id": "med_alloy_3",
-      "difficulty": "medium",
-      "items": [
-        "Cobalt",
-        "Nickel",
-        "Iron",
-        "Bronze"
-      ],
-      "answer": "Bronze",
-      "explanation": "Cobalt, Nickel, and Iron are elements; Bronze is an alloy."
-    },
-    {
-      "id": "med_joint_4",
-      "difficulty": "medium",
-      "items": [
-        "Shin",
-        "Elbow",
-        "Knee",
-        "Wrist"
-      ],
-      "answer": "Shin",
-      "explanation": "Elbow, Knee, and Wrist are joints; Shin is not a joint."
-    },
-    {
-      "id": "med_languages_vs_framework_5",
-      "difficulty": "medium",
-      "items": [
-        "Swift",
-        "Kotlin",
-        "Python",
-        "React"
-      ],
-      "answer": "React",
-      "explanation": "Swift, Kotlin, and Python are programming languages; React is a framework."
-    },
-    {
-      "id": "med_continent_peninsula_6",
-      "difficulty": "medium",
-      "items": [
-        "Asia",
-        "Africa",
-        "Europe",
-        "Arabia"
-      ],
-      "answer": "Arabia",
-      "explanation": "Asia, Africa, and Europe are continents; Arabia is a peninsula."
-    },
-    {
-      "id": "med_bird_of_prey_7",
-      "difficulty": "medium",
-      "items": [
-        "Hawk",
-        "Eagle",
-        "Falcon",
-        "Penguin"
-      ],
-      "answer": "Penguin",
-      "explanation": "Hawk, Eagle, and Falcon are birds of prey; Penguin is not."
-    },
-    {
-      "id": "med_polygon_parity_8",
-      "difficulty": "medium",
-      "items": [
-        "Hexagon",
-        "Octagon",
-        "Decagon",
-        "Triangle"
-      ],
-      "answer": "Triangle",
-      "explanation": "Hexagon, Octagon, and Decagon have an even number of sides; Triangle has an odd number."
-    },
-    {
-      "id": "med_metric_imperial_9",
-      "difficulty": "medium",
-      "items": [
-        "Meter",
-        "Litre",
-        "Gram",
-        "Inch"
-      ],
-      "answer": "Inch",
-      "explanation": "Meter, Litre, and Gram are metric units; Inch is imperial."
-    },
-    {
-      "id": "med_desert_10",
-      "difficulty": "medium",
-      "items": [
-        "Sahara",
-        "Gobi",
-        "Kalahari",
-        "Amazon"
-      ],
-      "answer": "Amazon",
-      "explanation": "Sahara, Gobi, and Kalahari are deserts; the Amazon is a rainforest region."
-    },
-    {
-      "id": "hard_roman_validity_1",
-      "difficulty": "hard",
-      "items": [
-        "XL",
-        "CM",
-        "IX",
-        "IC"
-      ],
-      "answer": "IC",
-      "explanation": "XL, CM, and IX are valid subtractive Roman numerals; IC is not used in standard notation."
-    },
-    {
-      "id": "hard_irregular_plural_2",
-      "difficulty": "hard",
-      "items": [
-        "Mouse",
-        "Goose",
-        "Child",
-        "House"
-      ],
-      "answer": "House",
-      "explanation": "Mouse, Goose, and Child have irregular plurals; House has a regular plural."
-    },
-    {
-      "id": "hard_element_symbols_3",
-      "difficulty": "hard",
-      "items": [
-        "Boron",
-        "Fluorine",
-        "Iodine",
-        "Neon"
-      ],
-      "answer": "Neon",
-      "explanation": "Boron, Fluorine, and Iodine have one-letter symbols (B, F, I); Neon is Ne."
-    },
-    {
-      "id": "hard_enclave_states_4",
-      "difficulty": "hard",
-      "items": [
-        "Lesotho",
-        "San Marino",
-        "Vatican",
-        "Monaco"
-      ],
-      "answer": "Monaco",
-      "explanation": "Lesotho, San Marino, and Vatican City are enclaved states; Monaco is not fully enclaved."
-    },
-    {
-      "id": "hard_double_letters_5",
-      "difficulty": "hard",
-      "items": [
-        "Batter",
-        "Butter",
-        "Letter",
-        "Later"
-      ],
-      "answer": "Later",
-      "explanation": "Batter, Butter, and Letter contain double letters; Later does not."
-    },
-    {
-      "id": "hard_precipitation_6",
-      "difficulty": "hard",
-      "items": [
-        "Sleet",
-        "Hail",
-        "Snow",
-        "Dew"
-      ],
-      "answer": "Dew",
-      "explanation": "Sleet, Hail, and Snow are precipitation; Dew forms by condensation, not precipitation."
-    },
-    {
-      "id": "hard_zodiac_constellation_7",
-      "difficulty": "hard",
-      "items": [
-        "Aries",
-        "Leo",
-        "Hydra",
-        "Taurus"
-      ],
-      "answer": "Hydra",
-      "explanation": "Aries, Leo, and Taurus are zodiac constellations; Hydra is not in the zodiac."
-    },
-    {
-      "id": "hard_dumpling_family_8",
-      "difficulty": "hard",
-      "items": [
-        "Gnocchi",
-        "Ravioli",
-        "Pierogi",
-        "Samosa"
-      ],
-      "answer": "Samosa",
-      "explanation": "Gnocchi, Ravioli, and Pierogi are dumpling/pasta forms; Samosa is a fried pastry."
-    },
-    {
-      "id": "hard_poetic_form_9",
-      "difficulty": "hard",
-      "items": [
-        "Sonnet",
-        "Haiku",
-        "Limerick",
-        "Ode"
-      ],
-      "answer": "Ode",
-      "explanation": "Sonnet, Haiku, and Limerick have fixed forms; Ode is a thematic form without a fixed structure."
-    },
-    {
-      "id": "hard_alphabetical_letters_10",
-      "difficulty": "hard",
-      "items": [
-        "Billowy",
-        "Chintz",
-        "Aegilops",
-        "Abroad"
-      ],
-      "answer": "Abroad",
-      "explanation": "Billowy, Chintz, and Aegilops have letters in alphabetical order; Abroad does not."
-    }
+  "days": [
+    [
+      {
+        "words": ["Eye", "Nose", "Mouth", "Hand"],
+        "odd": "Hand",
+        "explanation": "Eye, nose, and mouth are parts of the face; hand is not."
+      },
+      {
+        "words": ["Mercury", "Venus", "Earth", "Pluto"],
+        "odd": "Pluto",
+        "explanation": "Mercury, Venus, and Earth are classified planets; Pluto is a dwarf planet."
+      },
+      {
+        "words": ["Palindrome", "Level", "Radar", "Paper"],
+        "odd": "Paper",
+        "explanation": "Level, radar, and palindrome are palindromes; paper is not."
+      }
+    ],
+    [
+      {
+        "words": ["Triangle", "Square", "Circle", "Cube"],
+        "odd": "Cube",
+        "explanation": "Triangle, square, and circle are 2D shapes; cube is 3D."
+      },
+      {
+        "words": ["Violin", "Guitar", "Piano", "Drums"],
+        "odd": "Drums",
+        "explanation": "Violin, guitar, and piano are string instruments; drums are percussion."
+      },
+      {
+        "words": ["Shakespeare", "Dickens", "Tolstoy", "Einstein"],
+        "odd": "Einstein",
+        "explanation": "Shakespeare, Dickens, and Tolstoy are authors; Einstein was a physicist."
+      }
+    ],
+    [
+      {
+        "words": ["January", "April", "July", "Tuesday"],
+        "odd": "Tuesday",
+        "explanation": "January, April, and July are months; Tuesday is a day of the week."
+      },
+      {
+        "words": ["Sodium", "Iron", "Oxygen", "Carbon"],
+        "odd": "Iron",
+        "explanation": "Sodium, oxygen, and carbon are in the first two rows of the periodic table; iron is much heavier."
+      },
+      {
+        "words": ["Rome", "Athens", "Cairo", "Amazon"],
+        "odd": "Amazon",
+        "explanation": "Rome, Athens, and Cairo are cities; Amazon is a river."
+      }
+    ],
+    [
+      {
+        "words": ["Red", "Green", "Blue", "Cyan"],
+        "odd": "Cyan",
+        "explanation": "Red, green, and blue are primary light colors; cyan is secondary."
+      },
+      {
+        "words": ["Chess", "Poker", "Sudoku", "Scrabble"],
+        "odd": "Poker",
+        "explanation": "Chess, sudoku, and scrabble are skill-based games; poker relies heavily on chance."
+      },
+      {
+        "words": ["Venus", "Mars", "Jupiter", "Polaris"],
+        "odd": "Polaris",
+        "explanation": "Venus, Mars, and Jupiter are planets; Polaris is a star."
+      }
+    ],
+    [
+      {
+        "words": ["Dog", "Cat", "Cow", "Eagle"],
+        "odd": "Eagle",
+        "explanation": "Dog, cat, and cow are mammals; eagle is a bird."
+      },
+      {
+        "words": ["Square", "Pentagon", "Hexagon", "Sphere"],
+        "odd": "Sphere",
+        "explanation": "Square, pentagon, and hexagon are polygons; sphere is not."
+      },
+      {
+        "words": ["Python", "Java", "C++", "Excel"],
+        "odd": "Excel",
+        "explanation": "Python, Java, and C++ are programming languages; Excel is software."
+      }
+    ],
+    [
+      {
+        "words": ["Water", "Gold", "Diamond", "Air"],
+        "odd": "Air",
+        "explanation": "Water, gold, and diamond are tangible substances; air is a mixture of gases."
+      },
+      {
+        "words": ["Amazon", "Nile", "Yangtze", "Everest"],
+        "odd": "Everest",
+        "explanation": "Amazon, Nile, and Yangtze are rivers; Everest is a mountain."
+      },
+      {
+        "words": ["Tesla", "Edison", "Newton", "Picasso"],
+        "odd": "Picasso",
+        "explanation": "Tesla, Edison, and Newton were scientists; Picasso was a painter."
+      }
+    ],
+    [
+      {
+        "words": ["North", "East", "South", "Up"],
+        "odd": "Up",
+        "explanation": "North, east, and south are compass directions; up is not."
+      },
+      {
+        "words": ["Copper", "Silver", "Gold", "Sand"],
+        "odd": "Sand",
+        "explanation": "Copper, silver, and gold are metals; sand is not."
+      },
+      {
+        "words": ["Einstein", "Curie", "Darwin", "Mozart"],
+        "odd": "Mozart",
+        "explanation": "Einstein, Curie, and Darwin were scientists; Mozart was a composer."
+      }
+    ]
   ]
 }
