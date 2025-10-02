@@ -1,0 +1,106 @@
+:root{
+  --fg:#0e1320;
+  --fg-inv:#ffffff;
+  --radius:14px;
+
+  --c1:#5b6cff;
+  --c2:#2ec6ff;
+  --c3:#ff477e;
+  --c4:#ffb020;
+
+  --correct:#10b981;
+  --wrong:#ef4444;
+
+  --bg1:#142049;
+  --bg2:#20306d;
+  --bg3:#244688;
+  --bg4:#267ca6;
+}
+
+/* Layout */
+html,body{height:100%;margin:0;font-family:'Bungee',sans-serif;color:var(--fg-inv);}
+body{
+  background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3),var(--bg4));
+  background-size:220% 220%;
+  animation:bgSoft 20s ease-in-out infinite;
+  display:grid;grid-template-rows:auto 1fr auto;
+}
+@keyframes bgSoft{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* Header */
+header{text-align:center;padding:6px 8px 0}
+.logo{margin:0;font-size:50px;animation:logoPulse 6s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.sub{margin:2px 0;font-size:15px;opacity:.9}
+#progress{font-size:14px;opacity:.85;margin:2px 0 6px}
+
+/* Game grid */
+#game{display:flex;align-items:center;justify-content:center}
+#options{width:100%;max-width:460px;padding:0 18px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+
+/* Tile base */
+.option{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  color:#fff;border-radius:var(--radius);
+  aspect-ratio:1/1;font-size:22px;cursor:pointer;
+  user-select:none;overflow:hidden;
+  transition:transform .2s ease;
+}
+.option:active{transform:scale(.96)}
+.option span{display:block}
+
+/* Tile colors */
+.option:nth-child(1){background:var(--c1)}
+.option:nth-child(2){background:var(--c2)}
+.option:nth-child(3){background:var(--c3)}
+.option:nth-child(4){background:var(--c4)}
+
+/* Level 1: plain */
+.lvl1{box-shadow:0 6px 18px rgba(0,0,0,.25)}
+
+/* Level 2: badge rim */
+.lvl2{box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.lvl2::before{content:"";position:absolute;inset:0;border-radius:inherit;outline:2px solid rgba(255,255,255,.2);outline-offset:-6px}
+
+/* Level 3: shimmer line (sun catching effect) */
+.lvl3::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,.3) 50%,transparent 60%);
+  transform:translateX(-150%);
+  animation:sheen 3s ease-in-out infinite;
+  animation-delay:var(--delay,0s);
+}
+@keyframes sheen{
+  0%{transform:translateX(-150%)}
+  50%{transform:translateX(150%)}
+  100%{transform:translateX(150%)}
+}
+
+/* Overlay feedback */
+#feedbackOverlay{position:fixed;inset:0;display:none;
+  align-items:center;justify-content:center;flex-direction:column;
+  background:rgba(0,0,0,.92);z-index:100;text-align:center;padding:20px}
+#feedbackOverlay .symbol{font-size:100px;font-weight:900;margin-bottom:18px}
+#feedbackOverlay .text{font-size:36px;font-weight:800;margin-bottom:14px}
+#feedbackOverlay .explanation{font-size:18px;max-width:360px;margin-bottom:20px}
+#feedbackOverlay button{padding:16px 28px;border:none;border-radius:var(--radius);
+  background:var(--c1);color:#fff;font-size:20px;cursor:pointer}
+#feedbackOverlay.correct .symbol{color:var(--correct)}
+#feedbackOverlay.wrong .symbol{color:var(--wrong)}
+
+/* End screen */
+#endScreen{width:100%;max-width:460px;display:flex;flex-direction:column;
+  align-items:center;gap:12px;text-align:center}
+#summary{font-size:18px}
+button.primary{background:var(--c1);color:#fff;font-weight:600;
+  padding:20px 36px;font-size:22px;border-radius:var(--radius);
+  margin:0 auto;display:block}
+.hidden{display:none}
+
+/* Footer */
+footer{text-align:center;font-size:12px;opacity:.95;padding:6px 8px 10px;line-height:1.35em}
