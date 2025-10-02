@@ -1,0 +1,268 @@
+[
+  {
+    "category": "Technology",
+    "title": "Evolution of Smartphones",
+    "tiles": [
+      {
+        "text": "First BlackBerry released",
+        "year": 1999
+      },
+      {
+        "text": "Apple unveils first iPhone",
+        "year": 2007
+      },
+      {
+        "text": "Android operating system launches",
+        "year": 2008
+      },
+      {
+        "text": "First Samsung Galaxy phone",
+        "year": 2009
+      },
+      {
+        "text": "Siri introduced on iPhone 4S",
+        "year": 2011
+      },
+      {
+        "text": "Google releases Pixel phone",
+        "year": 2016
+      },
+      {
+        "text": "Foldable phones hit market",
+        "year": 2019
+      },
+      {
+        "text": "5G smartphones become mainstream",
+        "year": 2020
+      }
+    ]
+  },
+  {
+    "category": "Sports",
+    "title": "World Cup Finals",
+    "tiles": [
+      {
+        "text": "Brazil wins in Mexico",
+        "year": 1970
+      },
+      {
+        "text": "Argentina wins in Mexico",
+        "year": 1986
+      },
+      {
+        "text": "France wins in Paris",
+        "year": 1998
+      },
+      {
+        "text": "Italy wins in Berlin",
+        "year": 2006
+      },
+      {
+        "text": "Spain wins in Johannesburg",
+        "year": 2010
+      },
+      {
+        "text": "Germany wins in Rio",
+        "year": 2014
+      },
+      {
+        "text": "France wins in Moscow",
+        "year": 2018
+      },
+      {
+        "text": "Argentina wins in Doha",
+        "year": 2022
+      }
+    ]
+  },
+  {
+    "category": "History",
+    "title": "Space Exploration",
+    "tiles": [
+      {
+        "text": "Sputnik 1 launched",
+        "year": 1957
+      },
+      {
+        "text": "First human in space (Yuri Gagarin)",
+        "year": 1961
+      },
+      {
+        "text": "First moon landing (Apollo 11)",
+        "year": 1969
+      },
+      {
+        "text": "Voyager 1 launched",
+        "year": 1977
+      },
+      {
+        "text": "Hubble Space Telescope launched",
+        "year": 1990
+      },
+      {
+        "text": "Mars Pathfinder lands",
+        "year": 1997
+      },
+      {
+        "text": "Curiosity rover lands on Mars",
+        "year": 2012
+      },
+      {
+        "text": "James Webb Telescope launched",
+        "year": 2021
+      }
+    ]
+  },
+  {
+    "category": "Pop Culture",
+    "title": "Blockbuster Movies",
+    "tiles": [
+      {
+        "text": "Jaws premieres",
+        "year": 1975
+      },
+      {
+        "text": "Star Wars: A New Hope",
+        "year": 1977
+      },
+      {
+        "text": "Jurassic Park",
+        "year": 1993
+      },
+      {
+        "text": "Titanic",
+        "year": 1997
+      },
+      {
+        "text": "The Dark Knight",
+        "year": 2008
+      },
+      {
+        "text": "Avatar",
+        "year": 2009
+      },
+      {
+        "text": "Avengers: Endgame",
+        "year": 2019
+      },
+      {
+        "text": "Top Gun: Maverick",
+        "year": 2022
+      }
+    ]
+  },
+  {
+    "category": "Music",
+    "title": "Iconic Albums",
+    "tiles": [
+      {
+        "text": "The Beatles release Sgt. Pepper",
+        "year": 1967
+      },
+      {
+        "text": "Pink Floyd releases The Dark Side of the Moon",
+        "year": 1973
+      },
+      {
+        "text": "Michael Jackson releases Thriller",
+        "year": 1982
+      },
+      {
+        "text": "Nirvana releases Nevermind",
+        "year": 1991
+      },
+      {
+        "text": "Radiohead releases OK Computer",
+        "year": 1997
+      },
+      {
+        "text": "Eminem releases The Marshall Mathers LP",
+        "year": 2000
+      },
+      {
+        "text": "Beyonc\u00e9 releases Lemonade",
+        "year": 2016
+      },
+      {
+        "text": "Taylor Swift releases Midnights",
+        "year": 2022
+      }
+    ]
+  },
+  {
+    "category": "Science",
+    "title": "Medical Breakthroughs",
+    "tiles": [
+      {
+        "text": "Discovery of penicillin",
+        "year": 1928
+      },
+      {
+        "text": "First kidney transplant",
+        "year": 1954
+      },
+      {
+        "text": "First heart transplant",
+        "year": 1967
+      },
+      {
+        "text": "MRI technology introduced",
+        "year": 1977
+      },
+      {
+        "text": "Human Genome Project launched",
+        "year": 1990
+      },
+      {
+        "text": "First successful stem cell therapy",
+        "year": 2006
+      },
+      {
+        "text": "First CRISPR gene-editing trial",
+        "year": 2016
+      },
+      {
+        "text": "COVID-19 vaccines rolled out",
+        "year": 2020
+      }
+    ]
+  },
+  {
+    "category": "Literature",
+    "title": "Modern Classics",
+    "tiles": [
+      {
+        "text": "George Orwell publishes 1984",
+        "year": 1949
+      },
+      {
+        "text": "J.R.R. Tolkien publishes The Lord of the Rings",
+        "year": 1954
+      },
+      {
+        "text": "Harper Lee publishes To Kill a Mockingbird",
+        "year": 1960
+      },
+      {
+        "text": "Gabriel Garc\u00eda M\u00e1rquez publishes One Hundred Years of Solitude",
+        "year": 1967
+      },
+      {
+        "text": "Stephen King publishes The Shining",
+        "year": 1977
+      },
+      {
+        "text": "Toni Morrison wins Nobel Prize",
+        "year": 1993
+      },
+      {
+        "text": "J.K. Rowling publishes Harry Potter and the Sorcerer\u2019s Stone",
+        "year": 1997
+      },
+      {
+        "text": "Suzanne Collins publishes The Hunger Games",
+        "year": 2008
+      }
+    ]
+  }
+]
