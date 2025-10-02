@@ -6,7 +6,6 @@
   <title>Altera</title>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet" />
 
-  <!-- ✅ CSS goes here -->
   <style>
   :root {
     --correct:#10b981;
@@ -18,13 +17,18 @@
     background:#142049; display:flex; flex-direction:column;
     min-height:100vh; text-align:center; overflow:hidden;
   }
-  header { padding:12px 0 0; }
-  .logo { font-size:42px; font-weight:900; color:#5b6cff; }
-  .sub { font-size:14px; opacity:.9; margin:0; }
-  #progress { font-size:14px; margin:6px 0 10px; opacity:.9; }
 
+  /* Header */
+  header { padding:16px 0 6px; }
+  .logo {
+    font-size:46px; font-weight:900; color:#ff477e;
+    text-shadow:0 0 6px rgba(0,0,0,0.4);
+  }
+  .sub { font-size:16px; margin:4px 0; color:#ffffff; opacity:0.9; }
+  #progress { font-size:14px; margin:4px 0 12px; color:#ffffff; }
+
+  /* Game Area */
   main { flex:1; display:flex; align-items:center; justify-content:center; }
-
   #options {
     width:100%; max-width:460px;
     display:grid; grid-template-columns:repeat(2,1fr); gap:14px;
@@ -44,6 +48,7 @@
   .correct { background:var(--correct)!important; }
   .wrong { background:var(--wrong)!important; }
 
+  /* Overlay & End screen */
   #overlay, #endScreen {
     position:fixed; inset:0; display:none;
     flex-direction:column; align-items:center; justify-content:center;
@@ -58,13 +63,16 @@
     border:none; border-radius:8px; background:var(--correct);
     color:#fff; font-size:16px; cursor:pointer;
   }
+
   #endIcons { font-size:60px; margin-bottom:12px; }
+  #endText { margin:0; font-size:28px; }
   #shareBtn {
-    display:none; margin-top:14px;
+    display:none; margin-top:16px;
     padding:12px 24px; font-size:18px;
     border:none; border-radius:8px; background:#5b6cff;
     color:#fff; cursor:pointer;
   }
+
   footer { font-size:12px; padding:8px 0; opacity:.85; line-height:1.3; }
   </style>
 </head>
@@ -74,6 +82,7 @@
     <div class="sub">FIND THE ODD ONE OUT</div>
     <div id="progress"></div>
   </header>
+
   <main>
     <div id="options"></div>
   </main>
@@ -94,7 +103,6 @@
 
   <footer id="footerInfo"></footer>
 
-  <!-- ✅ JS goes here -->
   <script>
   const DATA_URL="puzzles.json";
   let puzzles, todaySet;
@@ -103,16 +111,16 @@
   let streak={current:0,best:0,lastDate:null};
 
   const options=document.getElementById("options"),
-  progressEl=document.getElementById("progress"),
-  overlay=document.getElementById("overlay"),
-  resultEl=document.getElementById("result"),
-  explanationEl=document.getElementById("explanation"),
-  continueBtn=document.getElementById("continueBtn"),
-  endScreen=document.getElementById("endScreen"),
-  endIcons=document.getElementById("endIcons"),
-  endText=document.getElementById("endText"),
-  shareBtn=document.getElementById("shareBtn"),
-  footerInfo=document.getElementById("footerInfo");
+        progressEl=document.getElementById("progress"),
+        overlay=document.getElementById("overlay"),
+        resultEl=document.getElementById("result"),
+        explanationEl=document.getElementById("explanation"),
+        continueBtn=document.getElementById("continueBtn"),
+        endScreen=document.getElementById("endScreen"),
+        endIcons=document.getElementById("endIcons"),
+        endText=document.getElementById("endText"),
+        shareBtn=document.getElementById("shareBtn"),
+        footerInfo=document.getElementById("footerInfo");
 
   function ymd(){const d=new Date();return d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0");}
   function ymdDash(){const d=new Date();return d.toISOString().split("T")[0];}
@@ -133,7 +141,7 @@
     options.innerHTML="";
     const pool= level===0 ? todaySet.easy : (level===1?todaySet.medium:todaySet.hard);
     const items=shuffle([...pool.words]);
-    items.forEach((w,i)=>{
+    items.forEach((w)=>{
       const t=document.createElement("div");
       t.className="option";
       t.textContent=w;
@@ -141,6 +149,7 @@
       options.appendChild(t);
     });
   }
+
   function checkChoice(choice,pool,tile){
     [...options.children].forEach(c=>c.onclick=null);
     if(choice===pool.odd){
@@ -153,6 +162,7 @@
       showFeedback(false,pool.explanation);
     }
   }
+
   function showFeedback(ok,ex){
     resultEl.textContent=ok?"✓ Correct":"✗ Wrong";
     resultEl.style.color=ok?"var(--correct)":"var(--wrong)";
@@ -160,12 +170,14 @@
     continueBtn.style.background=ok?"var(--correct)":"var(--wrong)";
     overlay.classList.add("show");
   }
+
   continueBtn.onclick=()=>{
     overlay.classList.remove("show");
     if(results[results.length-1]==="✗"){finish(false);}
     else if(++level<3){renderLevel();}
     else{finish(true);}
   };
+
   function finish(win){
     options.innerHTML="";
     endScreen.classList.add("show");
@@ -174,32 +186,37 @@
       : `<span style="color:var(--wrong)">✗</span>`).join(" ");
     if(win){
       endText.textContent="You Win!";
-      if(streak.lastDate!==ymd()){streak.current++;streak.best=Math.max(streak.best,streak.current);streak.lastDate=ymd();}
+      if(streak.lastDate!==ymd()){
+        streak.current++;
+        streak.best=Math.max(streak.best,streak.current);
+        streak.lastDate=ymd();
+      }
     }else{
       endText.textContent="Game Over";
-      streak.current=0;streak.lastDate=ymd();
+      streak.current=0; streak.lastDate=ymd();
     }
     saveStreak();updateFooter();
     shareBtn.style.display="inline-block";
   }
+
   shareBtn.onclick=()=>{
     let msg="";
-    if(results[0]==="✗")msg="I flopped hard on Altera (0/3)";
-    else if(results[1]==="✗")msg="I only got 1 right on Altera (1/3)";
-    else if(results[2]==="✗")msg="So close! 2/3 on Altera";
+    if(results[0]==="✗") msg="I flopped hard on Altera (0/3)";
+    else if(results[1]==="✗") msg="I only got 1 right on Altera (1/3)";
+    else if(results[2]==="✗") msg="So close! 2/3 on Altera";
     else msg="Flawless victory! 3/3 on Altera";
     msg+=`\n🔥 Streak: ${streak.current}`;
     if(navigator.share){navigator.share({title:"Altera",text:msg});}
     else{navigator.clipboard.writeText(msg).then(()=>alert("Copied!"));}
   };
+
   function updateFooter(){
     footerInfo.innerHTML=`Seed: ${ymd()}<br>Date: ${ymdDash()}<br>🔥 Streak: ${streak.current} (Best: ${streak.best})`;
   }
 
-  /* Init */
   (async function(){
-    loadStreak();updateFooter();
-    await loadPuzzles();renderLevel();
+    loadStreak(); updateFooter();
+    await loadPuzzles(); renderLevel();
   })();
   </script>
 </body>
