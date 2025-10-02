@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Altera — Find the Odd One Out</title>
+
+<!-- Force browsers to never cache this file -->
+<meta http-equiv="Cache-Control" content="no-store" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
 <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -27,12 +33,12 @@ header{text-align:center;padding:6px 0 0}
   background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4));
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;
-  background-size:400% auto;
+  background-size:200% auto;
   animation:logoFade 12s linear infinite;
 }
 @keyframes logoFade{
   0%{background-position:0% 50%}
-  100%{background-position:100% 50%}
+  100%{background-position:200% 50%}
 }
 .sub{margin:0;font-size:16px;opacity:.95}
 #progress{font-size:14px;margin:4px 0 8px;opacity:.95}
@@ -56,7 +62,7 @@ header{text-align:center;padding:6px 0 0}
 .option:nth-child(3){background:var(--c3)}
 .option:nth-child(4){background:var(--c4)}
 
-/* Level 3 glow (intense) */
+/* Level 3 glow */
 .lvl3{animation:pulseGlow 2s ease-in-out infinite;}
 @keyframes pulseGlow{
   0%{box-shadow:0 0 8px rgba(255,255,255,0.6);}
@@ -76,7 +82,7 @@ header{text-align:center;padding:6px 0 0}
 #continueBtn{padding:14px 28px;border:none;border-radius:var(--radius);background:var(--wrong);color:#fff;font-size:18px;cursor:pointer}
 #feedbackOverlay.correct #continueBtn{background:var(--correct)}
 
-/* SVG check / cross */
+/* Check / Cross SVGs */
 .checkmark {
   width: 90px; height: 90px;
   fill: var(--correct);
@@ -165,7 +171,13 @@ function seededPick(rng,arr){return arr[Math.floor(rng()*arr.length)]}
 function shuffleArray(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
 
 loadStreak(); loadData();
-async function loadData(){const res=await fetch(DATA_URL);const data=await res.json();puzzles=data.themes;setupDaily();}
+async function loadData(){
+  const dailySeed = toYMD(new Date(), tz);
+  const res = await fetch(DATA_URL + "?v=" + dailySeed, { cache: "no-store" });
+  const data = await res.json();
+  puzzles = data.themes;
+  setupDaily();
+}
 
 function setupDaily(){
   const seed=toYMD(new Date(),tz);const rng=mulberry32(Number(seed));
@@ -233,7 +245,7 @@ function finishGame(won){
       streakData.lastDate=todaySeed;saveStreak();
     }
     updateFooter(todaySeed);
-    confetti({particleCount:200,spread:90,origin:{y:.6}});
+    confetti({particleCount:250,spread:100,origin:{y:.6}});
   }
 }
 
