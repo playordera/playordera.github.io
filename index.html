@@ -12,6 +12,7 @@
     --correct:#10b981;
     --wrong:#ef4444;
     --tile1:#5b6cff; --tile2:#2ec6ff; --tile3:#ff477e; --tile4:#ffb020;
+    --logo1:#2ec6ff; --logo2:#ffb020;
   }
 
   * { box-sizing:border-box; margin:0; padding:0; }
@@ -22,37 +23,40 @@
     background:#142049;
     display:flex;
     flex-direction:column;
-    height:100vh; /* lock viewport */
+    height:100vh; /* full viewport */
     text-align:center;
-    overflow:hidden; /* prevent scroll */
   }
 
   /* Header */
   header {
-    padding:10px 0 6px; /* tighter */
+    padding:8px 0 4px;
     flex-shrink:0;
   }
   .logo {
-    font-size:40px; font-weight:900; color:#ff477e;
+    font-size:38px; font-weight:900;
+    background:linear-gradient(90deg,var(--logo1),var(--logo2));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
     text-shadow:0 0 6px rgba(0,0,0,0.4);
   }
-  .sub { font-size:14px; margin:4px 0; opacity:0.95; }
-  #progress { font-size:12px; margin:2px 0 6px; }
+  .sub { font-size:14px; margin:2px 0; opacity:0.95; }
+  #progress { font-size:12px; margin:2px 0 4px; }
 
-  /* Main content */
+  /* Main */
   main {
     flex:1;
     display:flex; justify-content:center; align-items:center;
-    padding:0 10px; /* smaller padding */
+    padding:0 10px;
   }
   #options {
-    width:100%; max-width:420px;
-    display:grid; grid-template-columns:repeat(2,1fr); gap:10px;
+    width:100%; max-width:400px;
+    display:grid; grid-template-columns:repeat(2,1fr);
+    gap:8px;
   }
   .option {
     display:flex; align-items:center; justify-content:center;
     aspect-ratio:1/1; border-radius:10px;
-    font-size:18px; cursor:pointer; user-select:none;
+    font-size:16px; cursor:pointer; user-select:none;
     color:#fff; font-weight:bold; transition:.2s transform;
   }
   .option:active { transform:scale(.95); }
@@ -70,16 +74,16 @@
     background:rgba(0,0,0,.9); z-index:50; padding:20px;
   }
   #overlay.show, #endScreen.show { display:flex; }
-  #overlay h1 { margin:0 0 8px; font-size:28px; }
-  #overlay p { font-size:14px; max-width:320px; }
+  #overlay h1 { margin:0 0 6px; font-size:26px; }
+  #overlay p { font-size:14px; max-width:300px; }
 
   #continueBtn {
-    margin-top:12px; padding:10px 20px;
+    margin-top:10px; padding:10px 20px;
     border:none; border-radius:8px; background:var(--correct);
     color:#fff; font-size:14px; cursor:pointer;
   }
 
-  #endIcons { font-size:48px; margin-bottom:10px; }
+  #endIcons { font-size:44px; margin-bottom:8px; }
   #endText { margin:0; font-size:22px; }
   #shareBtn {
     display:none; margin-top:12px;
@@ -93,6 +97,19 @@
     font-size:11px; padding:4px 0; opacity:.85; line-height:1.2;
     flex-shrink:0;
     background:#0e1633;
+  }
+
+  /* Responsive scaling for small screens */
+  @media (max-height:700px) {
+    .logo { font-size:32px; }
+    .sub { font-size:12px; }
+    #options { max-width:340px; gap:6px; }
+    .option { font-size:14px; }
+  }
+  @media (max-height:600px) {
+    .logo { font-size:28px; }
+    #options { max-width:300px; gap:5px; }
+    .option { font-size:12px; }
   }
   </style>
 </head>
@@ -128,7 +145,6 @@
   let puzzles, todaySet;
   let level=0;
   let results=[];
-  let streak={current:0,best:0,lastDate:null};
 
   const options=document.getElementById("options"),
         progressEl=document.getElementById("progress"),
@@ -145,8 +161,6 @@
   function ymd(){const d=new Date();return d.getFullYear()+String(d.getMonth()+1).padStart(2,"0")+String(d.getDate()).padStart(2,"0");}
   function ymdDash(){const d=new Date();return d.toISOString().split("T")[0];}
   function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-  function saveStreak(){localStorage.setItem("altera_streak",JSON.stringify(streak));}
-  function loadStreak(){try{const s=localStorage.getItem("altera_streak");if(s)streak=JSON.parse(s);}catch{}}
 
   async function loadPuzzles(){
     const res=await fetch(DATA_URL+"?v="+ymd(),{cache:"no-store"});
@@ -204,38 +218,37 @@
     endIcons.innerHTML=results.map(r=> r==="✓"
       ? `<span style="color:var(--correct)">✓</span>`
       : `<span style="color:var(--wrong)">✗</span>`).join(" ");
-    if(win){
-      endText.textContent="You Win!";
-      if(streak.lastDate!==ymd()){
-        streak.current++;
-        streak.best=Math.max(streak.best,streak.current);
-        streak.lastDate=ymd();
-      }
-    }else{
-      endText.textContent="Game Over";
-      streak.current=0; streak.lastDate=ymd();
-    }
-    saveStreak();updateFooter();
+    endText.textContent=win?"You Win!":"Game Over";
+    updateFooter();
     shareBtn.style.display="inline-block";
   }
 
   shareBtn.onclick=()=>{
-    let msg="";
-    if(results[0]==="✗") msg="I flopped hard on Altera (0/3)";
-    else if(results[1]==="✗") msg="I only got 1 right on Altera (1/3)";
-    else if(results[2]==="✗") msg="So close! 2/3 on Altera";
-    else msg="Flawless victory! 3/3 on Altera";
-    msg+=`\n🔥 Streak: ${streak.current}`;
+    let score = results.filter(r=>r==="✓").length;
+    let seed = ymd();
+    let date = ymdDash();
+    let msg = `Altera — Seed ${seed} (${date})\nScore: ${score}/3\n`;
+
+    if(score===0){
+      msg += "Pathetic. How did you even manage zero?";
+    } else if(score===1){
+      msg += "1/3… embarrassing. Were you even trying?";
+    } else if(score===2){
+      msg += "So close! Not bad, but still not perfect.";
+    } else if(score===3){
+      msg += "Flawless victory! You're a genius.";
+    }
+
     if(navigator.share){navigator.share({title:"Altera",text:msg});}
     else{navigator.clipboard.writeText(msg).then(()=>alert("Copied!"));}
   };
 
   function updateFooter(){
-    footerInfo.innerHTML=`Seed: ${ymd()}<br>Date: ${ymdDash()}<br>🔥 Streak: ${streak.current} (Best: ${streak.best})`;
+    footerInfo.innerHTML=`Seed: ${ymd()}<br>Date: ${ymdDash()}`;
   }
 
   (async function(){
-    loadStreak(); updateFooter();
+    updateFooter();
     await loadPuzzles(); renderLevel();
   })();
   </script>
