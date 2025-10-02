@@ -1,268 +1,100 @@
 [
   {
-    "category": "Technology",
-    "title": "Evolution of Smartphones",
+    "cat": "Technology",
+    "subcat": "Evolution of Smartphones",
     "tiles": [
-      {
-        "text": "First BlackBerry released",
-        "year": 1999
-      },
-      {
-        "text": "Apple unveils first iPhone",
-        "year": 2007
-      },
-      {
-        "text": "Android operating system launches",
-        "year": 2008
-      },
-      {
-        "text": "First Samsung Galaxy phone",
-        "year": 2009
-      },
-      {
-        "text": "Siri introduced on iPhone 4S",
-        "year": 2011
-      },
-      {
-        "text": "Google releases Pixel phone",
-        "year": 2016
-      },
-      {
-        "text": "Foldable phones hit market",
-        "year": 2019
-      },
-      {
-        "text": "5G smartphones become mainstream",
-        "year": 2020
-      }
+      "First BlackBerry released (1999)",
+      "Apple unveils first iPhone (2007)",
+      "Android OS launches (2008)",
+      "First Samsung Galaxy (2009)",
+      "Siri on iPhone 4S (2011)",
+      "Google Pixel released (2016)",
+      "Foldable phones arrive (2019)",
+      "5G mainstream (2020)"
     ]
   },
   {
-    "category": "Sports",
-    "title": "World Cup Finals",
+    "cat": "Sports",
+    "subcat": "World Cup Finals",
     "tiles": [
-      {
-        "text": "Brazil wins in Mexico",
-        "year": 1970
-      },
-      {
-        "text": "Argentina wins in Mexico",
-        "year": 1986
-      },
-      {
-        "text": "France wins in Paris",
-        "year": 1998
-      },
-      {
-        "text": "Italy wins in Berlin",
-        "year": 2006
-      },
-      {
-        "text": "Spain wins in Johannesburg",
-        "year": 2010
-      },
-      {
-        "text": "Germany wins in Rio",
-        "year": 2014
-      },
-      {
-        "text": "France wins in Moscow",
-        "year": 2018
-      },
-      {
-        "text": "Argentina wins in Doha",
-        "year": 2022
-      }
+      "Brazil wins in Mexico (1970)",
+      "Argentina wins in Mexico (1986)",
+      "France wins in Paris (1998)",
+      "Italy wins in Berlin (2006)",
+      "Spain wins in Johannesburg (2010)",
+      "Germany wins in Rio (2014)",
+      "France wins in Moscow (2018)",
+      "Argentina wins in Doha (2022)"
     ]
   },
   {
-    "category": "History",
-    "title": "Space Exploration",
+    "cat": "History",
+    "subcat": "Space Exploration",
     "tiles": [
-      {
-        "text": "Sputnik 1 launched",
-        "year": 1957
-      },
-      {
-        "text": "First human in space (Yuri Gagarin)",
-        "year": 1961
-      },
-      {
-        "text": "First moon landing (Apollo 11)",
-        "year": 1969
-      },
-      {
-        "text": "Voyager 1 launched",
-        "year": 1977
-      },
-      {
-        "text": "Hubble Space Telescope launched",
-        "year": 1990
-      },
-      {
-        "text": "Mars Pathfinder lands",
-        "year": 1997
-      },
-      {
-        "text": "Curiosity rover lands on Mars",
-        "year": 2012
-      },
-      {
-        "text": "James Webb Telescope launched",
-        "year": 2021
-      }
+      "Sputnik 1 launched (1957)",
+      "First human in space: Yuri Gagarin (1961)",
+      "First moon landing Apollo 11 (1969)",
+      "Voyager 1 launched (1977)",
+      "Hubble Telescope launched (1990)",
+      "Mars Pathfinder lands (1997)",
+      "Curiosity rover on Mars (2012)",
+      "James Webb Telescope (2021)"
     ]
   },
   {
-    "category": "Pop Culture",
-    "title": "Blockbuster Movies",
+    "cat": "Pop Culture",
+    "subcat": "Blockbuster Movies",
     "tiles": [
-      {
-        "text": "Jaws premieres",
-        "year": 1975
-      },
-      {
-        "text": "Star Wars: A New Hope",
-        "year": 1977
-      },
-      {
-        "text": "Jurassic Park",
-        "year": 1993
-      },
-      {
-        "text": "Titanic",
-        "year": 1997
-      },
-      {
-        "text": "The Dark Knight",
-        "year": 2008
-      },
-      {
-        "text": "Avatar",
-        "year": 2009
-      },
-      {
-        "text": "Avengers: Endgame",
-        "year": 2019
-      },
-      {
-        "text": "Top Gun: Maverick",
-        "year": 2022
-      }
+      "Jaws premieres (1975)",
+      "Star Wars: A New Hope (1977)",
+      "Jurassic Park (1993)",
+      "Titanic (1997)",
+      "The Dark Knight (2008)",
+      "Avatar (2009)",
+      "Avengers: Endgame (2019)",
+      "Top Gun: Maverick (2022)"
     ]
   },
   {
-    "category": "Music",
-    "title": "Iconic Albums",
+    "cat": "Music",
+    "subcat": "Iconic Albums",
     "tiles": [
-      {
-        "text": "The Beatles release Sgt. Pepper",
-        "year": 1967
-      },
-      {
-        "text": "Pink Floyd releases The Dark Side of the Moon",
-        "year": 1973
-      },
-      {
-        "text": "Michael Jackson releases Thriller",
-        "year": 1982
-      },
-      {
-        "text": "Nirvana releases Nevermind",
-        "year": 1991
-      },
-      {
-        "text": "Radiohead releases OK Computer",
-        "year": 1997
-      },
-      {
-        "text": "Eminem releases The Marshall Mathers LP",
-        "year": 2000
-      },
-      {
-        "text": "Beyonc\u00e9 releases Lemonade",
-        "year": 2016
-      },
-      {
-        "text": "Taylor Swift releases Midnights",
-        "year": 2022
-      }
+      "The Beatles: Sgt. Pepper (1967)",
+      "Pink Floyd: Dark Side of the Moon (1973)",
+      "Michael Jackson: Thriller (1982)",
+      "Nirvana: Nevermind (1991)",
+      "Radiohead: OK Computer (1997)",
+      "Eminem: The Marshall Mathers LP (2000)",
+      "Beyonc\u00e9: Lemonade (2016)",
+      "Taylor Swift: Midnights (2022)"
     ]
   },
   {
-    "category": "Science",
-    "title": "Medical Breakthroughs",
+    "cat": "Science",
+    "subcat": "Medical Breakthroughs",
     "tiles": [
-      {
-        "text": "Discovery of penicillin",
-        "year": 1928
-      },
-      {
-        "text": "First kidney transplant",
-        "year": 1954
-      },
-      {
-        "text": "First heart transplant",
-        "year": 1967
-      },
-      {
-        "text": "MRI technology introduced",
-        "year": 1977
-      },
-      {
-        "text": "Human Genome Project launched",
-        "year": 1990
-      },
-      {
-        "text": "First successful stem cell therapy",
-        "year": 2006
-      },
-      {
-        "text": "First CRISPR gene-editing trial",
-        "year": 2016
-      },
-      {
-        "text": "COVID-19 vaccines rolled out",
-        "year": 2020
-      }
+      "Discovery of penicillin (1928)",
+      "First kidney transplant (1954)",
+      "First heart transplant (1967)",
+      "MRI technology introduced (1977)",
+      "Human Genome Project launched (1990)",
+      "First stem cell therapy (2006)",
+      "CRISPR trial (2016)",
+      "COVID-19 vaccines (2020)"
     ]
   },
   {
-    "category": "Literature",
-    "title": "Modern Classics",
+    "cat": "Literature",
+    "subcat": "Modern Classics",
     "tiles": [
-      {
-        "text": "George Orwell publishes 1984",
-        "year": 1949
-      },
-      {
-        "text": "J.R.R. Tolkien publishes The Lord of the Rings",
-        "year": 1954
-      },
-      {
-        "text": "Harper Lee publishes To Kill a Mockingbird",
-        "year": 1960
-      },
-      {
-        "text": "Gabriel Garc\u00eda M\u00e1rquez publishes One Hundred Years of Solitude",
-        "year": 1967
-      },
-      {
-        "text": "Stephen King publishes The Shining",
-        "year": 1977
-      },
-      {
-        "text": "Toni Morrison wins Nobel Prize",
-        "year": 1993
-      },
-      {
-        "text": "J.K. Rowling publishes Harry Potter and the Sorcerer\u2019s Stone",
-        "year": 1997
-      },
-      {
-        "text": "Suzanne Collins publishes The Hunger Games",
-        "year": 2008
-      }
+      "George Orwell publishes 1984 (1949)",
+      "Tolkien publishes Lord of the Rings (1954)",
+      "Harper Lee: To Kill a Mockingbird (1960)",
+      "Garc\u00eda M\u00e1rquez: One Hundred Years of Solitude (1967)",
+      "Stephen King: The Shining (1977)",
+      "Toni Morrison wins Nobel Prize (1993)",
+      "Rowling: Harry Potter and the Sorcerer\u2019s Stone (1997)",
+      "Suzanne Collins: The Hunger Games (2008)"
     ]
   }
 ]
