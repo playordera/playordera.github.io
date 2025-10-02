@@ -1,0 +1,100 @@
+[
+  {
+    "category": "Technology",
+    "title": "Evolution of Smartphones",
+    "events": [
+      { "event": "First BlackBerry released", "year": 1999 },
+      { "event": "Apple unveils first iPhone", "year": 2007 },
+      { "event": "Android operating system launches", "year": 2008 },
+      { "event": "First Samsung Galaxy phone", "year": 2009 },
+      { "event": "Siri introduced on iPhone 4S", "year": 2011 },
+      { "event": "Google releases Pixel phone", "year": 2016 },
+      { "event": "Foldable phones hit market", "year": 2019 },
+      { "event": "5G smartphones become mainstream", "year": 2020 }
+    ]
+  },
+  {
+    "category": "Sports",
+    "title": "World Cup Finals",
+    "events": [
+      { "event": "Brazil wins in Mexico", "year": 1970 },
+      { "event": "Argentina wins in Mexico", "year": 1986 },
+      { "event": "France wins in Paris", "year": 1998 },
+      { "event": "Italy wins in Berlin", "year": 2006 },
+      { "event": "Spain wins in Johannesburg", "year": 2010 },
+      { "event": "Germany wins in Rio", "year": 2014 },
+      { "event": "France wins in Moscow", "year": 2018 },
+      { "event": "Argentina wins in Doha", "year": 2022 }
+    ]
+  },
+  {
+    "category": "History",
+    "title": "Space Exploration",
+    "events": [
+      { "event": "Sputnik 1 launched", "year": 1957 },
+      { "event": "First human in space (Yuri Gagarin)", "year": 1961 },
+      { "event": "First moon landing (Apollo 11)", "year": 1969 },
+      { "event": "Voyager 1 launched", "year": 1977 },
+      { "event": "Hubble Space Telescope launched", "year": 1990 },
+      { "event": "Mars Pathfinder lands", "year": 1997 },
+      { "event": "Curiosity rover lands on Mars", "year": 2012 },
+      { "event": "James Webb Telescope launched", "year": 2021 }
+    ]
+  },
+  {
+    "category": "Pop Culture",
+    "title": "Blockbuster Movies",
+    "events": [
+      { "event": "Jaws premieres", "year": 1975 },
+      { "event": "Star Wars: A New Hope", "year": 1977 },
+      { "event": "Jurassic Park", "year": 1993 },
+      { "event": "Titanic", "year": 1997 },
+      { "event": "The Dark Knight", "year": 2008 },
+      { "event": "Avatar", "year": 2009 },
+      { "event": "Avengers: Endgame", "year": 2019 },
+      { "event": "Top Gun: Maverick", "year": 2022 }
+    ]
+  },
+  {
+    "category": "Music",
+    "title": "Iconic Albums",
+    "events": [
+      { "event": "The Beatles release Sgt. Pepper", "year": 1967 },
+      { "event": "Pink Floyd releases The Dark Side of the Moon", "year": 1973 },
+      { "event": "Michael Jackson releases Thriller", "year": 1982 },
+      { "event": "Nirvana releases Nevermind", "year": 1991 },
+      { "event": "Radiohead releases OK Computer", "year": 1997 },
+      { "event": "Eminem releases The Marshall Mathers LP", "year": 2000 },
+      { "event": "Beyoncé releases Lemonade", "year": 2016 },
+      { "event": "Taylor Swift releases Midnights", "year": 2022 }
+    ]
+  },
+  {
+    "category": "Science",
+    "title": "Medical Breakthroughs",
+    "events": [
+      { "event": "Discovery of penicillin", "year": 1928 },
+      { "event": "First kidney transplant", "year": 1954 },
+      { "event": "First heart transplant", "year": 1967 },
+      { "event": "MRI technology introduced", "year": 1977 },
+      { "event": "Human Genome Project launched", "year": 1990 },
+      { "event": "First successful stem cell therapy", "year": 2006 },
+      { "event": "First CRISPR gene-editing trial", "year": 2016 },
+      { "event": "COVID-19 vaccines rolled out", "year": 2020 }
+    ]
+  },
+  {
+    "category": "Literature",
+    "title": "Modern Classics",
+    "events": [
+      { "event": "George Orwell publishes 1984", "year": 1949 },
+      { "event": "J.R.R. Tolkien publishes The Lord of the Rings", "year": 1954 },
+      { "event": "Harper Lee publishes To Kill a Mockingbird", "year": 1960 },
+      { "event": "Gabriel García Márquez publishes One Hundred Years of Solitude", "year": 1967 },
+      { "event": "Stephen King publishes The Shining", "year": 1977 },
+      { "event": "Toni Morrison wins Nobel Prize", "year": 1993 },
+      { "event": "J.K. Rowling publishes Harry Potter and the Sorcerer’s Stone", "year": 1997 },
+      { "event": "Suzanne Collins publishes The Hunger Games", "year": 2008 }
+    ]
+  }
+]
