@@ -14,7 +14,7 @@
   --correct: #10b981; --wrong: #ef4444;
 }
 
-/* Animated background */
+/* Background */
 body {
   margin:0; padding:0;
   font-family:'Bungee', sans-serif;
@@ -34,25 +34,42 @@ body {
 /* Header */
 header { text-align:center; padding:4px; }
 .logo {
-  font-size:54px; margin:0;
+  font-size:52px; margin:0;
   background: linear-gradient(90deg, #f59e0b, #e11d48, #0ea5e9, #4f46e5);
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer 6s linear infinite, logoPulse 5s ease-in-out infinite;
+  animation: fadeColors 12s ease-in-out infinite, logoPulse 6s ease-in-out infinite;
 }
-@keyframes shimmer {
-  0% {background-position: -200% 0;}
-  100% {background-position: 200% 0;}
+@keyframes fadeColors {
+  0% {background: linear-gradient(90deg, #f59e0b, #e11d48);}
+  33% {background: linear-gradient(90deg, #e11d48, #0ea5e9);}
+  66% {background: linear-gradient(90deg, #0ea5e9, #4f46e5);}
+  100% {background: linear-gradient(90deg, #f59e0b, #e11d48);}
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 @keyframes logoPulse {
   0%,100% {transform:scale(1);}
   50% {transform:scale(1.03);}
 }
-header h2 { font-size:15px; margin:2px 0 6px; font-weight:400; opacity:0.85; }
+header h2 { font-size:15px; margin:2px 0 2px; font-weight:400; opacity:0.85; }
+
+/* Progress */
+#progress {
+  font-size:14px;
+  opacity:0.75;
+  margin-bottom:8px;
+}
 
 /* Game area */
-#game { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 20px; margin-top:-6px; }
+#game { 
+  flex:1; display:flex; flex-direction:column; align-items:center; 
+  justify-content:flex-start; /* TOP not middle */
+  padding:0 20px; 
+  margin-top:8px;
+}
 #options { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; width:100%; max-width:420px; }
 
 /* Tiles */
@@ -75,24 +92,24 @@ header h2 { font-size:15px; margin:2px 0 6px; font-weight:400; opacity:0.85; }
 /* Subtle patterns */
 .option:nth-child(1)::after {
   content:"";position:absolute;inset:0;
-  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 1px, transparent 1px, transparent 8px);
+  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 1px, transparent 1px, transparent 10px);
 }
 .option:nth-child(2)::after {
   content:"";position:absolute;inset:0;
-  background-image:radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px);
-  background-size:12px 12px;
+  background-image:radial-gradient(rgba(255,255,255,0.12) 1.5px, transparent 1.5px);
+  background-size:14px 14px;
 }
 .option:nth-child(3)::after {
   content:"";position:absolute;inset:0;
-  background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0, rgba(255,255,255,0.12) 2px, transparent 2px, transparent 12px);
+  background-image:repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0, rgba(255,255,255,0.08) 2px, transparent 2px, transparent 14px);
 }
 .option:nth-child(4)::after {
   content:"";position:absolute;inset:0;
-  background:linear-gradient(135deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
-  background-size:18px 18px;
+  background:linear-gradient(135deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 75%, transparent 75%, transparent);
+  background-size:20px 20px;
 }
 
-/* Flip animations */
+/* Animations */
 .option.flip { animation: flipTile 0.6s forwards; }
 .option.correct { background:var(--correct)!important; }
 .option.wrong { background:var(--wrong)!important; }
@@ -117,7 +134,7 @@ header h2 { font-size:15px; margin:2px 0 6px; font-weight:400; opacity:0.85; }
 button.primary { background:var(--c1); color:white; font-weight:600; padding:20px 36px; font-size:22px; border-radius:var(--radius); margin-top:24px; }
 .hidden { display:none; }
 
-/* Footer stacked layout */
+/* Footer stacked */
 footer {
   text-align:center; font-size:12px;
   opacity:0.85; padding:6px;
@@ -131,6 +148,7 @@ footer {
 <header>
   <h1 class="logo" id="logo">ALTERA</h1>
   <h2>Find the odd one out</h2>
+  <div id="progress"></div>
 </header>
 
 <div id="game">
@@ -178,6 +196,7 @@ const overlayText=overlay.querySelector(".text");
 const overlayExp=overlay.querySelector(".explanation");
 const continueBtn=document.getElementById("continueBtn");
 const footerInfo=document.getElementById("footerInfo");
+const progressEl=document.getElementById("progress");
 const logo=document.getElementById("logo");
 
 async function loadData(){
@@ -208,6 +227,7 @@ function updateFooter(seed){
 
 function startPuzzle(i){
   currentIndex=i;
+  progressEl.textContent=`Puzzle ${i+1}/3`;
   logo.classList.add("pop");
   setTimeout(()=>logo.classList.remove("pop"),600);
   const p=todaySet[i];
