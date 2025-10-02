@@ -29,7 +29,18 @@ body{
 
 /* Header */
 header{text-align:center;padding:6px 0 0}
-.logo{margin:0;font-size:50px;}
+.logo{
+  margin:0;font-size:50px;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:logoFade 12s linear infinite;
+  background-size:400%;
+}
+@keyframes logoFade{
+  0%{background-position:0%}
+  100%{background-position:100%}
+}
 .sub{margin:0;font-size:16px;opacity:.9}
 #progress{font-size:14px;margin:4px 0 8px}
 
@@ -58,7 +69,7 @@ header{text-align:center;padding:6px 0 0}
 .option:nth-child(3){background:var(--c3)}
 .option:nth-child(4){background:var(--c4)}
 
-/* Level 2 */
+/* Level 2 outline */
 .lvl2::before{
   content:"";position:absolute;inset:0;border-radius:inherit;
   outline:2px solid rgba(255,255,255,.2);outline-offset:-6px;
@@ -84,18 +95,26 @@ header{text-align:center;padding:6px 0 0}
   align-items:center;justify-content:center;flex-direction:column;
   background:rgba(0,0,0,.9);z-index:100;text-align:center;
 }
+#feedbackOverlay.correct .symbol,
+#feedbackOverlay.correct .text{color:var(--correct);}
+#feedbackOverlay.wrong .symbol,
+#feedbackOverlay.wrong .text{color:var(--wrong);}
 #feedbackOverlay .symbol{font-size:100px;margin-bottom:18px}
 #feedbackOverlay .text{font-size:32px;margin-bottom:12px}
-#feedbackOverlay .explanation{font-size:18px;max-width:360px;margin-bottom:16px}
+#feedbackOverlay .explanation{font-size:18px;max-width:360px;margin-bottom:16px;color:#fff}
 #feedbackOverlay button{padding:14px 28px;border:none;border-radius:var(--radius);
   background:var(--c1);color:#fff;font-size:18px;cursor:pointer}
 
 /* End screen */
 #endScreen{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:20px}
 #summary{font-size:18px}
-button.primary{background:var(--c1);color:#fff;font-size:20px;
-  padding:16px 32px;border-radius:var(--radius);margin:0 auto;display:block}
-.hidden{display:none !important} /* ✅ ensures hidden elements never show */
+#shareBtn{
+  background:var(--c1);color:#fff;font-size:20px;
+  padding:16px 32px;border-radius:var(--radius);
+  display:none; /* hidden until end */
+  margin:0 auto;
+  border:none;cursor:pointer;
+}
 
 /* Footer */
 footer{text-align:center;font-size:12px;opacity:.9;padding:6px 8px 10px;line-height:1.35em}
@@ -113,7 +132,7 @@ footer{text-align:center;font-size:12px;opacity:.9;padding:6px 8px 10px;line-hei
 
     <div id="endScreen" class="hidden">
       <div id="summary"></div>
-      <button class="primary hidden" id="shareBtn">Share</button>
+      <button id="shareBtn">Share</button>
     </div>
   </main>
 
@@ -236,7 +255,7 @@ function finishGame(won){
   optEl.innerHTML="";
   endScreen.classList.remove("hidden");
   summaryEl.textContent=`${results.join(" ")} (${won?"Cleared all!":"Game over"})`;
-  shareBtn.classList.remove("hidden"); // show only now
+  shareBtn.style.display="block"; // ✅ show now, centered
 }
 
 shareBtn.onclick=()=>{
