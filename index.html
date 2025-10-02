@@ -13,8 +13,6 @@
   --correct:#10b981; --wrong:#ef4444;
   --bg1:#142049; --bg2:#20306d; --bg3:#244688; --bg4:#267ca6;
 }
-
-/* App layout */
 html,body{height:100%;margin:0;font-family:'Bungee',sans-serif;color:var(--fg);}
 body{
   display:grid;grid-template-rows:auto 1fr auto;overflow:hidden;
@@ -23,27 +21,28 @@ body{
 }
 @keyframes bgSoft{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 
-/* Header */
 header{text-align:center;padding:6px 0 0}
 .logo{
   margin:0;font-size:50px;
   background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4));
   -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;background-size:400%;
-  animation:logoFade 12s linear infinite;
+  -webkit-text-fill-color:transparent;
+  background-size:400% auto;
+  animation:logoFade 10s linear infinite;
 }
-@keyframes logoFade{0%{background-position:0%}100%{background-position:100%}}
+@keyframes logoFade{
+  0%{background-position:0% 50%}
+  100%{background-position:100% 50%}
+}
 .sub{margin:0;font-size:16px;opacity:.95}
 #progress{font-size:14px;margin:4px 0 8px;opacity:.95}
 
-/* Main grid */
 #game{display:flex;align-items:center;justify-content:center;min-height:0}
 #options{
   width:100%;max-width:460px;padding:0 20px;
   display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
 }
 
-/* Tiles */
 .option{
   position:relative;display:flex;align-items:center;justify-content:center;
   color:#fff;border-radius:var(--radius);aspect-ratio:1/1;
@@ -57,7 +56,6 @@ header{text-align:center;padding:6px 0 0}
 .option:nth-child(3){background:var(--c3)}
 .option:nth-child(4){background:var(--c4)}
 
-/* Level treatments */
 .lvl2::before{content:"";position:absolute;inset:0;border-radius:inherit;outline:2px solid rgba(255,255,255,.22);outline-offset:-6px}
 .lvl3::after{
   content:"";position:absolute;inset:0;border-radius:inherit;
@@ -66,7 +64,6 @@ header{text-align:center;padding:6px 0 0}
 }
 @keyframes sheen{0%{transform:translateX(-150%)}50%{transform:translateX(150%)}100%{transform:translateX(150%)}}
 
-/* Correct/Wrong overlay */
 #feedbackOverlay{
   position:fixed;inset:0;display:none;z-index:200;
   align-items:center;justify-content:center;flex-direction:column;
@@ -77,23 +74,23 @@ header{text-align:center;padding:6px 0 0}
 #feedbackOverlay .symbol{font-size:100px;margin-bottom:18px}
 #feedbackOverlay .text{font-size:34px;margin-bottom:12px}
 #feedbackOverlay .explanation{font-size:18px;max-width:360px;margin-bottom:18px;color:#fff}
-#continueBtn{padding:14px 28px;border:none;border-radius:var(--radius);background:#4f60ff;color:#fff;font-size:18px;cursor:pointer}
+#continueBtn{padding:14px 28px;border:none;border-radius:var(--radius);background:var(--wrong);color:#fff;font-size:18px;cursor:pointer}
+#feedbackOverlay.correct #continueBtn{background:var(--correct)}
 
-/* END SCREEN — fixed, centered overlay (prevents drifting share btn) */
 #endScreen{
   position:fixed;inset:0;display:none;z-index:150;
-  align-items:center;justify-content:center;flex-direction:column;gap:12px;
-  text-align:center;padding:20px;pointer-events:auto;
+  align-items:center;justify-content:center;flex-direction:column;gap:18px;
+  text-align:center;padding:20px;
 }
-#summary{font-size:18px}
+#summary{font-size:26px}
+.bigChecks{font-size:64px;margin-bottom:8px}
 #shareBtn{
-  display:none; /* hidden until game ends */
+  display:none;
   background:var(--c1);color:#fff;font-size:20px;
   padding:16px 32px;border-radius:var(--radius);border:none;cursor:pointer;
   box-shadow:0 10px 24px rgba(0,0,0,.25);
 }
 
-/* Footer */
 footer{text-align:center;font-size:12px;opacity:.95;padding:6px 8px 10px;line-height:1.35em}
 </style>
 </head>
@@ -108,8 +105,9 @@ footer{text-align:center;font-size:12px;opacity:.95;padding:6px 8px 10px;line-he
     <div id="options"></div>
   </main>
 
-  <!-- End screen overlay -->
+  <!-- End screen -->
   <div id="endScreen" aria-live="polite">
+    <div class="bigChecks" id="finalChecks"></div>
     <div id="summary"></div>
     <button id="shareBtn">Share</button>
   </div>
@@ -124,21 +122,20 @@ footer{text-align:center;font-size:12px;opacity:.95;padding:6px 8px 10px;line-he
 
   <footer id="footerInfo"></footer>
 
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script>
-/* Config */
 const DATA_URL="puzzles.json";
 const DIFFICULTIES=["easy","medium","hard"];
 const tz="America/Edmonton";
 
-/* State */
 let puzzles=[], todaySet=[], currentIndex=0, results=[];
 let streakData={ current:0, best:0, lastDate:null };
 let pendingCallback=null;
 
-/* DOM */
 const optEl=document.getElementById("options");
 const endScreen=document.getElementById("endScreen");
 const summaryEl=document.getElementById("summary");
+const finalChecks=document.getElementById("finalChecks");
 const shareBtn=document.getElementById("shareBtn");
 const overlay=document.getElementById("feedbackOverlay");
 const overlaySymbol=overlay.querySelector(".symbol");
@@ -148,7 +145,6 @@ const continueBtn=document.getElementById("continueBtn");
 const footerInfo=document.getElementById("footerInfo");
 const progressEl=document.getElementById("progress");
 
-/* Utils */
 function loadStreak(){const s=localStorage.getItem("altera_streak");if(s){streakData=JSON.parse(s);}}
 function saveStreak(){localStorage.setItem("altera_streak",JSON.stringify(streakData));}
 function toYMD(date,tz){const z=new Date(date.toLocaleString('en-US',{timeZone:tz}));return `${z.getFullYear()}${String(z.getMonth()+1).padStart(2,'0')}${String(z.getDate()).padStart(2,'0')}`;}
@@ -156,41 +152,27 @@ function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>1
 function seededPick(rng,arr){return arr[Math.floor(rng()*arr.length)]}
 function shuffleArray(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
 
-/* Boot */
-loadStreak();
-loadData();
-
-async function loadData(){
-  const res=await fetch(DATA_URL);
-  const data=await res.json();
-  puzzles=data.themes;
-  setupDaily();
-}
+loadStreak(); loadData();
+async function loadData(){const res=await fetch(DATA_URL);const data=await res.json();puzzles=data.themes;setupDaily();}
 
 function setupDaily(){
-  const seed=toYMD(new Date(),tz);
-  const rng=mulberry32(Number(seed));
+  const seed=toYMD(new Date(),tz);const rng=mulberry32(Number(seed));
   todaySet=DIFFICULTIES.map(d=>seededPick(rng,puzzles.filter(p=>p.difficulty===d)));
-  updateFooter(seed);
-  startPuzzle(0);
+  updateFooter(seed);startPuzzle(0);
 }
-
 function updateFooter(seed){
   const today=new Date().toLocaleDateString('en-CA',{timeZone:tz});
   footerInfo.innerHTML=`Seed: ${seed}<br>Date: ${today}<br>🔥 Streak: ${streakData.current} (Best: ${streakData.best})`;
 }
 
 function startPuzzle(i){
-  currentIndex=i;
-  progressEl.textContent=`Puzzle ${i+1}/3`;
-  const p=todaySet[i];
-  const shuffled=shuffleArray([...p.items]);
-
+  currentIndex=i;progressEl.textContent=`Puzzle ${i+1}/3`;
+  const p=todaySet[i];const shuffled=shuffleArray([...p.items]);
   optEl.innerHTML="";
   shuffled.forEach((item)=>{
     const tile=document.createElement("div");
-    tile.className="option lvl"+(i+1);      // lvl1 | lvl2 | lvl3
-    if(i===2){ tile.style.setProperty("--delay",`${Math.random()*2}s`); } // stagger shimmer
+    tile.className="option lvl"+(i+1);
+    if(i===2){tile.style.setProperty("--delay",`${Math.random()*2}s`);}
     tile.innerHTML=`<span>${item}</span>`;
     tile.onclick=()=>choose(tile,item,p);
     optEl.appendChild(tile);
@@ -203,55 +185,50 @@ function choose(tile,choice,puzzle){
   const correct=(choice===puzzle.answer);
   if(correct){
     results.push("✅");
-    showOverlay(true,puzzle.explanation,()=>{
-      if(currentIndex<2){ startPuzzle(currentIndex+1); }
-      else{ finishGame(true); }
-    });
+    showOverlay(true,puzzle.explanation,()=>{ if(currentIndex<2){startPuzzle(currentIndex+1);} else{finishGame(true);} });
   }else{
     results.push("❌");
     showOverlay(false,puzzle.explanation,()=>finishGame(false));
   }
 }
 
-/* Feedback overlay */
 function showOverlay(correct,explanation,cb){
-  overlay.style.display="flex";
-  overlay.className=correct?"correct":"wrong";
+  overlay.style.display="flex";overlay.className=correct?"correct":"wrong";
   overlaySymbol.textContent=correct?"✓":"✕";
   overlayText.textContent=correct?"Correct":"Game Over";
   overlayExp.textContent=explanation;
   pendingCallback=cb;
 }
-continueBtn.onclick=()=>{ overlay.style.display="none"; if(pendingCallback){pendingCallback(); pendingCallback=null;} };
+continueBtn.onclick=()=>{overlay.style.display="none";if(pendingCallback){pendingCallback();pendingCallback=null;}};
 
-/* End of game */
 function finishGame(won){
   const todaySeed=toYMD(new Date(),tz);
   if(streakData.lastDate!==todaySeed){
-    if(won){
-      const yesterday=toYMD(new Date(Date.now()-86400000),tz);
-      streakData.current=(streakData.lastDate===yesterday)?(streakData.current+1):1;
-      streakData.best=Math.max(streakData.best,streakData.current);
-    }else{
-      streakData.current=0;
-    }
-    streakData.lastDate=todaySeed; saveStreak();
+    if(won){streakData.current=(streakData.current+1);} else{streakData.current=0;}
+    streakData.best=Math.max(streakData.best,streakData.current);
+    streakData.lastDate=todaySeed;saveStreak();
   }
   updateFooter(todaySeed);
 
-  // Show end screen overlay centered, with button centered
   optEl.innerHTML="";
-  endScreen.style.display="flex";     // <-- fixed overlay centers content
-  summaryEl.textContent=`${results.join(" ")} (${won?"Cleared all!":"Game over"})`;
-  shareBtn.style.display="inline-flex";  // <-- show only now (centered)
+  endScreen.style.display="flex";
+  finalChecks.textContent=results.join(" ");
+  summaryEl.textContent=`${won?"Cleared all!":"Game over"}`;
+  shareBtn.style.display="inline-flex";
+
+  if(won){confetti({particleCount:150,spread:80,origin:{y:.6}});}
 }
 
-/* Share */
 shareBtn.onclick=()=>{
   const d=new Date().toLocaleDateString('en-CA',{timeZone:tz});
-  const text=`Altera ${d}\n${results.join(" ")}\n🔥 Streak: ${streakData.current}\nPlay: (your game URL)`;
-  if(navigator.share){ navigator.share({title:"Altera",text}); }
-  else{ navigator.clipboard.writeText(text).then(()=>alert("Results copied!")); }
+  let msg="";
+  if(results[0]==="❌"){msg="Altera humbled me today 💀 (0/3)";}
+  else if(results[1]==="❌"){msg="I only cracked 1 puzzle on Altera 🫠 (1/3)";}
+  else if(results[2]==="❌"){msg="So close! 2/3 puzzles solved on Altera 😤";}
+  else{msg="Flawless! 3/3 puzzles solved on Altera 🎉";}
+  const text=`Altera ${d}\n${msg}\n🔥 Streak: ${streakData.current}`;
+  if(navigator.share){navigator.share({title:"Altera",text});}
+  else{navigator.clipboard.writeText(text).then(()=>alert("Results copied!")); }
 };
 </script>
 </body>
