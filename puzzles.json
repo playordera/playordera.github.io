@@ -1,0 +1,359 @@
+{
+  "version": 1,
+  "calendar": {
+    "20251002": "animals"
+  },
+  "themes": [
+    {
+      "id": "shapes",
+      "name": "Shapes",
+      "puzzles": [
+        {
+          "difficulty": "easy",
+          "items": [
+            "🔺",
+            "🔺",
+            "🔺",
+            "🔴"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "easy",
+          "items": [
+            "🟩",
+            "🟩",
+            "🟩",
+            "🟪"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "easy",
+          "items": [
+            "◼️",
+            "◼️",
+            "◼️",
+            "⬛",
+            "🍎"
+          ],
+          "odd_index": 4
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "⬜️",
+            "⬜️",
+            "⬜️",
+            "🟨",
+            "⬜️"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "🔷",
+            "🔷",
+            "🔷",
+            "🔶"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "◻️",
+            "◻️",
+            "◻️",
+            "◻️",
+            "🔺"
+          ],
+          "odd_index": 4
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "🟦",
+            "🟦",
+            "🟦",
+            "🟦",
+            "🔵",
+            "🟦"
+          ],
+          "odd_index": 4
+        }
+      ]
+    },
+    {
+      "id": "animals",
+      "name": "Animals",
+      "puzzles": [
+        {
+          "difficulty": "easy",
+          "items": [
+            "🐶",
+            "🐱",
+            "🦊",
+            "🚗"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "easy",
+          "items": [
+            "🐭",
+            "🐹",
+            "🐰",
+            "🐢"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "🦁",
+            "🐯",
+            "🐆",
+            "🐸"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "🐟",
+            "🐠",
+            "🐡",
+            "🦅"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "🦇",
+            "🦉",
+            "🦅",
+            "🐧",
+            "🦋"
+          ],
+          "odd_index": 4
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "🦈",
+            "🐬",
+            "🐳",
+            "🦀",
+            "🐊"
+          ],
+          "odd_index": 4
+        }
+      ]
+    },
+    {
+      "id": "fruits",
+      "name": "Fruits",
+      "puzzles": [
+        {
+          "difficulty": "easy",
+          "items": [
+            "🍎",
+            "🍎",
+            "🍎",
+            "🍊"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "easy",
+          "items": [
+            "🍌",
+            "🍌",
+            "🍌",
+            "🍌",
+            "🍓"
+          ],
+          "odd_index": 4
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "🍇",
+            "🍇",
+            "🍇",
+            "🥦"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "🍉",
+            "🍉",
+            "🍉",
+            "🍈",
+            "🍔"
+          ],
+          "odd_index": 4
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "🍒",
+            "🍓",
+            "🍎",
+            "🍅"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "🍍",
+            "🥭",
+            "🍑",
+            "🧀"
+          ],
+          "odd_index": 3
+        }
+      ]
+    },
+    {
+      "id": "numbers",
+      "name": "Numbers",
+      "puzzles": [
+        {
+          "difficulty": "easy",
+          "items": [
+            "2",
+            "2",
+            "2",
+            "5"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "easy",
+          "items": [
+            "10",
+            "10",
+            "10",
+            "11"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "3",
+            "6",
+            "9",
+            "8"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "4",
+            "8",
+            "12",
+            "13"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "2",
+            "3",
+            "5",
+            "6"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "7",
+            "14",
+            "21",
+            "25"
+          ],
+          "odd_index": 3
+        }
+      ]
+    },
+    {
+      "id": "colors",
+      "name": "Colors",
+      "puzzles": [
+        {
+          "difficulty": "easy",
+          "items": [
+            "🔴",
+            "🔴",
+            "🔴",
+            "🔵"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "easy",
+          "items": [
+            "🟢",
+            "🟢",
+            "🟢",
+            "🟡"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "🟦",
+            "🟦",
+            "🟦",
+            "🟪"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "medium",
+          "items": [
+            "🟧",
+            "🟧",
+            "🟧",
+            "⚫️"
+          ],
+          "odd_index": 3
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "🟥",
+            "🟥",
+            "🟥",
+            "🟥",
+            "🟨"
+          ],
+          "odd_index": 4
+        },
+        {
+          "difficulty": "hard",
+          "items": [
+            "🟪",
+            "🟪",
+            "🟪",
+            "🟪",
+            "🟩"
+          ],
+          "odd_index": 4
+        }
+      ]
+    }
+  ]
+}
