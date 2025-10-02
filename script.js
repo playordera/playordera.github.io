@@ -56,12 +56,10 @@ function startPuzzle(i){
   const shuffled=shuffleArray([...p.items]);
 
   optEl.innerHTML="";
-  shuffled.forEach((item,idx)=>{
+  shuffled.forEach((item)=>{
     const tile=document.createElement("div");
     tile.className="option lvl"+(i+1);
-    if(i===2){ // random delays for shimmer effect
-      tile.style.setProperty("--delay",`${Math.random()*2}s`);
-    }
+    if(i===2){ tile.style.setProperty("--delay",`${Math.random()*2}s`); }
     tile.innerHTML=`<span>${item}</span>`;
     tile.onclick=()=>choose(tile,item,p);
     optEl.appendChild(tile);
@@ -105,10 +103,11 @@ function finishGame(won){
     streakData.lastDate=todaySeed;saveStreak();
   }
   updateFooter(todaySeed);
+
   optEl.innerHTML="";
   endScreen.classList.remove("hidden");
   summaryEl.textContent=`${results.join(" ")} (${won?"Cleared all!":"Game over"})`;
-  shareBtn.classList.remove("hidden");
+  shareBtn.classList.remove("hidden"); // show only now
 }
 
 shareBtn.onclick=()=>{
